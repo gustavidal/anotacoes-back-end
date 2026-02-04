@@ -28,55 +28,79 @@
         - || -> or  -> significa "ou"
         - && -> and -> significa "e"
         - !  -> not -> significa "não"
+    
+    Conversão de dados:
+        - parseInt()    -> Permite converter um conteúdo em número INTEIRO
+        - parseFloat()  -> Permite converter um conteúdo em número DECIMAL
+        - Number()      -> Permite converter um conteúdo em NÚMERO, inteiro ou decimal de forma automática
+        - String()      -> Permite converter um conteúdo em STRING
+        - Boolean()     -> Permite converter um conteúdo em BOOLEAN (true, false)
+        - typeof()      -> Retorna o tipo de dados de uma variável (String, Number, Boolean ou Object)
 */
 
 // Import da biblioteca de entrada de dados
-const readline = require("readline")
+const readline = require("readline");
 
 // Criação do objeto que guarda as entradas de dados
 const entradaDeDados = readline.createInterface({
     input: process.stdin,
     output: process.stdout
-})
+});
 
 // Entrada de dados do nome
-entradaDeDados.question("Digite o nome do aluno: ", function(nome){
+entradaDeDados.question("Digite o nome do aluno: ", function (nome) {
     // Recebe o nome do aluno
-    let nomeAluno = nome
+    let nomeAluno = nome;
 
     // Entrada de dados do nota1
-    entradaDeDados.question("Digite a nota 1: ", function(valor1){
+    entradaDeDados.question("Digite a nota 1: ", function (valor1) {
         // Recebe o nome da nota1
-        let nota1 = valor1
+        let nota1 = valor1;
 
         // Entrada de dados do nota2
-        entradaDeDados.question("Digite a nota 2: ", function(valor2){
+        entradaDeDados.question("Digite a nota 2: ", function (valor2) {
             // Recebe o nome da nota2
-            let nota2 = valor2
+            let nota2 = valor2;
 
             // Entrada de dados do nota3
-            entradaDeDados.question("Digite a nota 3: ", function(valor3){
+            entradaDeDados.question("Digite a nota 3: ", function (valor3) {
                 // Recebe o nome da nota3
-                let nota3 = valor3
+                let nota3 = valor3;
 
                 // Entrada de dados do nota4
-                entradaDeDados.question("Digite a nota 4: ", function(valor4){
+                entradaDeDados.question("Digite a nota 4: ", function (valor4) {
                     // Recebe o nome da nota4
-                    let nota4 = valor4
-                    
+                    let nota4 = valor4;
+
                     // Validação de entrada vazia
-                    if(nomeAluno == "" || nota1 == "" || nota2 == "" || nota3 == "" || nota4 == ""){
-                        console.log("\nERRO!\nPreencha todos os campos!")
-                    // Validação de entrada de número apenas entre 0 e 100
-                    } else if (nota1 < 0 || nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100 || nota4 < 0 || nota4 > 100){
-                        console.log("\nERRO!\nAs notas informadas devem ser de 0 a 100!")
-                    // Validação de entrada somente de números
-                    // isNaN() -> Permite a validação de números ou letras
-                    } else if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)){
-                        console.log("\nERRO!\nÉ permitido somente números na entrada das notas!")
+                    if (nomeAluno == "" || nota1 == "" || nota2 == "" || nota3 == "" || nota4 == "") {
+                        console.log("\nERRO!\nPreencha todos os campos!");
+                        // Validação de entrada de número apenas entre 0 e 100
+                    } else if (nota1 < 0 || nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100 || nota4 < 0 || nota4 > 100) {
+                        console.log("\nERRO!\nAs notas informadas devem ser de 0 a 100!");
+                        // Validação de entrada somente de números
+                        // isNaN() -> Permite a validação de números ou letras
+                    } else if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)) {
+                        console.log("\nERRO!\nÉ permitido somente números na entrada das notas!");
+                    } else {
+                        let media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4)) / 4;
+                        let status;
+
+                        if (media >= 70) {
+                            status = "APROVADO";
+                        } else if (media < 50) {
+                            status = "REPROVADO";
+                        } else {
+                            status = "RECUPERAÇÃO";
+                        }
+
+                        console.log(`\nNome do(a) aluno(a): ${nomeAluno}`);
+                        // toFixed() -> Permite fixar a quantidade de casas decimais
+                        console.log(`Média final do(a) aluno(a): ${media.toFixed(2)}`);
+                        console.log(`Status do(a) aluno(a): ${status}`);
                     }
-                }) // Fecha nota4
-            }) // Fecha nota3
-        }) // Fecha nota2
-    }) // Fecha nota1
-}) // Fecha nome
+                }); // Fecha nota4
+            }); // Fecha nota3
+        }); // Fecha nota2
+    }); // Fecha nota1
+}); // Fecha nome
