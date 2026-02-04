@@ -83,21 +83,22 @@ entradaDeDados.question("Digite o nome do aluno: ", function (nome) {
                     } else if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)) {
                         console.log("\nERRO!\nÉ permitido somente números na entrada das notas!");
                     } else {
+                        // Cálculo da média
                         let media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4)) / 4;
                         let status;
 
-                        if (media >= 70) {
+                        // Validação do status
+                        if (media >= 70.00) {
                             status = "APROVADO";
-                        } else if (media < 50) {
+                        } else if (media < 50.00) {
                             status = "REPROVADO";
                         } else {
                             status = "RECUPERAÇÃO";
                         }
 
-                        console.log(`\nNome do(a) aluno(a): ${nomeAluno}`);
+                        // Exibição do boletim
                         // toFixed() -> Permite fixar a quantidade de casas decimais
-                        console.log(`Média final do(a) aluno(a): ${media.toFixed(2)}`);
-                        console.log(`Status do(a) aluno(a): ${status}`);
+                        console.log(`\nNome do(a) aluno(a): ${nomeAluno} \nMédia final do(a) aluno(a): ${media.toFixed(2)} \nStatus do(a) aluno(a): ${status}`);
                     }
                 }); // Fecha nota4
             }); // Fecha nota3
