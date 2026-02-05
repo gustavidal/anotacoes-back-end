@@ -50,7 +50,9 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
                                 entradaDeDados.question(`Muito obrigado, ${nomeCliente}. O seu tempo de pagamento é em meses ou anos? \n[1] Meses \n[2] Anos \nDigite 1 ou 2: `, function (tempo) {
                                     let tempoEscolhido = tempo;
 
-                                    if (tempo == 1 || tempo == 2) {
+                                    if (tempo > 2 || tempo < 1) {
+                                        console.log("Opção inválida!");
+                                    } else {
                                         entradaDeDados.question("Em quantas vezes o produto foi parcelado? ", function (vezes) {
                                             let vezesParceladas = Number(vezes);
                                             if (tempoEscolhido == 2) {
@@ -70,8 +72,6 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
                                             console.log(`\nMuito obrigado por escolher a Viva Moda.`);
                                             console.log(`*******************************************************`);
                                         }); // Fecha quantidade parcelada
-                                    } else {
-                                        console.log("Opção inválida!");
                                     }
                                 }); // Fecha tempo
                             }
