@@ -15,66 +15,82 @@ const entradaDeDados = readline.createInterface({
     output: process.stdout
 });
 
+// Entrada de dados (nome do cliente)
 entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do cliente: ", function (nome) {
 
+    // Validação de inserção (nome do cliente)
     if (nome == "") {
-        console.log("O campo \"nome\" é obrigatório!")
+        console.log("O campo \"nome\" é obrigatório!");
     } else if (!isNaN(nome)) {
-        console.log("Não é permitida a entrada de números no campo \"nome\"!")
+        console.log("Não é permitida a entrada de números no campo \"nome\"!");
     } else {
         let nomeCliente = nome;
 
+        // Entrada de dados (produto)
         entradaDeDados.question("Digite o produto comprado: ", function (produto) {
 
+            // Validação de inserção (produto)
             if (produto == "") {
-                console.log("O campo \"produto\" é obrigatório!")
+                console.log("O campo \"produto\" é obrigatório!");
             } else if (!isNaN(produto)) {
-                console.log("Não é permitida a entrada de números no campo \"produto\"!")
+                console.log("Não é permitida a entrada de números no campo \"produto\"!");
             } else {
                 let produtoComprado = produto;
 
-                entradaDeDados.question(`Digite o valor do produto: R$ `, function (valor) {
+                // Entrada de dados (valor do produto)
+                entradaDeDados.question("Digite o valor do produto: R$ ", function (valor) {
 
+                    // Validação de inserção (valor do produto)
                     if (valor == "") {
-                        console.log("O campo \"valor\" é obrigatório!")
+                        console.log("O campo \"valor\" é obrigatório!");
                     } else if (isNaN(valor)) {
-                        console.log("Não é permitida a entrada de caracteres no campo \"valor\"!")
+                        console.log("Não é permitida a entrada de caracteres no campo \"valor\"!");
                     } else {
                         let valorProduto = (Number(valor)).toFixed(2);
 
+                        // Entrada de dados (taxa de juros)
                         entradaDeDados.question("Digite a taxa de juros, sem o símbolo de %: ", function (taxa) {
 
+                            // Validação de inserção (taxa de juros)
                             if (taxa == "") {
-                                console.log("O campo \"taxa\" é obrigatório!")
+                                console.log("O campo \"taxa\" é obrigatório!");
                             } else if (isNaN(taxa)) {
-                                console.log("Não é permitida a entrada de caracteres no campo \"taxa\"!")
+                                console.log("Não é permitida a entrada de caracteres no campo \"taxa\"!");
                             } else {
                                 let taxaJuros = Number(taxa) / 100;
 
-                                entradaDeDados.question("\nEscolha a forma de parcelamento abaixo: \n[1] Meses \n[2] Anos \nDigite 1 ou 2: ", function (tempo) {
+                                // Entrada de dados (forma de parcelamento)
+                                entradaDeDados.question("\nEscolha a forma de parcelamento abaixo: \n[1] Mês(es) \n[2] Ano(s) \nDigite 1 ou 2: ", function (parcelamento) {
 
-                                    if (tempo > 2 || tempo < 1) {
+                                    // Validação de inserção (forma de parcelamento)
+                                    if (parcelamento > 2 || parcelamento < 1) {
                                         console.log("Opção inválida!");
                                     } else {
-                                        let tempoEscolhido = tempo;
+                                        let formaParcelamento = parcelamento;
 
+                                        // Entrada de dados (quantidade de parcelas)
                                         entradaDeDados.question("\nDigite a quantidade de parcelas: ", function (parcelas) {
 
+                                            // Validação de inserção (quantidade de parcelas)
                                             if (parcelas == "") {
-                                                console.log("O campo \"parcelas\" é obrigatório!")
+                                                console.log("O campo \"parcelas\" é obrigatório!");
                                             } else if (isNaN(parcelas)) {
-                                                console.log("Não é permitida a entrada de caracteres no campo \"parcelas\"!")
+                                                console.log("Não é permitida a entrada de caracteres no campo \"parcelas\"!");
                                             } else {
                                                 let vezesParceladas = Number(parcelas);
 
-                                                if (tempoEscolhido == 2) {
+                                                // Calcula a quantidade de parcelas por ano(s)
+                                                if (formaParcelamento == 2) {
                                                     vezesParceladas = vezesParceladas * 12;
                                                 }
 
+                                                // Calcula o valor da montante ou valor final
                                                 let montante = (valorProduto * (1 + taxaJuros) ** vezesParceladas).toFixed(2);
 
+                                                // Calcula a diferença entre a montante e o valor inicial
                                                 let diferenca = (montante - valorProduto).toFixed(2);
 
+                                                // Descrição geral
                                                 console.log("\n*********************** Viva Moda *********************");
                                                 console.log(`Muito obrigado por realizar a sua compra conosco, sr(a) ${nomeCliente}.`);
                                                 console.log(`A compra do produto "${produtoComprado}" tem um valor de R$ ${valorProduto}.`);
@@ -85,12 +101,12 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
                                             }
                                         }); // Fecha quantidade parcelada
                                     }
-                                }); // Fecha tempo
+                                }); // Fecha forma de parcelamento
                             }
-                        }); // Fecha taxa
+                        }); // Fecha taxa de juros
                     }
-                }); // Fecha valor
+                }); // Fecha valor do produto
             }
         }); // Fecha produto
     }
-}); // Fecha nome
+}); // Fecha nome do cliente
