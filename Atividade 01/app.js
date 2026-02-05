@@ -19,10 +19,8 @@ const entradaDeDados = readline.createInterface({
 entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do cliente: ", function (nome) {
 
     // Validação de inserção (nome do cliente)
-    if (nome == "") {
-        console.log("O campo \"nome\" é obrigatório!");
-    } else if (!isNaN(nome)) {
-        console.log("Não é permitida a entrada de números no campo \"nome\"!");
+    if (nome == "" || !isNaN(nome)) {
+        console.log("O campo \"nome\" não pode ser vazio ou conter números!");
     } else {
         let nomeCliente = nome;
 
@@ -30,10 +28,8 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
         entradaDeDados.question("Digite o produto comprado: ", function (produto) {
 
             // Validação de inserção (produto)
-            if (produto == "") {
-                console.log("O campo \"produto\" é obrigatório!");
-            } else if (!isNaN(produto)) {
-                console.log("Não é permitida a entrada de números no campo \"produto\"!");
+            if (produto == "" || !isNaN(produto)) {
+                console.log("O campo \"produto\" não pode ser vazio ou conter números!");
             } else {
                 let produtoComprado = produto;
 
@@ -41,21 +37,17 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
                 entradaDeDados.question("Digite o valor do produto: R$ ", function (valor) {
 
                     // Validação de inserção (valor do produto)
-                    if (valor == "") {
-                        console.log("O campo \"valor\" é obrigatório!");
-                    } else if (isNaN(valor)) {
-                        console.log("Não é permitida a entrada de caracteres no campo \"valor\"!");
+                    if (valor == "" || isNaN(valor)) {
+                        console.log("O campo \"valor\" não pode ser vazio ou conter caracteres!");
                     } else {
                         let valorProduto = (Number(valor)).toFixed(2);
 
                         // Entrada de dados (taxa de juros)
-                        entradaDeDados.question("Digite a taxa de juros, sem o símbolo de %: ", function (taxa) {
+                        entradaDeDados.question("Digite a taxa de juros sem o símbolo %: ", function (taxa) {
 
                             // Validação de inserção (taxa de juros)
-                            if (taxa == "") {
-                                console.log("O campo \"taxa\" é obrigatório!");
-                            } else if (isNaN(taxa)) {
-                                console.log("Não é permitida a entrada de caracteres no campo \"taxa\"!");
+                            if (taxa == "" || isNaN(taxa)) {
+                                console.log("O campo \"taxa\" não pode ser vazio ou conter caracteres!");
                             } else {
                                 let taxaJuros = Number(taxa) / 100;
 
@@ -72,10 +64,8 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
                                         entradaDeDados.question("\nDigite a quantidade de parcelas: ", function (parcelas) {
 
                                             // Validação de inserção (quantidade de parcelas)
-                                            if (parcelas == "") {
-                                                console.log("O campo \"parcelas\" é obrigatório!");
-                                            } else if (isNaN(parcelas)) {
-                                                console.log("Não é permitida a entrada de caracteres no campo \"parcelas\"!");
+                                            if (parcelas == "" || isNaN(parcelas)) {
+                                                console.log("O campo \"parcelas\" não pode ser vazio ou conter caracteres!");
                                             } else {
                                                 let vezesParceladas = Number(parcelas);
 
