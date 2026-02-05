@@ -15,7 +15,7 @@ const entradaDeDados = readline.createInterface({
     output: process.stdout
 });
 
-entradaDeDados.question("Olá! Somos da empresa Viva Moda. \nDigite o nome do cliente: ", function (nome) {
+entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do cliente: ", function (nome) {
     let nomeCliente = nome;
 
     if (nome == "") {
@@ -32,7 +32,7 @@ entradaDeDados.question("Olá! Somos da empresa Viva Moda. \nDigite o nome do cl
                 console.log("Não é permitida a entrada de números no campo \"produto\"!")
             } else {
                 entradaDeDados.question(`Qual é o valor do produto ${produtoComprado}? R$ `, function (valor) {
-                    let valorProduto = Number(valor);
+                    let valorProduto = (Number(valor)).toFixed(2);
 
                     if (valor == "") {
                         console.log("O campo \"valor\" é obrigatório!")
@@ -50,16 +50,29 @@ entradaDeDados.question("Olá! Somos da empresa Viva Moda. \nDigite o nome do cl
                                 entradaDeDados.question(`Muito obrigado, ${nomeCliente}. O seu tempo de pagamento é em meses ou anos? \n[1] Meses \n[2] Anos \nDigite 1 ou 2: `, function (tempo) {
                                     let tempoEscolhido = tempo;
 
-                                    entradaDeDados.question("Em quantas vezes o produto foi parcelado? ", function (vezes) {
-                                        let vezesParceladas = Number(vezes);
-                                        if (tempoEscolhido == 2) {
-                                            vezesParceladas = vezesParceladas * 12;
-                                        }
+                                    if (tempo == 1 || tempo == 2) {
+                                        entradaDeDados.question("Em quantas vezes o produto foi parcelado? ", function (vezes) {
+                                            let vezesParceladas = Number(vezes);
+                                            if (tempoEscolhido == 2) {
+                                                vezesParceladas = vezesParceladas * 12;
+                                            }
 
-                                        let montante = valorProduto * (1 + taxaJuros) ** vezesParceladas;
+                                            let montante = valorProduto * (1 + taxaJuros) ** vezesParceladas;
+                                            montante = montante.toFixed(2);
 
-                                        console.log(toFixed(montante));
-                                    }); // Fecha quantidade parcelada
+                                            let diferenca = (montante - valorProduto).toFixed(2);
+
+                                            console.log(`\n********************** Viva Moda ********************`);
+                                            console.log(`Muito obrigado por realizar a sua compra conosco, sr(a) ${nomeCliente}.`);
+                                            console.log(`A compra do produto ${produtoComprado} tem um valor de R$ ${valorProduto}.`);
+                                            console.log(`A sua compra será parcelada em ${vezesParceladas} vezes e deverá ser pago R$ ${montante}.`);
+                                            console.log(`O acréscimo realizado ao valor de R$ ${valorProduto} será de R$ ${diferenca}.`);
+                                            console.log(`\nMuito obrigado por escolher a Viva Moda.`);
+                                            console.log(`*******************************************************`);
+                                        }); // Fecha quantidade parcelada
+                                    } else {
+                                        console.log("Opção inválida!");
+                                    }
                                 }); // Fecha tempo
                             }
                         }); // Fecha taxa
