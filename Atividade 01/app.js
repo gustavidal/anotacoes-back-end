@@ -4,7 +4,7 @@
 * Autor: Gustavo Vidal de Abreu
 * Data: 04/02/2026 (quarta-feira)
 * Versão: 1.0
-**************************************************************/
+****************************************************************/
 
 // Import da biblioteca de entrada de dados
 const readline = require("readline");
@@ -94,7 +94,7 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
                                                 console.log("\n*********************** Viva Moda *********************");
                                                 console.log(`Muito obrigado por realizar a sua compra conosco, sr(a) ${nomeCliente}.`);
                                                 console.log(`A compra do produto "${produtoComprado}" tem um valor de R$ ${valorProduto}.`);
-                                                console.log(`A sua compra será parcelada em ${vezesParceladas} vezes e deverá ser pago R$ ${montante}.`);
+                                                console.log(`A sua compra será parcelada em ${vezesParceladas} vezes e deverá ser pago R$ ${montante} pelos ${taxa}% de juros.`);
                                                 console.log(`O acréscimo realizado ao valor de R$ ${valorProduto} será de R$ ${diferenca}.`);
                                                 console.log("\nMuito obrigado por escolher a Viva Moda.");
                                                 console.log("*******************************************************");
