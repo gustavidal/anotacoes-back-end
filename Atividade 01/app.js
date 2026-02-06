@@ -32,7 +32,7 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
 
             // Validação de inserção (produto)
             if (produto == "" || !isNaN(produto) || !verificadorSimbolos.test(produto)) {
-                console.log("O campo \"produto\" não pode ser vazio ou conter números!");
+                console.log("O campo \"produto\" não pode ser vazio, conter números ou conter símbolos!");
             } else {
                 let produtoComprado = produto;
 
