@@ -15,12 +15,15 @@ const entradaDeDados = readline.createInterface({
     output: process.stdout
 });
 
+// Variável de validação de símbolos e quantidade mínima de caracteres
+const verificadorSimbolos = /^[\p{L} ]{2,}$/u;
+
 // Entrada de dados (nome do cliente)
 entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do cliente: ", function (nome) {
 
     // Validação de inserção (nome do cliente)
-    if (nome == "" || !isNaN(nome)) {
-        console.log("O campo \"nome\" não pode ser vazio ou conter números!");
+    if (nome == "" || !isNaN(nome) || !verificadorSimbolos.test(nome)) {
+        console.log("O campo \"nome\" não pode ser vazio, conter números ou conter símbolos!");
     } else {
         let nomeCliente = nome;
 
@@ -28,7 +31,7 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
         entradaDeDados.question("Digite o produto comprado: ", function (produto) {
 
             // Validação de inserção (produto)
-            if (produto == "" || !isNaN(produto)) {
+            if (produto == "" || !isNaN(produto) || !verificadorSimbolos.test(produto)) {
                 console.log("O campo \"produto\" não pode ser vazio ou conter números!");
             } else {
                 let produtoComprado = produto;
@@ -84,7 +87,7 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
                                                 console.log("\n*********************** Viva Moda *********************");
                                                 console.log(`Muito obrigado por realizar a sua compra conosco, sr(a) ${nomeCliente}.`);
                                                 console.log(`A compra do produto "${produtoComprado}" tem um valor de R$ ${valorProduto}.`);
-                                                console.log(`A sua compra será parcelada em ${vezesParceladas} vezes e deverá ser pago R$ ${montante} pelos ${taxa}% de juros.`);
+                                                console.log(`A sua compra será parcelada em ${vezesParceladas} vezes e deverá ser pago R$ ${montante}.`);
                                                 console.log(`O acréscimo realizado ao valor de R$ ${valorProduto} será de R$ ${diferenca}.`);
                                                 console.log("\nMuito obrigado por escolher a Viva Moda.");
                                                 console.log("*******************************************************");
@@ -97,6 +100,6 @@ entradaDeDados.question("\nOlá! Somos da empresa Viva Moda. \nDigite o nome do 
                     }
                 }); // Fecha valor do produto
             }
-        }); // Fecha produto
+        }); // Fecha nome do produto
     }
 }); // Fecha nome do cliente
