@@ -34,6 +34,15 @@ entradaDeDados.question('Digite o nome do cliente: ', function(nome){
                 // Entrada da quantidade de parcelas
                 entradaDeDados.question('Digite a quantidade de parcelas: ', function(parcelas){
                     let qtdeParcelas = parcelas
+
+                    // Validações
+
+                    // Cálculos
+                    let percentual = Number(taxaJuros) / 100
+
+                    let montante = Number(valorCompra) * ((1 + percentual) ** Number(qtdeParcelas))
+
+                    console.log('O valor final é: ' + montante.toFixed(2))
                 })
             })
         })
