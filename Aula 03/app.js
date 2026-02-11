@@ -35,11 +35,16 @@ entradaDeDados.question('Digite o nome do cliente: ', function (nome) {
                 entradaDeDados.question('Digite a quantidade de parcelas: ', function (parcelas) {
                     let qtdeParcelas = parcelas
 
+                    // Chama a função para calcular o valor do montante
                     let montante = calcularJurosCompostos(valorCompra, taxaJuros, qtdeParcelas)
 
-                    console.log(montante)
-
-                    // console.log('O valor final é: ' + montante.toFixed(2))
+                    // Valida se o cálculo foi realizado
+                    if (montante) {
+                        console.log('\nO valor final é: R$ ' + montante)
+                    } else {
+                        console.log('\nERRO\nNão foi possível processar o cálculo')
+                        entradaDeDados.close()
+                    }
                 })
             })
         })
