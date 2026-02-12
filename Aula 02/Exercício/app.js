@@ -40,25 +40,30 @@ entradaDeDados.question("Digite o nome do aluno: ", function (nome) {
                     let nota4 = valor4;
 
                     // Cálculo da média
-                    let media = calcularMedia(nota1, nota2, nota3, nota4);
-                    let status = validarStatus(calcularMedia)
-                    
-                    // Exibição do boletim
-                    console.log(`\nNome do(a) aluno(a): ${nomeAluno} \nMédia final do(a) aluno(a): ${media} \nStatus do(a) aluno(a): ${status}`);
+                    let media = calcularMedia(nota1, nota2, nota3, nota4, nomeAluno);
+                    let status = validarStatus(media)
 
+                    // Exibição do boletim
+                    if (media && status) {
+                        console.log(`\nNome do(a) aluno(a): ${nomeAluno} \nMédia final do(a) aluno(a): ${media} \nStatus do(a) aluno(a): ${status}`);
+                    } else {
+                        console.log('Dados informados incorretamente!')
+                    }
                 }); // Fecha nota4
             }); // Fecha nota3
         }); // Fecha nota2
     }); // Fecha nota1
 }); // Fecha nome
 
-function calcularMedia(n1, n2, n3, n4) {
+function calcularMedia(n1, n2, n3, n4, nome) {
+    let nomeAluno = nome
     let nota1 = Number(n1)
     let nota2 = Number(n2)
     let nota3 = Number(n3)
     let nota4 = Number(n4)
 
-    if (n1 == '' || n1 < 0 || n1 > 100 || isNaN(n1) ||
+    if (nomeAluno == '' || !isNaN(nomeAluno) ||
+        n1 == '' || n1 < 0 || n1 > 100 || isNaN(n1) ||
         n2 == '' || n2 < 0 || n2 > 100 || isNaN(n2) ||
         n3 == '' || n3 < 0 || n3 > 100 || isNaN(n3) ||
         n4 == '' || n4 < 0 || n4 > 100 || isNaN(n4)) {
@@ -69,14 +74,14 @@ function calcularMedia(n1, n2, n3, n4) {
     }
 }
 
-function validarStatus(calcularMedia) {
-    let media = calcularMedia
+function validarStatus(media) {
+    let mediaAluno = media
     let status
 
     if (media) {
-        if (media >= 70) {
+        if (mediaAluno >= 70) {
             status = "APROVADO";
-        } else if (media < 50) {
+        } else if (mediaAluno < 50) {
             status = "REPROVADO";
         } else {
             status = "RECUPERAÇÃO";
