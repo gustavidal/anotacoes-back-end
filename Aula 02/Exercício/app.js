@@ -39,7 +39,7 @@ entradaDeDados.question("Digite o nome do(a) aluno(a): ", function (nome) {
                     // Recebe o nome da nota4
                     let nota4 = valor4;
 
-                    // Import da biblioteca de cálculos financeiros
+                    // Import da biblioteca de cálculos
                     let calculos = require('./modulo/calculos.js')
 
                     // Cálculo da média
