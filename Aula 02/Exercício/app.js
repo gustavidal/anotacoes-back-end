@@ -15,7 +15,7 @@ const entradaDeDados = readline.createInterface({
 });
 
 // Entrada de dados do nome
-entradaDeDados.question("Digite o nome do aluno: ", function (nome) {
+entradaDeDados.question("Digite o nome do(a) aluno(a): ", function (nome) {
     // Recebe o nome do aluno
     let nomeAluno = nome;
 
