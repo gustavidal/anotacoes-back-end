@@ -1,9 +1,9 @@
-/**************************************************************
-* Objetivo: Projeto para realizar o cálculo de médias escolares
+/***************************************************************
+* Objetivo: Projeto para realizar o cálculo de operações básicas
 * Autor: Gustavo Vidal de Abreu
-* Data: 29/01/2026 (quinta-feira)
+* Data: 13/02/2026 (sexta-feira)
 * Versão: 1.0
-**************************************************************/
+***************************************************************/
 
 // Import da biblioteca de entrada de dados
 const readline = require("readline");
