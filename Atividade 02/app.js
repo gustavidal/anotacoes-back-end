@@ -19,7 +19,6 @@ let calculos = require('./modulo/calculos.js')
 
 entradaDeDados.question('\nQual operação você quer utilizar?\n[1] Adição\n[2] Subtração\n[3] Multiplicação\n[4] Divisão\n\nDigite somente 1 das opções acima: ', function (numOperacao) {
     let numeroOperacao = numOperacao
-
     let operacao = definirOperacao(numeroOperacao)
 
     if (operacao) {
@@ -32,14 +31,23 @@ entradaDeDados.question('\nQual operação você quer utilizar?\n[1] Adição\n[
             if (numero1 !== null) {
 
                 entradaDeDados.question(`Informe o segundo número, ${nomeNum2}: `, function (valor2) {
-                    let numero2 = validarEntradaValor2(valor2, operacao)
+                    let numero2 = validarEntradaValor2(valor2)
 
                     if (numero2 !== null) {
-                        console.log(numero2)
-                    } else if (operacao == 'DIVISÃO' && numero2 == 0) {
-                        console.log('\nNão é permitido a divisão de qualquer número por 0!\nResultado indefinido!')
+
+                        if (operacao === 'DIVISÃO' && numero2 === 0) {
+                            console.log('\nNão é permitido dividir por 0!\nResultado indefinido!')
+                            entradaDeDados.close()
+                        } else {
+                            let nomeResultado = definirNomeAoResultado(operacao)
+                            let resultado = calcularResultado(operacao, numero1, numero2)
+                            
+                            console.log(`\n${nomeResultado}: ${resultado}`)
+                            entradaDeDados.close()
+                        }
                     } else {
                         console.log('\nERRO!\nInforme somente números!')
+                        entradaDeDados.close()
                     }
                 })
             } else {
@@ -106,6 +114,22 @@ function definirNomeAoNum2(operacao) {
     }
 }
 
+// Função para retornar o nome do resultado da operação
+function definirNomeAoResultado(operacao) {
+    let tipoOperacao = operacao
+    let nomeResultado
+
+    if (tipoOperacao == 'ADIÇÃO') {
+        return nomeResultado = 'Soma'
+    } else if (tipoOperacao == 'SUBTRAÇÃO') {
+        return nomeResultado = 'Diferença'
+    } else if (tipoOperacao == 'MULTIPLICAÇÃO') {
+        return nomeResultado = 'Produto'
+    } else {
+        return nomeResultado = 'Quociente'
+    }
+}
+
 // Função para retornar a validação de entrada de dados do primeiro valor
 function validarEntradaValor1(valor) {
     let valor1 = Number(valor.replace(',', '.'))
@@ -118,14 +142,30 @@ function validarEntradaValor1(valor) {
 }
 
 // Função para retornar a validação de entrada de dados do segundo valor
-function validarEntradaValor2(valor, operacao) {
+function validarEntradaValor2(valor) {
     let valor2 = Number(valor.replace(',', '.'))
 
     if (valor.trim() === '' || isNaN(valor2)) {
         return null
-    } else if (valor === 0 && operacao === 'DIVISÃO') {
-        return null
+    }
+
+    return valor2
+}
+
+// Função para retornar o resultado da operação escolhida
+function calcularResultado(operacao, numero1, numero2) {
+    let tipoOperacao = operacao
+    let valor1 = numero1
+    let valor2 = numero2
+    let resultado
+
+    if (tipoOperacao == 'ADIÇÃO') {
+        return resultado = valor1 + valor2
+    } else if (tipoOperacao == 'SUBTRAÇÃO') {
+        return resultado = valor1 - valor2
+    } else if (tipoOperacao == 'MULTIPLICAÇÃO') {
+        return resultado = valor1 * valor2
     } else {
-        return valor2
+        return resultado = valor1 / valor2
     }
 }
