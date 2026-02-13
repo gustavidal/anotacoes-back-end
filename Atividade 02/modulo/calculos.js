@@ -10,8 +10,8 @@ function definirOperacao(opcao) {
     let opcaoOperacao = opcao
     let operacao
 
-    if (opcao == 1 || opcao == 2 ||
-        opcao == 3 || opcao == 4) {
+    if (opcao === '1' || opcao === '2' ||
+        opcao === '3' || opcao === '4') {
         if (opcaoOperacao == 1) {
             return operacao = 'ADIÇÃO'
         } else if (opcaoOperacao == 2) {
@@ -78,7 +78,7 @@ function definirNomeAoResultado(operacao) {
 function validarEntradaValor1(valor) {
     let valor1 = Number(valor.replace(',', '.'))
 
-    if (valor.trim() === '' || isNaN(valor1)) {
+    if (valor == '' || isNaN(valor1)) {
         return null
     } else {
         return valor1
@@ -89,7 +89,7 @@ function validarEntradaValor1(valor) {
 function validarEntradaValor2(valor) {
     let valor2 = Number(valor.replace(',', '.'))
 
-    if (valor.trim() === '' || isNaN(valor2)) {
+    if (valor == '' || isNaN(valor2)) {
         return null
     }
 
@@ -104,14 +104,16 @@ function calcularResultado(operacao, numero1, numero2) {
     let resultado
 
     if (tipoOperacao == 'ADIÇÃO') {
-        return resultado = valor1 + valor2
+        resultado = valor1 + valor2
     } else if (tipoOperacao == 'SUBTRAÇÃO') {
-        return resultado = valor1 - valor2
+        resultado = valor1 - valor2
     } else if (tipoOperacao == 'MULTIPLICAÇÃO') {
-        return resultado = valor1 * valor2
+        resultado = valor1 * valor2
     } else {
-        return resultado = valor1 / valor2
+        resultado = valor1 / valor2
     }
+
+    return Number(resultado.toFixed(2))
 }
 
 module.exports = {
