@@ -51,6 +51,7 @@ entradaDeDados.question("Digite o nome do aluno: ", function (nome) {
                         console.log(`\nNome do(a) aluno(a): ${nomeAluno} \nMédia final do(a) aluno(a): ${media} \nStatus do(a) aluno(a): ${status}`);
                     } else {
                         console.log('Dados informados incorretamente!')
+                        entradaDeDados.close()
                     }
                 }); // Fecha nota4
             }); // Fecha nota3
