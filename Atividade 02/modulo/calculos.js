@@ -71,25 +71,14 @@ function definirNomeAoResultado(operacao) {
     }
 }
 
-// Função para retornar a validação de entrada de dados do primeiro valor
-function validarEntradaValor1(valor) {
-    let valor1 = Number(valor.replace(',', '.'))
+// Função para retornar a validação de entrada de dados
+function validarEntrada(valor) {
+    let numero = Number(valor.replace(',', '.'))
 
-    if (valor.trim() === '' || isNaN(valor1)) {
-        return null
+    if (valor.trim() === '' || isNaN(numero)) {
+        return false
     } else {
-        return valor1
-    }
-}
-
-// Função para retornar a validação de entrada de dados do segundo valor
-function validarEntradaValor2(valor) {
-    let valor2 = Number(valor.replace(',', '.'))
-
-    if (valor.trim() === '' || isNaN(valor2)) {
-        return null
-    } else {
-        return valor2
+        return numero
     }
 }
 
@@ -118,7 +107,6 @@ module.exports = {
     definirNomeAoNum1,
     definirNomeAoNum2,
     definirNomeAoResultado,
-    validarEntradaValor1,
-    validarEntradaValor2,
+    validarEntrada,
     calcularResultado
 }

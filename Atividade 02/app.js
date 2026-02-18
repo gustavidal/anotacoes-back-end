@@ -26,14 +26,14 @@ entradaDeDados.question('\nQual operação você quer utilizar?\n[1] Adição\n[
         let nomeNum2 = calculos.definirNomeAoNum2(operacao)
 
         entradaDeDados.question(`\nInforme o primeiro número, ${nomeNum1}: `, function (valor1) {
-            let numero1 = calculos.validarEntradaValor1(valor1)
+            let numero1 = calculos.validarEntrada(valor1)
 
-            if (numero1 !== null) {
+            if (numero1 !== false) {
 
                 entradaDeDados.question(`Informe o segundo número, ${nomeNum2}: `, function (valor2) {
-                    let numero2 = calculos.validarEntradaValor2(valor2)
+                    let numero2 = calculos.validarEntrada(valor2)
 
-                    if (numero2 !== null) {
+                    if (numero2 !== false) {
 
                         if (operacao === 'DIVISÃO' && numero2 === 0) {
                             console.log('\nNão é permitido dividir por 0!\nResultado indefinido!')
