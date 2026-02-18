@@ -61,13 +61,13 @@ function definirNomeAoResultado(operacao) {
     let nomeResultado
 
     if (tipoOperacao === 'ADIÇÃO') {
-        return nomeResultado = 'Soma'
+        return nomeResultado = 'da soma'
     } else if (tipoOperacao === 'SUBTRAÇÃO') {
-        return nomeResultado = 'Diferença'
+        return nomeResultado = 'da diferença'
     } else if (tipoOperacao === 'MULTIPLICAÇÃO') {
-        return nomeResultado = 'Produto'
+        return nomeResultado = 'do produto'
     } else {
-        return nomeResultado = 'Quociente'
+        return nomeResultado = 'do quociente'
     }
 }
 

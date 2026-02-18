@@ -42,7 +42,7 @@ entradaDeDados.question('\nQual operação você quer utilizar?\n[1] Adição\n[
                             let nomeResultado = calculos.definirNomeAoResultado(operacao)
                             let resultado = calculos.calcularResultado(operacao, numero1, numero2)
 
-                            console.log(`\n${nomeResultado}: ${resultado}`)
+                            console.log(`\nO resultado ${nomeResultado} é: ${resultado}`)
                             entradaDeDados.close()
                         }
                     } else {
