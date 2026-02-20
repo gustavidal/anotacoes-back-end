@@ -11,16 +11,18 @@ function definirOperacao(opcao) {
     let operacao
 
     if (opcaoOperacao === '1') {
-        return operacao = 'ADIÇÃO'
+        operacao = 'ADIÇÃO'
     } else if (opcaoOperacao === '2') {
-        return operacao = 'SUBTRAÇÃO'
+        operacao = 'SUBTRAÇÃO'
     } else if (opcaoOperacao === '3') {
-        return operacao = 'MULTIPLICAÇÃO'
+        operacao = 'MULTIPLICAÇÃO'
     } else if (opcaoOperacao === '4') {
-        return operacao = 'DIVISÃO'
+        operacao = 'DIVISÃO'
     } else {
         return false
     }
+
+    return operacao
 }
 
 // Função para retornar o nome do primeiro valor
@@ -29,14 +31,16 @@ function definirNomeAoNum1(operacao) {
     let nomeNum1
 
     if (tipoOperacao === 'ADIÇÃO') {
-        return nomeNum1 = 'a 1ª parcela'
+        nomeNum1 = 'a 1ª parcela'
     } else if (tipoOperacao === 'SUBTRAÇÃO') {
-        return nomeNum1 = 'o minuendo'
+        nomeNum1 = 'o minuendo'
     } else if (tipoOperacao === 'MULTIPLICAÇÃO') {
-        return nomeNum1 = 'o 1º fator'
+        nomeNum1 = 'o 1º fator'
     } else {
-        return nomeNum1 = 'o dividendo'
+        nomeNum1 = 'o dividendo'
     }
+
+    return nomeNum1
 }
 
 // Função para retornar o nome do segundo valor
@@ -45,14 +49,16 @@ function definirNomeAoNum2(operacao) {
     let nomeNum2
 
     if (tipoOperacao === 'ADIÇÃO') {
-        return nomeNum2 = 'a 2ª parcela'
+        nomeNum2 = 'a 2ª parcela'
     } else if (tipoOperacao === 'SUBTRAÇÃO') {
-        return nomeNum2 = 'o subtraendo'
+        nomeNum2 = 'o subtraendo'
     } else if (tipoOperacao === 'MULTIPLICAÇÃO') {
-        return nomeNum2 = 'o 2º fator'
+        nomeNum2 = 'o 2º fator'
     } else {
-        return nomeNum2 = 'o divisor'
+        nomeNum2 = 'o divisor'
     }
+
+    return nomeNum2
 }
 
 // Função para retornar o nome do resultado da operação
@@ -61,14 +67,16 @@ function definirNomeAoResultado(operacao) {
     let nomeResultado
 
     if (tipoOperacao === 'ADIÇÃO') {
-        return nomeResultado = 'da soma'
+        nomeResultado = 'da soma'
     } else if (tipoOperacao === 'SUBTRAÇÃO') {
-        return nomeResultado = 'da diferença'
+        nomeResultado = 'da diferença'
     } else if (tipoOperacao === 'MULTIPLICAÇÃO') {
-        return nomeResultado = 'do produto'
+        nomeResultado = 'do produto'
     } else {
-        return nomeResultado = 'do quociente'
+        nomeResultado = 'do quociente'
     }
+
+    return nomeResultado
 }
 
 // Função para retornar a validação de entrada de dados
