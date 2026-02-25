@@ -5,7 +5,7 @@
  * Versão: 1.0
 ********************************************************************/
 
-// Função que retorna um boolean
+// Função que retorna um boolean para com a validação simples de entrada de dados do tipo string
 const validarEntradaDeString = function (dado) {
     let dadoInf = String(dado)
 
@@ -15,6 +15,7 @@ const validarEntradaDeString = function (dado) {
         return true
 }
 
+// Função que retorna um boolean para com a validação simples de entrada de dados do tipo number
 const validarEntradaDeNumber = function (valor) {
     let valorInf = Number(valor)
 
