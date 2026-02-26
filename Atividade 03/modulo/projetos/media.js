@@ -27,7 +27,7 @@ const definirGeneroAoAluno = function (genero) {
     let generoFormatado = genero.trim().toUpperCase()
     let sexo
 
-    if (generoFormatado === 'MASCULINO') {
+    if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM') {
         sexo = 'aluno'
     } else if (generoFormatado === 'FEMININO') {
         sexo = 'aluna'

@@ -86,11 +86,10 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                         entradaDeDados.question('Digite o gênero do professor (MASCULINO ou FEMININO): ', function (generoProfessor) {
                             let generoProfInf = generoProfessor.trim()
                             let generoProfessorVal = validacao.validarEntradaDeString(generoProfInf)
+                            let sexoProfessor = media.definirGeneroAoProfessor(generoProfessor)
 
                             // Entrada do nome do aluno
-                            if (generoProfessorVal) {
-                                let sexoProfessor = media.definirGeneroAoProfessor(generoProfessor)
-
+                            if (generoProfessorVal && sexoProfessor) {
                                 entradaDeDados.question('\nDigite o nome do aluno: ', function (nomeAluno) {
                                     let nomeAlunoInf = nomeAluno.trim()
                                     let nomeAlunoVal = validacao.validarEntradaDeString(nomeAlunoInf)
@@ -100,11 +99,10 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                         entradaDeDados.question('Digite o gênero do aluno (MASCULINO ou FEMININO): ', function (generoAluno) {
                                             let generoAlunoInf = generoAluno.trim()
                                             let generoAlunoVal = validacao.validarEntradaDeString(generoAlunoInf)
+                                            let sexoAluno = media.definirGeneroAoAluno(generoAluno)
 
                                             // Entrada das notas
-                                            if (generoAlunoVal) {
-                                                let sexoAluno = media.definirGeneroAoAluno(generoAluno)
-
+                                            if (generoAlunoVal && sexoAluno) {
                                                 entradaDeDados.question('\nDigite o nome do curso: ', function (nomeCurso) {
                                                     let nomeCursoInf = nomeCurso.trim()
                                                     let nomeCursoVal = validacao.validarEntradaDeString(nomeCursoInf)
