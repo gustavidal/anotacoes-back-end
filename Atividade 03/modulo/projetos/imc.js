@@ -8,6 +8,15 @@
 // Import da biblioteca de cálculos
 let calculos = require('../calculo.js')
 
+const validarMedicaoDeAltura = function (medicao) {
+    let medicaoAlt = medicao.trim().toUpperCase()
+    if (medicaoAlt === 'CM' || medicaoAlt === 'M') {
+        return true
+    } else {
+        return false
+    }
+}
+
 const calcularIMC = function (peso, altura, medicao) {
     let pesoInf = Number(peso.replace(',', '.'))
     let alturaInf = Number(altura.replace(',', '.'))
@@ -46,6 +55,7 @@ const classificarIMC = function (imc) {
 }
 
 module.exports = {
+    validarMedicaoDeAltura,
     calcularIMC,
     classificarIMC
 }
