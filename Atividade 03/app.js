@@ -45,11 +45,10 @@ entradaDeDados.question('\nDigite o peso em kg: ', function (peso) {
                     // Validação da altura e cálculo do IMC
                     if (alturaVal) {
                         let resultadoIMC = imc.calcularIMC(pesoInf, alturaInf, medicaoInf)
-                        console.log(`\nO resultado do IMC é: ${resultadoIMC}`)
-
                         let classificacaoIMC = imc.classificarIMC(resultadoIMC)
+                        
+                        console.log(`\nO resultado do IMC é: ${resultadoIMC}`)
                         console.log(`Classificação do IMC: ${classificacaoIMC}`)
-
                         entradaDeDados.close()
                     } else {
                         console.log('Altura inválida!')
