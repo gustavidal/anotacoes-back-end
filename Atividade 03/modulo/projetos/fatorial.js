@@ -15,6 +15,19 @@ const calcularFatorial = function (numero) {
     return fatorial
 }
 
+const montarExpressaoFatorial = function (numero) {
+    let expressao = ''
+
+    for (let i = numero; i >= 1; i--) {
+        expressao += i
+        if (i > 1)
+            expressao += '×'
+    }
+
+    return expressao
+}
+
 module.exports = {
-    calcularFatorial
+    calcularFatorial,
+    montarExpressaoFatorial
 }

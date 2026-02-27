@@ -59,21 +59,20 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
 
                                         console.log(`\nO resultado do IMC é: ${resultadoIMC}`)
                                         console.log(`Classificação do IMC: ${classificacaoIMC}`)
-                                        entradaDeDados.close()
                                     } else {
                                         console.log('Altura inválida!')
-                                        entradaDeDados.close()
                                     }
+                                    entradaDeDados.close()
                                 })
                             } else {
                                 console.log('Medição inválida!')
-                                entradaDeDados.close()
                             }
+                            entradaDeDados.close()
                         })
                     } else {
                         console.log('Peso inválido!')
-                        entradaDeDados.close()
                     }
+                    entradaDeDados.close()
                 })
                 break;
             case 'MÉDIA' || 'MEDIA':
@@ -151,7 +150,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                                                                     console.log(`Notas: ${nota1Inf}, ${nota2Inf}, ${nota3Inf} e ${nota4Inf}.`)
                                                                                                     console.log(`Média final: ${mediaFinal}`)
                                                                                                     entradaDeDados.close()
-                                                                                                } else if (situacao === 'recuperação') {
+                                                                                                } else {
                                                                                                     entradaDeDados.question('Digite a nota da recuperação: ', function (notaRecuperacao) {
                                                                                                         let notaRecuperacaoInf = notaRecuperacao.replace(',', '.')
                                                                                                         let notaRecuperacaoVal1 = validacao.validarEntradaDeNumber(notaRecuperacaoInf)
@@ -169,62 +168,60 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                                                                             console.log(`Média final do exame: ${mediaRecuperacao}`)
                                                                                                         } else {
                                                                                                             console.log('Nota de recuperação inválida!')
-                                                                                                            entradaDeDados.close()
                                                                                                         }
+                                                                                                        entradaDeDados.close()
                                                                                                     })
-                                                                                                } else {
-                                                                                                    console.log('Situação final inválida!')
-                                                                                                    entradaDeDados.close()
                                                                                                 }
+                                                                                                entradaDeDados.close()
                                                                                             } else {
                                                                                                 console.log('Nota 4 inválida!')
-                                                                                                entradaDeDados.close()
                                                                                             }
+                                                                                            entradaDeDados.close()
                                                                                         })
                                                                                     } else {
                                                                                         console.log('Nota 3 inválida!')
-                                                                                        entradaDeDados.close()
                                                                                     }
+                                                                                    entradaDeDados.close()
                                                                                 })
                                                                             } else {
                                                                                 console.log('Nota 2 inválida!')
-                                                                                entradaDeDados.close()
                                                                             }
+                                                                            entradaDeDados.close()
                                                                         })
                                                                     } else {
                                                                         console.log('Nota 1 inválida!')
-                                                                        entradaDeDados.close()
                                                                     }
+                                                                    entradaDeDados.close()
                                                                 })
                                                             } else {
                                                                 console.log('Disciplina inválida!')
-                                                                entradaDeDados.close()
                                                             }
+                                                            entradaDeDados.close()
                                                         })
                                                     } else {
                                                         console.log('Nome do curso inválido!')
-                                                        entradaDeDados.close()
                                                     }
+                                                    entradaDeDados.close()
                                                 })
                                             } else {
                                                 console.log('Gênero do aluno inválido!')
-                                                entradaDeDados.close()
                                             }
+                                            entradaDeDados.close()
                                         })
                                     } else {
                                         console.log('Nome do aluno inválido!')
-                                        entradaDeDados.close()
                                     }
+                                    entradaDeDados.close()
                                 })
                             } else {
                                 console.log('Gênero do professor inválido!')
-                                entradaDeDados.close()
                             }
+                            entradaDeDados.close()
                         })
                     } else {
                         console.log('Nome do professor inválido!')
-                        entradaDeDados.close()
                     }
+                    entradaDeDados.close()
                 })
                 break;
             case 'TABUADA':
@@ -258,44 +255,50 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
 
                                                 console.log(`\nTabuada de ${numeroInf} a ${numero2Inf} sequenciada de ${contadorInf} a ${contadorFinalInf}:`)
                                                 console.log(resultadoTabuada)
-                                                entradaDeDados.close()
                                             } else {
                                                 console.log('\nNúmero inválido ou menor que o primeiro contador!')
-                                                entradaDeDados.close()
                                             }
+
+                                            entradaDeDados.close()
                                         })
                                     } else {
                                         console.log('\nNúmero inválido ou menor que zero!')
-                                        entradaDeDados.close()
                                     }
+                                    entradaDeDados.close()
                                 })
                             } else {
                                 console.log('\nNúmero inválido ou menor que o primeiro!')
-                                entradaDeDados.close()
                             }
+                            entradaDeDados.close()
                         })
                     } else {
                         console.log('\nNúmero inválido!')
-                        entradaDeDados.close()
                     }
+                    entradaDeDados.close()
                 })
                 break;
             case 'FATORIAL':
                 // Entrada do número para o cálculo do fatorial
-                entradaDeDados.question('\nDigite um número inteiro maior ou igual a zero para calcular o fatorial: ', function (numeroFatorial) {
-                    let numeroFatorialInf = numeroFatorial.trim().replace('!', '')
+                entradaDeDados.question('\nDigite um número inteiro maior que 1 para calcular o fatorial: ', function (numeroFatorial) {
+                    let numeroFatorialInf = numeroFatorial.trim().replace(/!/g, '')
                     let numeroFatorialVal = validacao.validarEntradaDeNumber(numeroFatorialInf)
                     let numeroFatorialInteiro = validacao.validarNumeroInteiro(numeroFatorialInf)
-                    let numeroFatorialMaiorOuIgualAZero = validacao.serMaior(numeroFatorialInf, -1)
+                    let numeroFatorialMaiorQueUm = validacao.serMaior(numeroFatorialInf, 1)
 
-                    if (numeroFatorialVal && numeroFatorialInteiro && numeroFatorialMaiorOuIgualAZero) {
+                    if (numeroFatorialVal && numeroFatorialInteiro && numeroFatorialMaiorQueUm) {
                         let resultadoFatorial = fatorial.calcularFatorial(numeroFatorialInf)
-                        console.log(`\nO fatorial de ${numeroFatorialInf} é: ${resultadoFatorial}`)
-                        entradaDeDados.close()
+                        let expressao = montarExpressaoFatorial(numeroFatorialInf)
+
+                        console.log(`\nFatorial de ${numeroFatorialInf} é ${expressao} = ${resultadoFatorial}`)
+                    } else if (!numeroFatorialInteiro) {
+                        console.log('\nO número precisa ser inteiro!')
+                    } else if (!numeroFatorialMaiorQueUm) {
+                        console.log('\nNão existe fatorial para 0 e 1. Digite um número maior que 1.')
                     } else {
-                        console.log('\nNúmero inválido!')
-                        entradaDeDados.close()
+                        console.log('\nDigite apenas números válidos!')
                     }
+
+                    entradaDeDados.close()
                 })
                 break;
             default:
@@ -304,6 +307,6 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
         }
     } else {
         console.log('Tipo de calculadora inexistente!')
-        entradaDeDados.close()
     }
+    entradaDeDados.close()
 })

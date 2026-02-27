@@ -27,7 +27,7 @@ const calcularTabuada = function (tabuadaInicial, tabuadaFinal, contador, contad
         resultado += `\nTabuada do [${i}]\n`
 
         for (let j = contIni; j <= contFim; j++) {
-            resultado += `${i} x ${j} = ${i * j}\n`
+            resultado += `${i} × ${j} = ${i * j}\n`
         }
     }
 
