@@ -42,6 +42,15 @@ const validarTipoDeCalculadora = function (tipoCalculadora) {
         return false
 }
 
+const validarNumeroInteiro = function (numero) {
+    let numeroInf = Number(numero)
+
+    if (!Number.isInteger(numeroInf))
+        return false
+    else
+        return true
+}
+
 // Funções para comparar dois números e retornar um booleano para cada comparação (maior, menor e igual)
 const serMaior = (numero1, numero2) => Number(numero1) > Number(numero2)
 const serMenor = (numero1, numero2) => Number(numero1) < Number(numero2)
@@ -53,5 +62,6 @@ module.exports = {
     validarTipoDeCalculadora,
     serMaior,
     serMenor,
-    serIgual
+    serIgual,
+    validarNumeroInteiro
 }

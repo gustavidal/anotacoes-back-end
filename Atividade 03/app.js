@@ -172,6 +172,9 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                                                                             entradaDeDados.close()
                                                                                                         }
                                                                                                     })
+                                                                                                } else {
+                                                                                                    console.log('Situação final inválida!')
+                                                                                                    entradaDeDados.close()
                                                                                                 }
                                                                                             } else {
                                                                                                 console.log('Nota 4 inválida!')
@@ -261,6 +264,9 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                 entradaDeDados.close()
                                             }
                                         })
+                                    } else {
+                                        console.log('\nNúmero inválido ou menor que zero!')
+                                        entradaDeDados.close()
                                     }
                                 })
                             } else {
@@ -268,6 +274,24 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                 entradaDeDados.close()
                             }
                         })
+                    } else {
+                        console.log('\nNúmero inválido!')
+                        entradaDeDados.close()
+                    }
+                })
+                break;
+            case 'FATORIAL':
+                // Entrada do número para o cálculo do fatorial
+                entradaDeDados.question('\nDigite um número inteiro maior ou igual a zero para calcular o fatorial: ', function (numeroFatorial) {
+                    let numeroFatorialInf = numeroFatorial.trim().replace('!', '')
+                    let numeroFatorialVal = validacao.validarEntradaDeNumber(numeroFatorialInf)
+                    let numeroFatorialInteiro = validacao.validarNumeroInteiro(numeroFatorialInf)
+                    let numeroFatorialMaiorOuIgualAZero = validacao.serMaior(numeroFatorialInf, -1)
+
+                    if (numeroFatorialVal && numeroFatorialInteiro && numeroFatorialMaiorOuIgualAZero) {
+                        let resultadoFatorial = fatorial.calcularFatorial(numeroFatorialInf)
+                        console.log(`\nO fatorial de ${numeroFatorialInf} é: ${resultadoFatorial}`)
+                        entradaDeDados.close()
                     } else {
                         console.log('\nNúmero inválido!')
                         entradaDeDados.close()
