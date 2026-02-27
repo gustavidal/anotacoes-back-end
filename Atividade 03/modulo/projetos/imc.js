@@ -10,7 +10,8 @@ let calculos = require('../calculo.js')
 
 const validarMedicaoDeAltura = function (medicao) {
     let medicaoAlt = medicao.trim().toUpperCase()
-    if (medicaoAlt === 'CM' || medicaoAlt === 'M') {
+    if (medicaoAlt === 'CM' || medicaoAlt === "CENTÍMETROS" || medicaoAlt === 'CENTIMETROS' ||
+        medicaoAlt === 'M' || medicaoAlt === 'METROS') {
         return true
     } else {
         return false

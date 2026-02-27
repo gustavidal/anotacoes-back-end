@@ -25,6 +25,7 @@ const validarEntradaDeNumber = function (valor) {
         return true
 }
 
+// Função que retorna um boolean para com a validação do tipo de calculadora escolhida
 const validarTipoDeCalculadora = function (tipoCalculadora) {
     let tipoCalculadoraInf = String(tipoCalculadora)
 
@@ -41,8 +42,16 @@ const validarTipoDeCalculadora = function (tipoCalculadora) {
         return false
 }
 
+// Funções para comparar dois números e retornar um booleano para cada comparação (maior, menor e igual)
+const serMaior = (numero1, numero2) => Number(numero1) > Number(numero2)
+const serMenor = (numero1, numero2) => Number(numero1) < Number(numero2)
+const serIgual = (numero1, numero2) => Number(numero1) === Number(numero2)
+
 module.exports = {
     validarEntradaDeString,
     validarEntradaDeNumber,
-    validarTipoDeCalculadora
+    validarTipoDeCalculadora,
+    serMaior,
+    serMenor,
+    serIgual
 }

@@ -107,13 +107,13 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                 entradaDeDados.question('\nDigite o nome do curso: ', function (nomeCurso) {
                                                     let nomeCursoInf = nomeCurso.trim()
                                                     let nomeCursoVal = validacao.validarEntradaDeString(nomeCursoInf)
-                                                    
+
                                                     // Entrada da disciplina
                                                     if (nomeCursoVal) {
                                                         entradaDeDados.question('Digite a disciplina: ', function (disciplina) {
                                                             let disciplinaInf = disciplina.trim()
                                                             let disciplinaVal = validacao.validarEntradaDeString(disciplinaInf)
-                                                            
+
                                                             // Entrada e validação das notas
                                                             if (disciplinaVal) {
                                                                 console.log('\nAs notas devem ser entre 0 e 100. Use ponto ou vírgula para separar as casas decimais.')
@@ -220,6 +220,56 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                         })
                     } else {
                         console.log('Nome do professor inválido!')
+                        entradaDeDados.close()
+                    }
+                })
+                break;
+            case 'TABUADA':
+                // Entrada do número para a primeira tabuada
+                entradaDeDados.question('\nDigite um número maior que 1 para ser a primeira tabuada: ', function (numero) {
+                    let numeroInf = numero.trim()
+                    let numeroVal = validacao.validarEntradaDeNumber(numeroInf)
+                    let numeroMaiorQueUm = tabuada.validarNumeroParaTabuada(numeroInf)
+
+                    if (numeroVal && numeroMaiorQueUm) {
+                        entradaDeDados.question(`Digite um número maior que ${numeroInf} para ser sequenciado até a tabuada final: `, function (numero2) {
+                            let numero2Inf = numero2.trim()
+                            let numero2Val = validacao.validarEntradaDeNumber(numero2Inf)
+                            let numero2MaiorQuePrimeiroNumero = tabuada.validarNumeroParaTabuada(numero2Inf)
+                            let numero2MaiorQueNumero1 = validacao.serMaior(numero2Inf, numeroInf)
+
+                            if (numero2Val && numero2MaiorQuePrimeiroNumero && numero2MaiorQueNumero1) {
+                                entradaDeDados.question('Digite um número para ser o 1º contador da tabuada: ', function (multiplicador) {
+                                    let contadorInf = multiplicador.trim()
+                                    let contadorVal = validacao.validarEntradaDeNumber(contadorInf)
+                                    let contadorMaiorOuIgualAZero = validacao.serMaior(contadorInf, -1)
+
+                                    if (contadorVal && contadorMaiorOuIgualAZero) {
+                                        entradaDeDados.question('Digite um número para ser o contador final da tabuada: ', function (contadorFinal) {
+                                            let contadorFinalInf = contadorFinal.trim()
+                                            let contadorFinalVal = validacao.validarEntradaDeNumber(contadorFinalInf)
+                                            let contadorFinalMaiorQueMultiplicador = validacao.serMaior(contadorFinalInf, contadorInf)
+
+                                            if (contadorFinalVal && contadorFinalMaiorQueMultiplicador) {
+                                                let resultadoTabuada = tabuada.calcularTabuada(numeroInf, numero2Inf, contadorInf, contadorFinalInf)
+
+                                                console.log(`\nTabuada de ${numeroInf} a ${numero2Inf} sequenciada de ${contadorInf} a ${contadorFinalInf}:`)
+                                                console.log(resultadoTabuada)
+                                                entradaDeDados.close()
+                                            } else {
+                                                console.log('\nNúmero inválido ou menor que o primeiro contador!')
+                                                entradaDeDados.close()
+                                            }
+                                        })
+                                    }
+                                })
+                            } else {
+                                console.log('\nNúmero inválido ou menor que o primeiro!')
+                                entradaDeDados.close()
+                            }
+                        })
+                    } else {
+                        console.log('\nNúmero inválido!')
                         entradaDeDados.close()
                     }
                 })
