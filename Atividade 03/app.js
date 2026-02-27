@@ -287,9 +287,8 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
 
                     if (numeroFatorialVal && numeroFatorialInteiro && numeroFatorialMaiorQueUm) {
                         let resultadoFatorial = fatorial.calcularFatorial(numeroFatorialInf)
-                        let expressao = montarExpressaoFatorial(numeroFatorialInf)
-
-                        console.log(`\nFatorial de ${numeroFatorialInf} é ${expressao} = ${resultadoFatorial}`)
+                        let expressao = fatorial.montarExpressaoFatorial(numeroFatorialInf)
+                        console.log(`Fatorial de ${numeroFatorialInf} é ${expressao} = ${resultadoFatorial}`)
                     } else if (!numeroFatorialInteiro) {
                         console.log('\nO número precisa ser inteiro!')
                     } else if (!numeroFatorialMaiorQueUm) {
@@ -297,7 +296,6 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                     } else {
                         console.log('\nDigite apenas números válidos!')
                     }
-
                     entradaDeDados.close()
                 })
                 break;
@@ -307,6 +305,6 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
         }
     } else {
         console.log('Tipo de calculadora inexistente!')
+        entradaDeDados.close()
     }
-    entradaDeDados.close()
 })
