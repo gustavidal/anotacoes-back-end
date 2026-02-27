@@ -25,7 +25,24 @@ const validarEntradaDeNumber = function (valor) {
         return true
 }
 
+const validarTipoDeCalculadora = function (tipoCalculadora) {
+    let tipoCalculadoraInf = String(tipoCalculadora)
+
+    if (tipoCalculadoraInf === 'IMC' || 
+        tipoCalculadoraInf === 'MÉDIA' || tipoCalculadoraInf === 'MEDIA' ||
+        tipoCalculadoraInf === 'TABUADA' || 
+        tipoCalculadoraInf === 'FATORIAL' || 
+        tipoCalculadoraInf === 'PAR/ÍMPAR' || tipoCalculadoraInf === 'PAR/IMPAR' || 
+        tipoCalculadoraInf === 'PAR OU ÍMPAR' || tipoCalculadoraInf === 'PAR OU IMPAR' ||
+        tipoCalculadoraInf === 'PAR E ÍMPAR' || tipoCalculadoraInf === 'PAR E IMPAR' ||
+        tipoCalculadoraInf === 'PAR' || tipoCalculadoraInf === 'ÍMPAR' || tipoCalculadoraInf === 'IMPAR')
+        return true
+    else
+        return false
+}
+
 module.exports = {
     validarEntradaDeString,
-    validarEntradaDeNumber
+    validarEntradaDeNumber,
+    validarTipoDeCalculadora
 }

@@ -29,8 +29,9 @@ let par_impar = require('./modulo/projetos/par_impar.js')
 entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média, Tabuada, Fatorial ou Par/Ímpar): ', function (tipoCalculadora) {
     let tipoCalculadoraInf = tipoCalculadora.trim().toUpperCase()
     let tipoCalculadoraVal = validacao.validarEntradaDeString(tipoCalculadoraInf)
+    let tipoCalculadoraExistente = validacao.validarTipoDeCalculadora(tipoCalculadoraInf)
 
-    if (tipoCalculadoraVal) {
+    if (tipoCalculadoraVal && tipoCalculadoraExistente) {
         switch (tipoCalculadoraInf) {
             case 'IMC':
                 // Entrada do peso
@@ -38,7 +39,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                     let pesoInf = peso.replace(',', '.')
                     let pesoVal = validacao.validarEntradaDeNumber(pesoInf)
 
-                    // Validação do peso e entrada da medicao
+                    // Validação do peso e entrada da medição
                     if (pesoVal) {
                         entradaDeDados.question('Qual formato você deseja para a altura? (m ou cm): ', function (medicao) {
                             let medicaoInf = medicao.trim()
@@ -75,7 +76,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                     }
                 })
                 break;
-            case 'MÉDIA':
+            case 'MÉDIA' || 'MEDIA':
                 // Entrada do nome do professor
                 entradaDeDados.question('\nDigite o nome do professor: ', function (nomeProfessor) {
                     let nomeProfInf = nomeProfessor.trim()
@@ -101,17 +102,19 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                             let generoAlunoVal = validacao.validarEntradaDeString(generoAlunoInf)
                                             let sexoAluno = media.definirGeneroAoAluno(generoAluno)
 
-                                            // Entrada das notas
+                                            // Entrada do nome do curso
                                             if (generoAlunoVal && sexoAluno) {
                                                 entradaDeDados.question('\nDigite o nome do curso: ', function (nomeCurso) {
                                                     let nomeCursoInf = nomeCurso.trim()
                                                     let nomeCursoVal = validacao.validarEntradaDeString(nomeCursoInf)
-
+                                                    
+                                                    // Entrada da disciplina
                                                     if (nomeCursoVal) {
                                                         entradaDeDados.question('Digite a disciplina: ', function (disciplina) {
                                                             let disciplinaInf = disciplina.trim()
                                                             let disciplinaVal = validacao.validarEntradaDeString(disciplinaInf)
-
+                                                            
+                                                            // Entrada e validação das notas
                                                             if (disciplinaVal) {
                                                                 console.log('\nAs notas devem ser entre 0 e 100. Use ponto ou vírgula para separar as casas decimais.')
                                                                 entradaDeDados.question('Digite a primeira nota: ', function (nota1) {
