@@ -5,13 +5,36 @@
  * Versão: 1.0
 ******************************************************************/
 
+// FUNÇÕES PADRÕES
 // Funções para cálculos matemáticos básicos (adição, subtração, multiplicação, divisão e potenciação)
 const somar         = (numero1, numero2) => Number(numero1) + Number(numero2)
-const subtrair      = (numero1, numero2) => Number(numero1) - Number(numero2)
 const multiplicar   = (numero1, numero2) => Number(numero1) * Number(numero2)
 const dividir       = (numero1, numero2) => Number(numero1) / Number(numero2)
 const elevar        = (base, expoente)   => Number(base) ** Number(expoente)
 
+
+
+// FUNÇÕES PARA O IMC
+// Função que calcula o IMC
+const calcularIMC = function (peso, altura, medicao) {
+    let pesoInf    = Number(peso.replace(',', '.'))
+    let alturaInf  = Number(altura.replace(',', '.'))
+    let medicaoAlt = medicao.toUpperCase()
+    let imc
+
+    if (medicaoAlt === 'CM')
+        alturaInf = dividir(alturaInf, 100)
+    else if (medicaoAlt !== 'M')
+        return false
+
+    imc = (dividir(pesoInf, elevar(alturaInf, 2))).toFixed(2)
+    return imc
+}
+
+
+
+// FUNÇÕES PARA A MÉDIA
+// Função que calcula a média final
 const calcularMedia = function (nota1, nota2, nota3, nota4) {
     let nota1Num = Number(nota1)
     let nota2Num = Number(nota2)
@@ -27,8 +50,9 @@ const calcularMedia = function (nota1, nota2, nota3, nota4) {
         return false
 }
 
+// Função que calcula a média recuperativa, pedindo uma nota para um novo cálculo
 const calcularMediaRecuperativa = function (media, notaRecuperacao) {
-    let mediaNum = Number(media)
+    let mediaNum           = Number(media)
     let notaRecuperacaoNum = Number(notaRecuperacao)
     let mediaFinal
 
@@ -40,12 +64,52 @@ const calcularMediaRecuperativa = function (media, notaRecuperacao) {
         return false
 }
 
+
+
+// FUNÇÕES PARA A TABUADA
+// Função que calcula a tabuada
+const calcularTabuada = function (tabuadaInicial, tabuadaFinal, contador, contadorFinal) {
+    let tabIni  = Number(tabuadaInicial)
+    let tabFim  = Number(tabuadaFinal)
+    let contIni = Number(contador)
+    let contFim = Number(contadorFinal)
+    let resultado = ''
+
+    for (let i = tabIni; i <= tabFim; i++) {
+        resultado += `\nTabuada do [${i}]\n`
+
+        for (let j = contIni; j <= contFim; j++) {
+            resultado += `${i} × ${j} = ${multiplicar(i, j)}\n`
+        }
+    }
+
+    return resultado
+}
+
+
+
+// FUNÇÕES PARA O FATORIAL
+// Função que calcula o fatorial
+const calcularFatorial = function (numero) {
+    let fatorial = 1
+
+    for (let i = 1; i <= numero; i++) {
+        fatorial *= i
+    }
+
+    return fatorial
+}
+
+
+
+// Exportação das funções
 module.exports = {
-    somar,
-    subtrair,
-    multiplicar,
-    dividir,
-    elevar,
-    calcularMedia,
-    calcularMediaRecuperativa
+    // Padrões
+    somar, multiplicar, dividir, elevar,
+
+    // Específicas
+    calcularIMC,
+    calcularMedia, calcularMediaRecuperativa,
+    calcularTabuada,
+    calcularFatorial
 }
