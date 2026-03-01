@@ -9,9 +9,6 @@
 // Função que reduz as possíveis entradas do tipo de calculadora para uma só
 const formatarTipoDeCalculadora = function (tipo) {
     let tipoInf     = String(tipo.toUpperCase())
-    let parOuImpar  = [
-        'PAR/IMPAR', 'IMPAR/PAR', 'IMPAR OU PAR', 'PAR OU IMPAR', 'IMPAR E PAR', 'PAR E IMPAR', 'IMPAR', 'PAR',
-        'PAR/ÍMPAR', 'ÍMPAR/PAR', 'ÍMPAR OU PAR', 'PAR OU ÍMPAR', 'ÍMPAR E PAR', 'PAR E ÍMPAR', 'ÍMPAR']
     let calculadora = ''
 
     if (tipoInf == 'IMC')
@@ -22,10 +19,8 @@ const formatarTipoDeCalculadora = function (tipo) {
         calculadora = 'CALCULADORA'
     else if (tipoInf == 'FATORIAL')
         calculadora = 'FATORIAL'
-    else if (parOuImpar.includes(tipoInf))
-        calculadora = 'PAR/ÍMPAR'
     else
-        return false
+        calculadora = 'PAR/ÍMPAR'
     
     return calculadora
 }
@@ -48,7 +43,7 @@ const formatarClassificacaoImc = function (imc) {
         classificacao = 'Obesidade grau I'
     else if (imcNum >= 35 && imcNum < 40)
         classificacao = 'Obesidade grau II'
-    else if (imcNum >= 40)
+    else
         classificacao = 'Obesidade grau III'
 
     return classificacao
@@ -64,10 +59,8 @@ const formatarGeneroProfessor = function (genero) {
 
     if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM')
         sexo = 'Professor'
-    else if (generoFormatado === 'FEMININO' || generoFormatado === 'MULHER')
-        sexo = 'Professora'
     else
-        return false
+        sexo = 'Professora'
 
     return sexo
 }
@@ -79,10 +72,8 @@ const formatarGeneroAluno = function (genero) {
 
     if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM')
         sexo = 'aluno'
-    else if (generoFormatado === 'FEMININO')
-        sexo = 'aluna'
     else
-        return false
+        sexo = 'aluna'
 
     return sexo
 }
@@ -96,10 +87,8 @@ const formatarMediaFinal = function (media) {
         situacao = 'aprovado'
     else if (mediaNum >= 50 && mediaNum < 70)
         situacao = 'recuperação'
-    else if (mediaNum < 50)
-        situacao = 'reprovado'
     else
-        return false
+        situacao = 'reprovado'
 
     return situacao
 }

@@ -73,6 +73,17 @@ const validarMedicaoDeAltura = function (tipoMedicao) {
 
 
 // FUNÇÕES PARA A MÉDIA
+// Função que retorna um boolean para com a validação de gênero
+const validarGenero = function (genero) {
+    let generoInf = genero.trim().toUpperCase()
+    let generoVal = ['MASCULINO', 'HOMEM', 'FEMININO', 'MULHER']
+
+    if (generoVal.includes(generoInf))
+        return true
+    else
+        return false
+} 
+
 // Função que retorna um boolean para com o tamanho da nota inserida
 const validarTamanhoDaNota = function (nota) {
     let notaNum = Number(nota)
@@ -106,6 +117,6 @@ module.exports = {
 
     // Específicas
     validarMedicaoDeAltura,
-    validarTamanhoDaNota,
+    validarGenero, validarTamanhoDaNota,
     validarNumeroParaTabuada
 }
