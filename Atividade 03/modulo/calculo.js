@@ -42,7 +42,7 @@ const calcularMedia = function (nota1, nota2, nota3, nota4) {
     let nota4Num = Number(nota4)
     let media
 
-    media = Number(dividir(somar(nota1Num, nota2Num, nota3Num, nota4Num), 4))
+    media = Number(dividir(somar(somar(nota1Num, nota2Num), somar(nota3Num, nota4Num)), 4))
 
     if (media)
         return media.toFixed(2)
