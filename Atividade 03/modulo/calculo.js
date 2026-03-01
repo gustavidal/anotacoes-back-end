@@ -100,6 +100,43 @@ const calcularFatorial = function (numero) {
 
 
 
+// FUNÇÕES PARA PAR E ÍMPAR
+// Função que calcula os números pares
+const calcularPares = function (numeroInicial, numeroFinal) {
+    let inicio = Number(numeroInicial)
+    let fim = Number(numeroFinal)
+    let lista = ''
+    let contador = 0
+
+    for (let i = inicio; i <= fim; i++) {
+        if (i % 2 === 0) {
+            lista += i + '\n'
+            contador++
+        }
+    }
+
+    return lista + '|' + contador
+}
+
+// Função que calcula os números ímpares
+const calcularImpares = function (numeroInicial, numeroFinal) {
+    let inicio = Number(numeroInicial)
+    let fim = Number(numeroFinal)
+    let lista = ''
+    let contador = 0
+
+    for (let i = inicio; i <= fim; i++) {
+        if (i % 2 !== 0) {
+            lista += i + '\n'
+            contador++
+        }
+    }
+
+    return lista + '|' + contador
+}
+
+
+
 // Exportação das funções
 module.exports = {
     // Padrões
@@ -109,5 +146,6 @@ module.exports = {
     calcularIMC,
     calcularMedia, calcularMediaRecuperativa,
     calcularTabuada,
-    calcularFatorial
+    calcularFatorial,
+    calcularPares, calcularImpares
 }

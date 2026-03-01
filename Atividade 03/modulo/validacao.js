@@ -62,15 +62,9 @@ const serIgual = (numero1, numero2) => Number(numero1) === Number(numero2)
 // Função que retorna um boolean para com a inserção sobre a medição de altura
 const validarMedicaoDeAltura = function (tipoMedicao) {
     let medicaoAlt = tipoMedicao.trim().toUpperCase()
-    let medicao    = [
-        'CM', 'M',
-        'CMS', 'MS',
-        'METRO', 'METROS',
-        'CENTÍMETRO', 'CENTÍMETROS',
-        'CENTIMETRO', 'CENTIMETROS'
-    ]
-
-    if (medicaoAlt.includes(medicao))
+    let medicao = ['CM', 'M', 'CMS', 'MS', 'METRO', 'METROS', 'CENTÍMETRO', 'CENTÍMETROS', 'CENTIMETRO', 'CENTIMETROS']
+    
+    if (medicao.includes(medicaoAlt))
         return true
     else
         return false

@@ -9,6 +9,8 @@
 // Função que reduz as possíveis entradas do tipo de calculadora para uma só
 const formatarTipoDeCalculadora = function (tipo) {
     let tipoInf = String(tipo.toUpperCase())
+    let parOuImpar = ['PAR/IMPAR', 'IMPAR/PAR', 'IMPAR OU PAR', 'PAR OU IMPAR', 'IMPAR E PAR', 'PAR E IMPAR', 'IMPAR', 'PAR',
+        'PAR/ÍMPAR', 'ÍMPAR/PAR', 'ÍMPAR OU PAR', 'PAR OU ÍMPAR', 'ÍMPAR E PAR', 'PAR E ÍMPAR', 'ÍMPAR']
     let calculadora = ''
 
     if (tipoInf == 'IMC')
@@ -19,8 +21,7 @@ const formatarTipoDeCalculadora = function (tipo) {
         calculadora = 'CALCULADORA'
     else if (tipoInf == 'FATORIAL')
         calculadora = 'FATORIAL'
-    else if (tipoInf == 'PAR/IMPAR' || tipoInf == 'IMPAR/PAR' || tipoInf == 'IMPAR OU PAR' || tipoInf == 'PAR OU IMPAR' || tipoInf == 'IMPAR E PAR' || tipoInf == 'PAR E IMPAR' || tipoInf == 'IMPAR' || tipoInf == 'PAR' ||
-        tipoInf == 'PAR/ÍMPAR' || tipoInf == 'ÍMPAR/PAR' || tipoInf == 'ÍMPAR OU PAR' || tipoInf == 'PAR OU ÍMPAR' || tipoInf == 'ÍMPAR E PAR' || tipoInf == 'PAR E ÍMPAR' || tipoInf == 'ÍMPAR')
+    else if (parOuImpar.includes(tipoInf))
         calculadora = 'PAR/ÍMPAR'
 
     return calculadora
@@ -58,13 +59,12 @@ const formatarGeneroProfessor = function (genero) {
     let generoFormatado = genero.trim().toUpperCase()
     let sexo
 
-    if (generoFormatado === 'MASCULINO') {
+    if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM')
         sexo = 'Professor'
-    } else if (generoFormatado === 'FEMININO') {
+    else if (generoFormatado === 'FEMININO' || generoFormatado === 'MULHER')
         sexo = 'Professora'
-    } else {
+    else
         return false
-    }
 
     return sexo
 }
@@ -74,13 +74,12 @@ const formatarGeneroAluno = function (genero) {
     let generoFormatado = genero.trim().toUpperCase()
     let sexo
 
-    if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM') {
+    if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM')
         sexo = 'aluno'
-    } else if (generoFormatado === 'FEMININO') {
+    else if (generoFormatado === 'FEMININO')
         sexo = 'aluna'
-    } else {
+    else
         return false
-    }
 
     return sexo
 }
@@ -120,6 +119,23 @@ const formatarExpressaoFatorial = function (numero) {
 }
 
 
+
+// FUNÇÕES PARA PAR E ÍMPAR
+// Função que formata o resultado do cálculo de pares e ímpares
+const formatarListaParesImpares = function (titulo, retornoCalculo) {
+    let partes = retornoCalculo.split('|')
+    let lista = partes[0]
+    let quantidade = partes[1]
+    let texto = '\n' + titulo + '\n'
+    
+    texto += lista
+    texto += 'Quantidade de números encontrados: ' + quantidade + '\n'
+
+    return texto
+}
+
+
+
 // Exportação das funções
 module.exports = {
     // Padrões
@@ -128,5 +144,6 @@ module.exports = {
     // Específicas
     formatarClassificacaoImc,
     formatarGeneroProfessor, formatarGeneroAluno, formatarMediaFinal,
-    formatarExpressaoFatorial
+    formatarExpressaoFatorial,
+    formatarListaParesImpares
 }
