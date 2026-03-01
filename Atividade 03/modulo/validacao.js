@@ -28,19 +28,17 @@ const validarEntradaDeNumber = function (valor) {
 
 // Função que retorna um boolean para com a validação do tipo de calculadora escolhida
 const validarTipoDeCalculadora = function (tipoCalculadora) {
-    let tipoCalculadoraInf = String(tipoCalculadora)
+    let tipoCalculadoraInf = String(tipoCalculadora.toUpperCase())
+    let calculadora        = [
+        'PAR/IMPAR', 'IMPAR/PAR', 'IMPAR OU PAR', 'PAR OU IMPAR', 'IMPAR E PAR', 'PAR E IMPAR', 'IMPAR', 'PAR',
+        'PAR/ÍMPAR', 'ÍMPAR/PAR', 'ÍMPAR OU PAR', 'PAR OU ÍMPAR', 'ÍMPAR E PAR', 'PAR E ÍMPAR', 'ÍMPAR',
+        'IMC', 'MÉDIA', 'MEDIA', 'TABUADA', 'FATORIAL'
+    ]
 
-    if (tipoCalculadoraInf === 'IMC' || 
-        tipoCalculadoraInf === 'MÉDIA' || tipoCalculadoraInf === 'MEDIA' ||
-        tipoCalculadoraInf === 'TABUADA' || 
-        tipoCalculadoraInf === 'FATORIAL' || 
-        tipoCalculadoraInf === 'PAR/ÍMPAR' || tipoCalculadoraInf === 'PAR/IMPAR' || 
-        tipoCalculadoraInf === 'PAR OU ÍMPAR' || tipoCalculadoraInf === 'PAR OU IMPAR' ||
-        tipoCalculadoraInf === 'PAR E ÍMPAR' || tipoCalculadoraInf === 'PAR E IMPAR' ||
-        tipoCalculadoraInf === 'PAR' || tipoCalculadoraInf === 'ÍMPAR' || tipoCalculadoraInf === 'IMPAR')
-        return true
-    else
+    if (tipoCalculadoraInf.includes(calculadora))
         return false
+    else
+        return true
 }
 
 // Função que retorna um boolean para com a validação de se um número for inteiro ou não
@@ -62,10 +60,17 @@ const serIgual = (numero1, numero2) => Number(numero1) === Number(numero2)
 
 // FUNÇÕES PARA O IMC
 // Função que retorna um boolean para com a inserção sobre a medição de altura
-const validarMedicaoDeAltura = function (medicao) {
-    let medicaoAlt = medicao.trim().toUpperCase()
-    if (medicaoAlt === 'CM' || medicaoAlt === "CENTÍMETROS" || medicaoAlt === 'CENTIMETROS' ||
-        medicaoAlt === 'M' || medicaoAlt === 'METROS')
+const validarMedicaoDeAltura = function (tipoMedicao) {
+    let medicaoAlt = tipoMedicao.trim().toUpperCase()
+    let medicao    = [
+        'CM', 'M',
+        'CMS', 'MS',
+        'METRO', 'METROS',
+        'CENTÍMETRO', 'CENTÍMETROS',
+        'CENTIMETRO', 'CENTIMETROS'
+    ]
+
+    if (medicaoAlt.includes(medicao))
         return true
     else
         return false

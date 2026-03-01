@@ -5,25 +5,47 @@
  * Versão: 1.0
 ********************************************************************************/
 
+// FUNÇÕES PADRÕES
+// Função que reduz as possíveis entradas do tipo de calculadora para uma só
+const formatarTipoDeCalculadora = function (tipo) {
+    let tipoInf = String(tipo.toUpperCase())
+    let calculadora = ''
+
+    if (tipoInf == 'IMC')
+        calculadora = 'IMC'
+    else if (tipoInf == 'MÉDIA' || tipoInf == 'MEDIA')
+        calculadora = 'MÉDIA'
+    else if (tipoInf == 'TABUADA')
+        calculadora = 'CALCULADORA'
+    else if (tipoInf == 'FATORIAL')
+        calculadora = 'FATORIAL'
+    else if (tipoInf == 'PAR/IMPAR' || tipoInf == 'IMPAR/PAR' || tipoInf == 'IMPAR OU PAR' || tipoInf == 'PAR OU IMPAR' || tipoInf == 'IMPAR E PAR' || tipoInf == 'PAR E IMPAR' || tipoInf == 'IMPAR' || tipoInf == 'PAR' ||
+        tipoInf == 'PAR/ÍMPAR' || tipoInf == 'ÍMPAR/PAR' || tipoInf == 'ÍMPAR OU PAR' || tipoInf == 'PAR OU ÍMPAR' || tipoInf == 'ÍMPAR E PAR' || tipoInf == 'PAR E ÍMPAR' || tipoInf == 'ÍMPAR')
+        calculadora = 'PAR/ÍMPAR'
+
+    return calculadora
+}
+
+
+
 // FUNÇÕES PARA O IMC
 // Função que classifica o IMC de uma pessoa
-const classificarIMC = function (imc) {
+const formatarClassificacaoImc = function (imc) {
     let imcNum = Number(imc)
     let classificacao = ''
 
-    if (imcNum < 18.5) {
+    if (imcNum < 18.5)
         classificacao = 'Abaixo do peso'
-    } else if (imcNum >= 18.5 && imcNum < 25) {
+    else if (imcNum >= 18.5 && imcNum < 25)
         classificacao = 'Peso normal'
-    } else if (imcNum >= 25 && imcNum < 30) {
+    else if (imcNum >= 25 && imcNum < 30)
         classificacao = 'Acima do peso (sobrepeso)'
-    } else if (imcNum >= 30 && imcNum < 35) {
+    else if (imcNum >= 30 && imcNum < 35)
         classificacao = 'Obesidade grau I'
-    } else if (imcNum >= 35 && imcNum < 40) {
+    else if (imcNum >= 35 && imcNum < 40)
         classificacao = 'Obesidade grau II'
-    } else if (imcNum >= 40) {
+    else if (imcNum >= 40)
         classificacao = 'Obesidade grau III'
-    }
 
     return classificacao
 }
@@ -32,7 +54,7 @@ const classificarIMC = function (imc) {
 
 // FUNÇÕES PARA A MÉDIA
 // Função que define o gênero do lecionador
-const definirGeneroAoProfessor = function (genero) {
+const formatarGeneroProfessor = function (genero) {
     let generoFormatado = genero.trim().toUpperCase()
     let sexo
 
@@ -48,7 +70,7 @@ const definirGeneroAoProfessor = function (genero) {
 }
 
 // Função que define o gênero do aluno
-const definirGeneroAoAluno = function (genero) {
+const formatarGeneroAluno = function (genero) {
     let generoFormatado = genero.trim().toUpperCase()
     let sexo
 
@@ -64,7 +86,7 @@ const definirGeneroAoAluno = function (genero) {
 }
 
 // Função que classifica a média do aluno de acordo com a nota
-const classificarMedia = function (media) {
+const formatarMediaFinal = function (media) {
     let mediaNum = Number(media)
     let situacao
 
@@ -85,7 +107,7 @@ const classificarMedia = function (media) {
 
 // FUNÇÕES PARA O FATORIAL
 // Função que formata a expressão fatorial
-const montarExpressaoFatorial = function (numero) {
+const formatarExpressaoFatorial = function (numero) {
     let expressao = ''
 
     for (let i = numero; i >= 1; i--) {
@@ -100,7 +122,11 @@ const montarExpressaoFatorial = function (numero) {
 
 // Exportação das funções
 module.exports = {
-    classificarIMC,
-    definirGeneroAoProfessor, definirGeneroAoAluno, classificarMedia,
-    montarExpressaoFatorial
+    // Padrões
+    formatarTipoDeCalculadora,
+
+    // Específicas
+    formatarClassificacaoImc,
+    formatarGeneroProfessor, formatarGeneroAluno, formatarMediaFinal,
+    formatarExpressaoFatorial
 }

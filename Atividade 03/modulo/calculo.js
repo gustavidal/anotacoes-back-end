@@ -78,9 +78,8 @@ const calcularTabuada = function (tabuadaInicial, tabuadaFinal, contador, contad
     for (let i = tabIni; i <= tabFim; i++) {
         resultado += `\nTabuada do [${i}]\n`
 
-        for (let j = contIni; j <= contFim; j++) {
+        for (let j = contIni; j <= contFim; j++)
             resultado += `${i} × ${j} = ${multiplicar(i, j)}\n`
-        }
     }
 
     return resultado
@@ -93,9 +92,8 @@ const calcularTabuada = function (tabuadaInicial, tabuadaFinal, contador, contad
 const calcularFatorial = function (numero) {
     let fatorial = 1
 
-    for (let i = 1; i <= numero; i++) {
+    for (let i = 1; i <= numero; i++)
         fatorial *= i
-    }
 
     return fatorial
 }
