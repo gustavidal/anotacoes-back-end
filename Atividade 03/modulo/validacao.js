@@ -35,10 +35,10 @@ const validarTipoDeCalculadora = function (tipoCalculadora) {
         'IMC', 'MÉDIA', 'MEDIA', 'TABUADA', 'FATORIAL'
     ]
 
-    if (tipoCalculadoraInf.includes(calculadora))
-        return false
-    else
+    if (calculadora.includes(tipoCalculadoraInf))
         return true
+    else
+        return false
 }
 
 // Função que retorna um boolean para com a validação de se um número for inteiro ou não

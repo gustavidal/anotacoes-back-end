@@ -8,8 +8,9 @@
 // FUNÇÕES PADRÕES
 // Função que reduz as possíveis entradas do tipo de calculadora para uma só
 const formatarTipoDeCalculadora = function (tipo) {
-    let tipoInf = String(tipo.toUpperCase())
-    let parOuImpar = ['PAR/IMPAR', 'IMPAR/PAR', 'IMPAR OU PAR', 'PAR OU IMPAR', 'IMPAR E PAR', 'PAR E IMPAR', 'IMPAR', 'PAR',
+    let tipoInf     = String(tipo.toUpperCase())
+    let parOuImpar  = [
+        'PAR/IMPAR', 'IMPAR/PAR', 'IMPAR OU PAR', 'PAR OU IMPAR', 'IMPAR E PAR', 'PAR E IMPAR', 'IMPAR', 'PAR',
         'PAR/ÍMPAR', 'ÍMPAR/PAR', 'ÍMPAR OU PAR', 'PAR OU ÍMPAR', 'ÍMPAR E PAR', 'PAR E ÍMPAR', 'ÍMPAR']
     let calculadora = ''
 
@@ -23,7 +24,9 @@ const formatarTipoDeCalculadora = function (tipo) {
         calculadora = 'FATORIAL'
     else if (parOuImpar.includes(tipoInf))
         calculadora = 'PAR/ÍMPAR'
-
+    else
+        return false
+    
     return calculadora
 }
 
@@ -32,7 +35,7 @@ const formatarTipoDeCalculadora = function (tipo) {
 // FUNÇÕES PARA O IMC
 // Função que classifica o IMC de uma pessoa
 const formatarClassificacaoImc = function (imc) {
-    let imcNum = Number(imc)
+    let imcNum        = Number(imc)
     let classificacao = ''
 
     if (imcNum < 18.5)
@@ -57,7 +60,7 @@ const formatarClassificacaoImc = function (imc) {
 // Função que define o gênero do lecionador
 const formatarGeneroProfessor = function (genero) {
     let generoFormatado = genero.trim().toUpperCase()
-    let sexo
+    let sexo            = ''
 
     if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM')
         sexo = 'Professor'
@@ -72,7 +75,7 @@ const formatarGeneroProfessor = function (genero) {
 // Função que define o gênero do aluno
 const formatarGeneroAluno = function (genero) {
     let generoFormatado = genero.trim().toUpperCase()
-    let sexo
+    let sexo            = ''
 
     if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM')
         sexo = 'aluno'
@@ -87,17 +90,16 @@ const formatarGeneroAluno = function (genero) {
 // Função que classifica a média do aluno de acordo com a nota
 const formatarMediaFinal = function (media) {
     let mediaNum = Number(media)
-    let situacao
+    let situacao = ''
 
-    if (mediaNum >= 70) {
+    if (mediaNum >= 70)
         situacao = 'aprovado'
-    } else if (mediaNum >= 50 && mediaNum < 70) {
+    else if (mediaNum >= 50 && mediaNum < 70)
         situacao = 'recuperação'
-    } else if (mediaNum < 50) {
+    else if (mediaNum < 50)
         situacao = 'reprovado'
-    } else {
+    else
         return false
-    }
 
     return situacao
 }
@@ -107,9 +109,10 @@ const formatarMediaFinal = function (media) {
 // FUNÇÕES PARA O FATORIAL
 // Função que formata a expressão fatorial
 const formatarExpressaoFatorial = function (numero) {
-    let expressao = ''
+    let fatorialNum = Number(numero)
+    let expressao   = ''
 
-    for (let i = numero; i >= 1; i--) {
+    for (let i = fatorialNum; i >= 1; i--) {
         expressao += i
         if (i > 1)
             expressao += '×'
@@ -123,10 +126,11 @@ const formatarExpressaoFatorial = function (numero) {
 // FUNÇÕES PARA PAR E ÍMPAR
 // Função que formata o resultado do cálculo de pares e ímpares
 const formatarListaParesImpares = function (titulo, retornoCalculo) {
-    let partes = retornoCalculo.split('|')
-    let lista = partes[0]
+    let tituloFormatado = titulo.trim().toUpperCase()
+    let partes     = retornoCalculo.split('|')
+    let lista      = partes[0]
     let quantidade = partes[1]
-    let texto = '\n' + titulo + '\n'
+    let texto      = '\n' + tituloFormatado + '\n'
     
     texto += lista
     texto += 'Quantidade de números encontrados: ' + quantidade + '\n'
