@@ -106,6 +106,7 @@ const formatarMediaRecuperativa = function (media) {
     return situacao
 }
 
+// Função que formata de forma completa a saída formatada da média com todos os valores pedidos nos requisitos
 const formatarSaidaMedia = function (
     situacao, situacaoExame,
     media, mediaExame,
@@ -131,26 +132,23 @@ const formatarSaidaMedia = function (
     let notaRec       = Number(notaExame)
     let texto         = ''
     
-    if (situacaoInf === 'recuperação') {
+    if (situacaoInf === 'recuperação')
         texto += `\nO ${genAlunoInf} ${nomeAlunoInf} foi ${situacaoEx} na disciplina ${disciplinaInf}.`
-    } else {
+    else
         texto += `\nO ${genAlunoInf} ${nomeAlunoInf} foi ${situacaoInf} na disciplina ${disciplinaInf}.`
-    }
     
     texto += `\nCurso: ${cursoInf}`
     texto += `\n${genProfInf}: ${nomeProfInf}`
 
-    if (situacaoInf === 'recuperação') {
+    if (situacaoInf === 'recuperação')
         texto += `\nNotas: ${nota1Inf}, ${nota2Inf}, ${nota3Inf}, ${nota4Inf} e ${notaRec}.`
-    } else {
+    else
         texto += `\nNotas: ${nota1Inf}, ${nota2Inf}, ${nota3Inf} e ${nota4Inf}.`
-    }
     
     texto += `\nMédia final: ${mediaFinal}`
 
-    if (situacaoInf === 'recuperação') {
+    if (situacaoInf === 'recuperação')
         texto += `\nMédia final do exame: ${mediaRec}`
-    }
 
     return texto
 }
