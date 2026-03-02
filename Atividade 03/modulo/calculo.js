@@ -1,16 +1,16 @@
-/******************************************************************
- * Objetivo: Arquivo responsável pelos cálculos matemáticos padrões
+/*******************************************************************
+ * Objetivo: Arquivo responsável pelos cálculos dos dados informados
  * Data: 25/02/2026 (quarta-feira)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
-******************************************************************/
+*******************************************************************/
 
 // FUNÇÕES PADRÕES
 // Funções para cálculos matemáticos básicos (adição, subtração, multiplicação, divisão e potenciação)
 const somar         = (numero1, numero2) => Number(numero1) + Number(numero2)
 const multiplicar   = (numero1, numero2) => Number(numero1) * Number(numero2)
 const dividir       = (numero1, numero2) => Number(numero1) / Number(numero2)
-const elevar        = (base, expoente)   => Number(base) ** Number(expoente)
+const elevar        = (base, expoente)   => Number(base)   ** Number(expoente)
 
 
 
@@ -41,22 +41,22 @@ const calcularMedia = function (nota1, nota2, nota3, nota4) {
     let nota2Num = Number(nota2)
     let nota3Num = Number(nota3)
     let nota4Num = Number(nota4)
-    let media
+    let mediaFinal
 
-    media = (Number(dividir(somar(somar(nota1Num, nota2Num), somar(nota3Num, nota4Num)), 4))).toFixed(2)
+    mediaFinal = (Number(dividir(somar(somar(nota1Num, nota2Num), somar(nota3Num, nota4Num)), 4))).toFixed(2)
     
-    return media
+    return mediaFinal
 }
 
 // Função que calcula a média recuperativa, pedindo uma nota para um novo cálculo
 const calcularMediaRecuperativa = function (media, notaRecuperacao) {
     let mediaNum           = Number(media)
     let notaRecuperacaoNum = Number(notaRecuperacao)
-    let mediaFinal
+    let mediaExame
 
-    mediaFinal = (dividir(somar(mediaNum, notaRecuperacaoNum), 2)).toFixed(2)
+    mediaExame = (dividir(somar(mediaNum, notaRecuperacaoNum), 2)).toFixed(2)
 
-    return mediaFinal
+    return mediaExame
 }
 
 
