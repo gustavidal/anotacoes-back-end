@@ -138,36 +138,28 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                                                         if (nota4Val1 && nota4Val2) {
                                                                                             let mediaFinal = calculos.calcularMedia(nota1Inf, nota2Inf, nota3Inf, nota4Inf)
                                                                                             let situacao   = formatacao.formatarMediaFinal(mediaFinal)
-
-                                                                                            if (situacao === 'aprovado' || situacao === 'reprovado') {
-                                                                                                console.log(`\nO ${sexoAluno} ${nomeAluno} foi ${situacao} na disciplina ${disciplina}.`)
-                                                                                                console.log(`Curso: ${nomeCurso}`)
-                                                                                                console.log(`${sexoProfessor}: ${nomeProfessor}`)
-                                                                                                console.log(`Notas: ${nota1Inf}, ${nota2Inf}, ${nota3Inf} e ${nota4Inf}.`)
-                                                                                                console.log(`Média final: ${mediaFinal}`)
-                                                                                                entradaDeDados.close()
-                                                                                            } else {
+                                                                                            let texto      = formatacao.formatarSaidaMedia(situacao, 0, mediaFinal, 0, nomeCursoInf, disciplinaInf, nomeProfInf, nomeAlunoInf, generoProfInf, generoAlunoInf, nota1Inf, nota2Inf, nota3Inf, nota4Inf, 0)
+                                                                                            
+                                                                                            if (situacao === 'recuperação') {
                                                                                                 entradaDeDados.question('Digite a nota da recuperação: ', function (notaRecuperacao) {
                                                                                                     let notaRecuperacaoInf  = notaRecuperacao.replace(',', '.')
                                                                                                     let notaRecuperacaoVal1 = validacao.validarEntradaDeNumber(notaRecuperacaoInf)
                                                                                                     let notaRecuperacaoVal2 = validacao.validarTamanhoDaNota(notaRecuperacaoInf)
-
+                                                                                                    
                                                                                                     if (notaRecuperacaoVal1 && notaRecuperacaoVal2) {
                                                                                                         let mediaRecuperacao = calculos.calcularMediaRecuperativa(mediaFinal, notaRecuperacaoInf)
                                                                                                         let situacaoFinal    = formatacao.formatarMediaRecuperativa(mediaRecuperacao)
+                                                                                                        let texto            = formatacao.formatarSaidaMedia(situacao, situacaoFinal, mediaFinal, mediaRecuperacao, nomeCursoInf, disciplinaInf, nomeProfInf, nomeAlunoInf, generoProfInf, generoAlunoInf, nota1Inf, nota2Inf, nota3Inf, nota4Inf, notaRecuperacaoInf)
 
-                                                                                                        console.log(`\nO ${sexoAluno} ${nomeAluno} foi ${situacaoFinal} na disciplina ${disciplina}.`)
-                                                                                                        console.log(`Curso: ${nomeCurso}`)
-                                                                                                        console.log(`${sexoProfessor}: ${nomeProfessor}`)
-                                                                                                        console.log(`Notas: ${nota1Inf}, ${nota2Inf}, ${nota3Inf}, ${nota4Inf} e ${notaRecuperacaoInf}.`)
-                                                                                                        console.log(`Média final: ${mediaFinal}`)
-                                                                                                        console.log(`Média final do exame: ${mediaRecuperacao}`)
+                                                                                                        console.log(texto)
                                                                                                         entradaDeDados.close()
                                                                                                     } else {
                                                                                                         console.log('Nota de recuperação inválida!')
                                                                                                         entradaDeDados.close()
                                                                                                     }
                                                                                                 })
+                                                                                            } else {
+                                                                                                console.log(texto)
                                                                                             }
                                                                                         } else {
                                                                                             console.log('\nNota 4 inválida!')

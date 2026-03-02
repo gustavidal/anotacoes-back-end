@@ -106,6 +106,55 @@ const formatarMediaRecuperativa = function (media) {
     return situacao
 }
 
+const formatarSaidaMedia = function (
+    situacao, situacaoExame,
+    media, mediaExame,
+    curso, disciplina,
+    nomeProf, nomeAluno,
+    genProf, genAluno,
+    nota1, nota2, nota3, nota4, notaExame
+) {        
+    let situacaoInf   = String(situacao)
+    let situacaoEx    = String(situacaoExame)
+    let mediaFinal    = Number(media)
+    let mediaRec      = Number(mediaExame)
+    let cursoInf      = String(curso)
+    let disciplinaInf = String(disciplina)
+    let nomeProfInf   = String(nomeProf)
+    let nomeAlunoInf  = String(nomeAluno)
+    let genProfInf    = String(genProf)
+    let genAlunoInf   = String(genAluno)
+    let nota1Inf      = Number(nota1)
+    let nota2Inf      = Number(nota2)
+    let nota3Inf      = Number(nota3)
+    let nota4Inf      = Number(nota4)
+    let notaRec       = Number(notaExame)
+    let texto         = ''
+    
+    if (situacaoInf === 'recuperação') {
+        texto += `\nO ${genAlunoInf} ${nomeAlunoInf} foi ${situacaoEx} na disciplina ${disciplinaInf}.`
+    } else {
+        texto += `\nO ${genAlunoInf} ${nomeAlunoInf} foi ${situacaoInf} na disciplina ${disciplinaInf}.`
+    }
+    
+    texto += `\nCurso: ${cursoInf}`
+    texto += `\n${genProfInf}: ${nomeProfInf}`
+
+    if (situacaoInf === 'recuperação') {
+        texto += `\nNotas: ${nota1Inf}, ${nota2Inf}, ${nota3Inf}, ${nota4Inf} e ${notaRec}.`
+    } else {
+        texto += `\nNotas: ${nota1Inf}, ${nota2Inf}, ${nota3Inf} e ${nota4Inf}.`
+    }
+    
+    texto += `\nMédia final: ${mediaFinal}`
+
+    if (situacaoInf === 'recuperação') {
+        texto += `\nMédia final do exame: ${mediaRec}`
+    }
+
+    return texto
+}
+
 
 
 // FUNÇÕES PARA O FATORIAL
@@ -149,7 +198,7 @@ module.exports = {
 
     // Específicas
     formatarClassificacaoImc,
-    formatarGeneroProfessor, formatarGeneroAluno, formatarMediaFinal, formatarMediaRecuperativa,
+    formatarGeneroProfessor, formatarGeneroAluno, formatarMediaFinal, formatarMediaRecuperativa, formatarSaidaMedia,
     formatarExpressaoFatorial,
     formatarListaParesImpares
 }
