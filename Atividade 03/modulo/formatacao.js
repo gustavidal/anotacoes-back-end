@@ -93,6 +93,19 @@ const formatarMediaFinal = function (media) {
     return situacao
 }
 
+// Função que classifica a média recuperativa do aluno de acordo com a nota
+const formatarMediaRecuperativa = function (media) {
+    let mediaNum = Number(media)
+    let situacao = ''
+
+    if (mediaNum >= 60)
+        situacao = 'aprovado'
+    else
+        situacao = 'reprovado'
+
+    return situacao
+}
+
 
 
 // FUNÇÕES PARA O FATORIAL
@@ -136,7 +149,7 @@ module.exports = {
 
     // Específicas
     formatarClassificacaoImc,
-    formatarGeneroProfessor, formatarGeneroAluno, formatarMediaFinal,
+    formatarGeneroProfessor, formatarGeneroAluno, formatarMediaFinal, formatarMediaRecuperativa,
     formatarExpressaoFatorial,
     formatarListaParesImpares
 }

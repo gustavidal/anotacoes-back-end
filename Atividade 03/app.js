@@ -154,7 +154,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
 
                                                                                                     if (notaRecuperacaoVal1 && notaRecuperacaoVal2) {
                                                                                                         let mediaRecuperacao = calculos.calcularMediaRecuperativa(mediaFinal, notaRecuperacaoInf)
-                                                                                                        let situacaoFinal    = formatacao.formatarMediaFinal(mediaRecuperacao)
+                                                                                                        let situacaoFinal    = formatacao.formatarMediaRecuperativa(mediaRecuperacao)
 
                                                                                                         console.log(`\nO ${sexoAluno} ${nomeAluno} foi ${situacaoFinal} na disciplina ${disciplina}.`)
                                                                                                         console.log(`Curso: ${nomeCurso}`)
