@@ -242,7 +242,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
 
                                         // Validação do contador final e cálculo da tabuada
                                         if (contadorFinalVal && contadorFinalMaiorQueMultiplicador) {
-                                            let resultadoTabuada = calculos.calcularTabuada(numeroInf, numero2Inf, contadorInf, contadorFinalInf)
+                                            let resultadoTabuada = formatacao.formatarTabuada(numeroInf, numero2Inf, contadorInf, contadorFinalInf)
 
                                             console.log(`\nTabuada de ${numeroInf} a ${numero2Inf} sequenciada de ${contadorInf} a ${contadorFinalInf}:`)
                                             console.log(resultadoTabuada)

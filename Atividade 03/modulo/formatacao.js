@@ -155,6 +155,27 @@ const formatarSaidaMedia = function (
 
 
 
+// FUNÇÕES PARA A TABUADA
+// Função que calcula a tabuada
+const formatarTabuada = function (tabuadaInicial, tabuadaFinal, contador, contadorFinal) {
+    let tabIni    = Number(tabuadaInicial)
+    let tabFim    = Number(tabuadaFinal)
+    let contIni   = Number(contador)
+    let contFim   = Number(contadorFinal)
+    let resultado = ''
+
+    for (let i = tabIni; i <= tabFim; i++) {
+        resultado += `\nTabuada do [${i}]\n`
+
+        for (let j = contIni; j <= contFim; j++)
+            resultado += `${i} × ${j} = ${multiplicar(i, j)}\n`
+    }
+
+    return resultado
+}
+
+
+
 // FUNÇÕES PARA O FATORIAL
 // Função que formata a expressão fatorial
 const formatarExpressaoFatorial = function (numero) {
@@ -197,6 +218,7 @@ module.exports = {
     // Específicas
     formatarClassificacaoImc,
     formatarGeneroProfessor, formatarGeneroAluno, formatarMediaFinal, formatarMediaRecuperativa, formatarSaidaMedia,
+    formatarTabuada,
     formatarExpressaoFatorial,
     formatarListaParesImpares
 }

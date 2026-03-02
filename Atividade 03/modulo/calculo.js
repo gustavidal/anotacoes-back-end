@@ -27,7 +27,7 @@ const calcularIMC = function (peso, altura, medicao) {
     else if (medicaoAlt !== 'M')
         return false
 
-    imc = (dividir(pesoInf, elevar(alturaInf, 2))).toFixed(2)
+    imc = Number((dividir(pesoInf, elevar(alturaInf, 2))).toFixed(2))
     
     return imc
 }
@@ -43,7 +43,7 @@ const calcularMedia = function (nota1, nota2, nota3, nota4) {
     let nota4Num = Number(nota4)
     let mediaFinal
 
-    mediaFinal = (Number(dividir(somar(somar(nota1Num, nota2Num), somar(nota3Num, nota4Num)), 4))).toFixed(2)
+    mediaFinal = Number((dividir(somar(somar(nota1Num, nota2Num), somar(nota3Num, nota4Num)), 4)).toFixed(2))
     
     return mediaFinal
 }
@@ -54,30 +54,9 @@ const calcularMediaRecuperativa = function (media, notaRecuperacao) {
     let notaRecuperacaoNum = Number(notaRecuperacao)
     let mediaExame
 
-    mediaExame = (dividir(somar(mediaNum, notaRecuperacaoNum), 2)).toFixed(2)
+    mediaExame = Number((dividir(somar(mediaNum, notaRecuperacaoNum), 2)).toFixed(2))
 
     return mediaExame
-}
-
-
-
-// FUNÇÕES PARA A TABUADA
-// Função que calcula a tabuada
-const calcularTabuada = function (tabuadaInicial, tabuadaFinal, contador, contadorFinal) {
-    let tabIni    = Number(tabuadaInicial)
-    let tabFim    = Number(tabuadaFinal)
-    let contIni   = Number(contador)
-    let contFim   = Number(contadorFinal)
-    let resultado = ''
-
-    for (let i = tabIni; i <= tabFim; i++) {
-        resultado += `\nTabuada do [${i}]\n`
-
-        for (let j = contIni; j <= contFim; j++)
-            resultado += `${i} × ${j} = ${multiplicar(i, j)}\n`
-    }
-
-    return resultado
 }
 
 
@@ -140,7 +119,6 @@ module.exports = {
     // Específicas
     calcularIMC,
     calcularMedia, calcularMediaRecuperativa,
-    calcularTabuada,
     calcularFatorial,
     calcularPares, calcularImpares
 }
