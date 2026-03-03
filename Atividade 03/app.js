@@ -21,11 +21,11 @@ let validacao  = require('./modulo/validacao.js')
 
 // Entrada do tipo de calculadora que o usuário deseja utilizar
 entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média, Tabuada, Fatorial ou Par/Ímpar): ', function (tipoCalculadora) {
-    let tipoCalculadoraInf       = tipoCalculadora.trim().toUpperCase()
-    let tipoCalculadoraVal       = validacao.validarEntradaDeString(tipoCalculadoraInf)
-    let tipoCalculadoraExistente = validacao.validarTipoDeCalculadora(tipoCalculadoraInf)
+    let tipoCalculadoraInf  = tipoCalculadora.trim().toUpperCase()
+    let tipoCalculadoraVal1 = validacao.validarEntradaDeString(tipoCalculadoraInf)
+    let tipoCalculadoraVal2 = validacao.validarTipoDeCalculadora(tipoCalculadoraInf)
 
-    if (tipoCalculadoraVal && tipoCalculadoraExistente) {
+    if (tipoCalculadoraVal1 && tipoCalculadoraVal2) {
         let calculadora = formatacao.formatarTipoDeCalculadora(tipoCalculadoraInf)
         if (calculadora === 'IMC') {
             // Entrada do peso
@@ -95,7 +95,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                         let generoAlunoInf  = generoAluno.trim()
                                         let generoAlunoVal1 = validacao.validarEntradaDeString(generoAlunoInf)
                                         let generoAlunoVal2 = validacao.validarGenero(generoAlunoInf)
-                                        let sexoAluno    = formatacao.formatarGeneroAluno(generoAlunoInf)
+                                        let sexoAluno       = formatacao.formatarGeneroAluno(generoAlunoInf)
                                         
                                         // Entrada do nome do curso
                                         if (generoAlunoVal1 && generoAlunoVal2) {
@@ -308,14 +308,20 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                         // Validação do número final e entrada do tipo de separação para o cálculo de pares e ímpares
                         if (numeroFinVal1 && numeroFinVal2 && numeroFinVal3 && numeroFinVal4) {
                             entradaDeDados.question('\nVocê deseja calcular (PARES, ÍMPARES ou AMBOS)? ', function (tipoSeparacao) {
-                                let tipo         = tipoSeparacao
-                                let retornoPar   = calculos.calcularPares(numeroIniInf, numeroFinInf)
-                                let retornoImp   = calculos.calcularImpares(numeroIniInf, numeroFinInf)
-                                let textoPares   = formatacao.formatarListaParesImpares('Lista de números Pares', retornoPar)
-                                let textoImpares = formatacao.formatarListaParesImpares('Lista de números Ímpares', retornoImp)
-                                let textoFinal   = formatacao.formatarSaidaParImpar(tipo, textoPares, textoImpares)
+                                let tipo    = tipoSeparacao.trim()
+                                let tipoVal = validacao.validarEntradaDeString(tipo)
 
-                                console.log(textoFinal)
+                                if (tipoVal) {
+                                    let retornoPar   = calculos.calcularPares(numeroIniInf, numeroFinInf)
+                                    let retornoImp   = calculos.calcularImpares(numeroIniInf, numeroFinInf)
+                                    let textoPares   = formatacao.formatarListaParesImpares('Lista de números Pares', retornoPar)
+                                    let textoImpares = formatacao.formatarListaParesImpares('Lista de números Ímpares', retornoImp)
+                                    let textoFinal   = formatacao.formatarSaidaParImpar(tipo, textoPares, textoImpares)
+
+                                    console.log(textoFinal)
+                                } else {
+                                    console.log('\nProibido números e/ou vazio!')
+                                }
                                 entradaDeDados.close()
                             })
                         } else {
