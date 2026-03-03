@@ -5,8 +5,6 @@
  * Versão: 1.0
 ********************************************************************************/
 
-const { text } = require("node:stream/consumers")
-
 // FUNÇÕES PADRÕES
 // Função que reduz as possíveis entradas do tipo de calculadora para uma só
 const formatarTipoDeCalculadora = function (tipo) {

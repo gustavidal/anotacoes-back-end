@@ -53,11 +53,10 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
 
                                     console.log(`\nO resultado do IMC é: ${resultadoIMC}`)
                                     console.log(`Classificação do IMC: ${classificacaoIMC}`)
-                                    entradaDeDados.close()
                                 } else {
                                     console.log('\nAltura inválida!')
-                                    entradaDeDados.close()
                                 }
+                                entradaDeDados.close()
                             })
                         } else {
                             console.log('\nMedição inválida!')
@@ -152,11 +151,10 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                                                                         let texto            = formatacao.formatarSaidaMedia(situacao, situacaoFinal, mediaFinal, mediaRecuperacao, nomeCursoInf, disciplinaInf, nomeProfInf, nomeAlunoInf, sexoProfessor, sexoAluno, nota1Inf, nota2Inf, nota3Inf, nota4Inf, notaRecuperacaoInf)
 
                                                                                                         console.log(texto)
-                                                                                                        entradaDeDados.close()
                                                                                                     } else {
                                                                                                         console.log('Nota de recuperação inválida!')
-                                                                                                        entradaDeDados.close()
                                                                                                     }
+                                                                                                    entradaDeDados.close()
                                                                                                 })
                                                                                             } else {
                                                                                                 console.log(texto)
@@ -246,11 +244,10 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
 
                                             console.log(`\nTabuada de ${numero1Inf} a ${numero2Inf} sequenciada de ${contador1Inf} a ${contador2Inf}:`)
                                             console.log(resultadoTabuada)
-                                            entradaDeDados.close()
                                         } else {
                                             console.log('\nNúmero inválido ou menor que o primeiro contador!')
-                                            entradaDeDados.close()
                                         }
+                                        entradaDeDados.close()
                                     })
                                 } else {
                                     console.log('\nNúmero inválido ou menor que zero!')
@@ -281,11 +278,10 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                     let expressao    = formatacao.formatarExpressaoFatorial(numeroFatInf)
 
                     console.log(`\nFatorial de ${numeroFatInf} é ${expressao} = ${resultadoFat}`)
-                    entradaDeDados.close()
                 } else {
                     console.log('\nDigite apenas números válidos! (maior que 1 e inteiro)')
-                    entradaDeDados.close()
                 }
+                entradaDeDados.close()
             })
         } else {
             // Entrada do número inicial para o cálculo de pares e ímpares
