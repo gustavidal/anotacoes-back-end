@@ -78,16 +78,16 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                 // Entrada do gênero do professor
                 if (nomeProfessorVal) {
                     entradaDeDados.question('Digite o gênero do professor (MASCULINO ou FEMININO): ', function (generoProfessor) {
-                        let generoProfInf       = generoProfessor.trim()
-                        let generoProfessorVal1 = validacao.validarEntradaDeString(generoProfInf)
-                        let generoProfessorVal2 = validacao.validarGenero(generoProfInf)
+                        let generoProfInf  = generoProfessor.trim()
+                        let generoProfVal1 = validacao.validarEntradaDeString(generoProfInf)
+                        let generoProfVal2 = validacao.validarGenero(generoProfInf)
+                        let sexoProfessor  = formatacao.formatarGeneroProfessor(generoProfessor)
                         
                         // Entrada do nome do aluno
-                        if (generoProfessorVal1 && generoProfessorVal2) {
+                        if (generoProfVal1 && generoProfVal2) {
                             entradaDeDados.question('\nDigite o nome do aluno: ', function (nomeAluno) {
-                                let sexoProfessor = formatacao.formatarGeneroProfessor(generoProfessor)
-                                let nomeAlunoInf  = nomeAluno.trim()
-                                let nomeAlunoVal  = validacao.validarEntradaDeString(nomeAlunoInf)
+                                let nomeAlunoInf = nomeAluno.trim()
+                                let nomeAlunoVal = validacao.validarEntradaDeString(nomeAlunoInf)
 
                                 // Entrada do gênero do aluno
                                 if (nomeAlunoVal) {
@@ -95,11 +95,11 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                         let generoAlunoInf  = generoAluno.trim()
                                         let generoAlunoVal1 = validacao.validarEntradaDeString(generoAlunoInf)
                                         let generoAlunoVal2 = validacao.validarGenero(generoAlunoInf)
+                                        let sexoAluno    = formatacao.formatarGeneroAluno(generoAlunoInf)
                                         
                                         // Entrada do nome do curso
                                         if (generoAlunoVal1 && generoAlunoVal2) {
                                             entradaDeDados.question('\nDigite o nome do curso: ', function (nomeCurso) {
-                                                let sexoAluno    = formatacao.formatarGeneroAluno(generoAlunoInf)
                                                 let nomeCursoInf = nomeCurso.trim()
                                                 let nomeCursoVal = validacao.validarEntradaDeString(nomeCursoInf)
 
@@ -138,7 +138,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                                                         if (nota4Val1 && nota4Val2) {
                                                                                             let mediaFinal = calculos.calcularMedia(nota1Inf, nota2Inf, nota3Inf, nota4Inf)
                                                                                             let situacao   = formatacao.formatarMediaFinal(mediaFinal)
-                                                                                            let texto      = formatacao.formatarSaidaMedia(situacao, 0, mediaFinal, 0, nomeCursoInf, disciplinaInf, nomeProfInf, nomeAlunoInf, generoProfInf, generoAlunoInf, nota1Inf, nota2Inf, nota3Inf, nota4Inf, 0)
+                                                                                            let texto      = formatacao.formatarSaidaMedia(situacao, 0, mediaFinal, 0, nomeCursoInf, disciplinaInf, nomeProfInf, nomeAlunoInf, sexoProfessor, sexoAluno, nota1Inf, nota2Inf, nota3Inf, nota4Inf, 0)
                                                                                             
                                                                                             if (situacao === 'recuperação') {
                                                                                                 entradaDeDados.question('Digite a nota da recuperação: ', function (notaRecuperacao) {
@@ -149,7 +149,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                                                                                     if (notaRecuperacaoVal1 && notaRecuperacaoVal2) {
                                                                                                         let mediaRecuperacao = calculos.calcularMediaRecuperativa(mediaFinal, notaRecuperacaoInf)
                                                                                                         let situacaoFinal    = formatacao.formatarMediaRecuperativa(mediaRecuperacao)
-                                                                                                        let texto            = formatacao.formatarSaidaMedia(situacao, situacaoFinal, mediaFinal, mediaRecuperacao, nomeCursoInf, disciplinaInf, nomeProfInf, nomeAlunoInf, generoProfInf, generoAlunoInf, nota1Inf, nota2Inf, nota3Inf, nota4Inf, notaRecuperacaoInf)
+                                                                                                        let texto            = formatacao.formatarSaidaMedia(situacao, situacaoFinal, mediaFinal, mediaRecuperacao, nomeCursoInf, disciplinaInf, nomeProfInf, nomeAlunoInf, sexoProfessor, sexoAluno, nota1Inf, nota2Inf, nota3Inf, nota4Inf, notaRecuperacaoInf)
 
                                                                                                         console.log(texto)
                                                                                                         entradaDeDados.close()
@@ -214,37 +214,37 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
         } else if (calculadora === 'TABUADA') {
             // Entrada do número para a primeira tabuada
             entradaDeDados.question('\nDigite um número maior que 1 para ser a primeira tabuada: ', function (numero) {
-                let numeroInf        = numero.trim()
-                let numeroVal        = validacao.validarEntradaDeNumber(numeroInf)
-                let numeroMaiorQueUm = validacao.validarNumeroParaTabuada(numeroInf)
+                let numero1Inf  = numero.trim()
+                let numero1Val1 = validacao.validarEntradaDeNumber(numero1Inf)
+                let numero1Val2 = validacao.validarNumeroParaTabuada(numero1Inf)
 
                 // Validação do número e entrada do segundo número para a tabuada
-                if (numeroVal && numeroMaiorQueUm) {
-                    entradaDeDados.question(`Digite um número maior que ${numeroInf} para ser sequenciado até a tabuada final: `, function (numero2) {
-                        let numero2Inf                    = numero2.trim()
-                        let numero2Val                    = validacao.validarEntradaDeNumber(numero2Inf)
-                        let numero2MaiorQuePrimeiroNumero = validacao.validarNumeroParaTabuada(numero2Inf)
-                        let numero2MaiorQueNumero1        = validacao.serMaior(numero2Inf, numeroInf)
+                if (numero1Val1 && numero1Val2) {
+                    entradaDeDados.question(`Digite um número maior que ${numero1Inf} para ser sequenciado até a tabuada final: `, function (numero2) {
+                        let numero2Inf  = numero2.trim()
+                        let numero2Val1 = validacao.validarEntradaDeNumber(numero2Inf)
+                        let numero2Val2 = validacao.validarNumeroParaTabuada(numero2Inf)
+                        let numero2Val3 = validacao.serMaior(numero2Inf, numero1Inf)
 
                         // Validação do segundo número e entrada do contador para a tabuada
-                        if (numero2Val && numero2MaiorQuePrimeiroNumero && numero2MaiorQueNumero1) {
+                        if (numero2Val1 && numero2Val2 && numero2Val3) {
                             entradaDeDados.question('Digite um número para ser o 1º contador da tabuada: ', function (multiplicador) {
-                                let contadorInf               = multiplicador.trim()
-                                let contadorVal               = validacao.validarEntradaDeNumber(contadorInf)
-                                let contadorMaiorOuIgualAZero = validacao.serMaior(contadorInf, -1)
+                                let contador1Inf  = multiplicador.trim()
+                                let contador1Val1 = validacao.validarEntradaDeNumber(contador1Inf)
+                                let contador1Val2 = validacao.serMaior(contador1Inf, -1)
 
                                 // Validação do contador e entrada do contador final para a tabuada
-                                if (contadorVal && contadorMaiorOuIgualAZero) {
+                                if (contador1Val1 && contador1Val2) {
                                     entradaDeDados.question('Digite um número para ser o contador final da tabuada: ', function (contadorFinal) {
-                                        let contadorFinalInf                   = contadorFinal.trim()
-                                        let contadorFinalVal                   = validacao.validarEntradaDeNumber(contadorFinalInf)
-                                        let contadorFinalMaiorQueMultiplicador = validacao.serMaior(contadorFinalInf, contadorInf)
+                                        let contador2Inf  = contadorFinal.trim()
+                                        let contador2Val1 = validacao.validarEntradaDeNumber(contador2Inf)
+                                        let contador2Val2 = validacao.serMaior(contador2Inf, contador1Inf)
 
                                         // Validação do contador final e cálculo da tabuada
-                                        if (contadorFinalVal && contadorFinalMaiorQueMultiplicador) {
-                                            let resultadoTabuada = formatacao.formatarTabuada(numeroInf, numero2Inf, contadorInf, contadorFinalInf)
+                                        if (contador2Val1 && contador2Val2) {
+                                            let resultadoTabuada = formatacao.formatarTabuada(numero1Inf, numero2Inf, contador1Inf, contador2Inf)
 
-                                            console.log(`\nTabuada de ${numeroInf} a ${numero2Inf} sequenciada de ${contadorInf} a ${contadorFinalInf}:`)
+                                            console.log(`\nTabuada de ${numero1Inf} a ${numero2Inf} sequenciada de ${contador1Inf} a ${contador2Inf}:`)
                                             console.log(resultadoTabuada)
                                             entradaDeDados.close()
                                         } else {
@@ -270,17 +270,17 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
         } else if (calculadora === 'FATORIAL') {
             // Entrada do número para o cálculo do fatorial
             entradaDeDados.question('\nDigite um número inteiro maior que 1 para calcular o fatorial: ', function (numeroFatorial) {
-                let numeroFatorialInf        = numeroFatorial.trim().replace(/!/g, '')
-                let numeroFatorialVal        = validacao.validarEntradaDeNumber(numeroFatorialInf)
-                let numeroFatorialInteiro    = validacao.validarNumeroInteiro(numeroFatorialInf)
-                let numeroFatorialMaiorQueUm = validacao.serMaior(numeroFatorialInf, 1)
+                let numeroFatInf  = numeroFatorial.trim().replace(/!/g, '')
+                let numeroFatVal1 = validacao.validarEntradaDeNumber(numeroFatInf)
+                let numeroFatVal2 = validacao.validarNumeroInteiro(numeroFatInf)
+                let numeroFatVal3 = validacao.serMaior(numeroFatInf, 1)
 
                 // Validação do número para o cálculo do fatorial
-                if (numeroFatorialVal && numeroFatorialInteiro && numeroFatorialMaiorQueUm) {
-                    let resultadoFatorial = calculos.calcularFatorial(numeroFatorialInf)
-                    let expressao         = formatacao.formatarExpressaoFatorial(numeroFatorialInf)
+                if (numeroFatVal1 && numeroFatVal2 && numeroFatVal3) {
+                    let resultadoFat = calculos.calcularFatorial(numeroFatInf)
+                    let expressao    = formatacao.formatarExpressaoFatorial(numeroFatInf)
 
-                    console.log(`\nFatorial de ${numeroFatorialInf} é ${expressao} = ${resultadoFatorial}`)
+                    console.log(`\nFatorial de ${numeroFatInf} é ${expressao} = ${resultadoFat}`)
                     entradaDeDados.close()
                 } else {
                     console.log('\nDigite apenas números válidos! (maior que 1 e inteiro)')
@@ -290,41 +290,32 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
         } else {
             // Entrada do número inicial para o cálculo de pares e ímpares
             entradaDeDados.question('\nDigite o Número Inicial (0 até 500): ', function (numeroInicial) {
-                let numeroInicialInf                     = numeroInicial.trim()
-                let numeroInicialVal                     = validacao.validarEntradaDeNumber(numeroInicialInf)
-                let numeroInicialInt                     = validacao.validarNumeroInteiro(numeroInicialInf)
-                let numeroInicialMaiorOuIgualAZero       = validacao.serMaior(numeroInicialInf, -1)
-                let numeroInicialMenorOuIgualAQuinhentos = validacao.serMenor(numeroInicialInf, 501)
+                let numeroIniInf  = numeroInicial.trim()
+                let numeroIniVal1 = validacao.validarEntradaDeNumber(numeroIniInf)
+                let numeroIniVal2 = validacao.validarNumeroInteiro(numeroIniInf)
+                let numeroIniVal3 = validacao.serMaior(numeroIniInf, -1)
+                let numeroIniVal4 = validacao.serMenor(numeroIniInf, 501)
 
                 // Validação do número inicial e entrada do número final para o cálculo de pares e ímpares
-                if (numeroInicialVal && numeroInicialInt && numeroInicialMaiorOuIgualAZero && numeroInicialMenorOuIgualAQuinhentos) {
+                if (numeroIniVal1 && numeroIniVal2 && numeroIniVal3 && numeroIniVal4) {
                     entradaDeDados.question('Digite o Número Final (100 até 1000): ', function (numeroFinal) {
-                        let numeroFinalInf              = numeroFinal.trim()
-                        let numeroFinalVal              = validacao.validarEntradaDeNumber(numeroFinalInf)
-                        let numeroFinalInt              = validacao.validarNumeroInteiro(numeroFinalInf)
-                        let numeroFinalMaiorOuIgualACem = validacao.serMaior(numeroFinalInf, 99)
-                        let numeroFinalMenorOuIgualAMil = validacao.serMenor(numeroFinalInf, 1001)
+                        let numeroFinInf  = numeroFinal.trim()
+                        let numeroFinVal1 = validacao.validarEntradaDeNumber(numeroFinInf)
+                        let numeroFinVal2 = validacao.validarNumeroInteiro(numeroFinInf)
+                        let numeroFinVal3 = validacao.serMaior(numeroFinInf, 99)
+                        let numeroFinVal4 = validacao.serMenor(numeroFinInf, 1001)
 
                         // Validação do número final e entrada do tipo de separação para o cálculo de pares e ímpares
-                        if (numeroFinalVal && numeroFinalInt && numeroFinalMaiorOuIgualACem && numeroFinalMenorOuIgualAMil) {
+                        if (numeroFinVal1 && numeroFinVal2 && numeroFinVal3 && numeroFinVal4) {
                             entradaDeDados.question('\nVocê deseja calcular (PARES, ÍMPARES ou AMBOS)? ', function (tipoSeparacao) {
-                                let tipo = tipoSeparacao.trim().toUpperCase()
+                                let tipo         = tipoSeparacao
+                                let retornoPar   = calculos.calcularPares(numeroIniInf, numeroFinInf)
+                                let retornoImp   = calculos.calcularImpares(numeroIniInf, numeroFinInf)
+                                let textoPares   = formatacao.formatarListaParesImpares('Lista de números Pares', retornoPar)
+                                let textoImpares = formatacao.formatarListaParesImpares('Lista de números Ímpares', retornoImp)
+                                let textoFinal   = formatacao.formatarSaidaParImpar(tipo, textoPares, textoImpares)
 
-                                let retornoPares   = calculos.calcularPares(numeroInicialInf, numeroFinalInf)
-                                let retornoImpares = calculos.calcularImpares(numeroInicialInf, numeroFinalInf)
-                                let textoPares     = formatacao.formatarListaParesImpares('Lista de números Pares', retornoPares)
-                                let textoImpares   = formatacao.formatarListaParesImpares('Lista de números Ímpares', retornoImpares)
-
-                                if (tipo === 'PARES') {
-                                    console.log(textoPares)
-                                } else if (tipo === 'ÍMPARES' || tipo === 'IMPARES') {
-                                    console.log(textoImpares)
-                                } else if (tipo === 'AMBOS') {
-                                    console.log(textoPares)
-                                    console.log(textoImpares)
-                                } else {
-                                    console.log('\nOpção inválida!')
-                                }
+                                console.log(textoFinal)
                                 entradaDeDados.close()
                             })
                         } else {

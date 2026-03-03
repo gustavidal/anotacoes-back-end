@@ -197,15 +197,33 @@ const formatarExpressaoFatorial = function (numero) {
 // Função que formata o resultado do cálculo de pares e ímpares
 const formatarListaParesImpares = function (titulo, retornoCalculo) {
     let tituloFormatado = titulo.trim().toUpperCase()
-    let partes     = retornoCalculo.split('|')
-    let lista      = partes[0]
-    let quantidade = partes[1]
-    let texto      = '\n' + tituloFormatado + '\n'
+    let partes          = retornoCalculo.split('|')
+    let lista           = partes[0]
+    let quantidade      = partes[1]
+    let texto           = '\n' + tituloFormatado + '\n'
     
     texto += lista
     texto += 'Quantidade de números encontrados: ' + quantidade + '\n'
 
     return texto
+}
+
+const formatarSaidaParImpar = function (tipo, tPar, tImpar) {
+    let tipoSaida    = String(tipo.trim().toUpperCase())
+    let textoPares   = String(tPar)
+    let textoImpares = String(tImpar)
+    let texto        = ''
+    
+    if (tipoSaida === 'PARES') {
+        texto += `${textoPares}`
+    } else if (tipoSaida === 'ÍMPARES' || tipoSaida === 'IMPARES') {
+        texto += `${textoImpares}`
+    } else if (tipoSaida === 'AMBOS') {
+        texto += `${textoPares}\n`
+        texto += `${textoImpares}`
+    } else {
+        texto += '\nOpção inválida!'
+    }
 }
 
 
@@ -220,5 +238,5 @@ module.exports = {
     formatarGeneroProfessor, formatarGeneroAluno, formatarMediaFinal, formatarMediaRecuperativa, formatarSaidaMedia,
     formatarTabuada,
     formatarExpressaoFatorial,
-    formatarListaParesImpares
+    formatarListaParesImpares, formatarSaidaParImpar
 }
