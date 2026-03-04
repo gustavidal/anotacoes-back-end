@@ -301,7 +301,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                         let numeroFinVal2 = validacao.validarNumeroInteiro(numeroFinInf)
                         let numeroFinVal3 = validacao.serMaior(numeroFinInf, 99)
                         let numeroFinVal4 = validacao.serMenor(numeroFinInf, 1001)
-                        let numeroFinVal5 = validacao.serIgual(numeroFinInf, numeroFinInf)
+                        let numeroFinVal5 = validacao.serIgual(numeroFinInf, numeroIniInf)
 
                         // Validação do número final e entrada do tipo de separação para o cálculo de pares e ímpares
                         if (numeroFinVal1 && numeroFinVal2 && numeroFinVal3 && numeroFinVal4 && numeroFinVal5) {
