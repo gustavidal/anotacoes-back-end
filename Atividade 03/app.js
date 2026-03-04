@@ -15,9 +15,9 @@ const entradaDeDados = readline.createInterface({
 });
 
 // Import das bibliotecas de cálculos, formatação e validação
-let calculos   = require('./modulo/calculos.js')
-let formatacao = require('./modulo/formatacoes.js')
-let validacao  = require('./modulo/validacoes.js')
+let validacao  = require('./modulo/1. validacoes.js')
+let calculos   = require('./modulo/2. calculos.js')
+let formatacao = require('./modulo/3. formatacoes.js')
 
 // Entrada do tipo de calculadora que o usuário deseja utilizar
 entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média, Tabuada, Fatorial ou Par/Ímpar): ', function (tipoCalculadora) {
@@ -304,7 +304,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                         let numeroFinVal5 = validacao.serIgual(numeroFinInf, numeroIniInf)
 
                         // Validação do número final e entrada do tipo de separação para o cálculo de pares e ímpares
-                        if (numeroFinVal1 && numeroFinVal2 && numeroFinVal3 && numeroFinVal4 && numeroFinVal5) {
+                        if (numeroFinVal1 && numeroFinVal2 && numeroFinVal3 && numeroFinVal4 && !numeroFinVal5) {
                             entradaDeDados.question('\nVocê deseja calcular (PARES, ÍMPARES ou AMBOS)? ', function (tipoSeparacao) {
                                 let tipo    = tipoSeparacao.trim()
                                 let tipoVal = validacao.validarEntradaDeString(tipo)
@@ -312,8 +312,8 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                                 if (tipoVal) {
                                     let retornoPar   = calculos.calcularPares(numeroIniInf, numeroFinInf)
                                     let retornoImp   = calculos.calcularImpares(numeroIniInf, numeroFinInf)
-                                    let textoPares   = formatacao.formatarListaParesImpares('Lista de números Pares', retornoPar)
-                                    let textoImpares = formatacao.formatarListaParesImpares('Lista de números Ímpares', retornoImp)
+                                    let textoPares   = formatacao.formatarListaParesImpares('LISTA DE NÚMEROS PARES', retornoPar)
+                                    let textoImpares = formatacao.formatarListaParesImpares('LISTA DE NÚMEROS ÍMPARES', retornoImp)
                                     let textoFinal   = formatacao.formatarSaidaParImpar(tipo, textoPares, textoImpares)
 
                                     console.log(textoFinal)

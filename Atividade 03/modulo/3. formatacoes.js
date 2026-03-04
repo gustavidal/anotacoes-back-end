@@ -195,7 +195,8 @@ const formatarExpressaoFatorial = function (numero) {
 // Função que formata o resultado do cálculo de pares e ímpares
 const formatarListaParesImpares = function (titulo, retornoCalculo) {
     let tituloFormat = titulo.trim().toUpperCase()
-    let partes       = retornoCalculo.split('|')
+    let retorno      = String(retornoCalculo)
+    let partes       = retorno.split('|')
     let lista        = partes[0]
     let quantidade   = partes[1]
     let texto        = `\n${tituloFormat}\n`
@@ -212,11 +213,11 @@ const formatarSaidaParImpar = function (tipo, tPar, tImpar) {
     let textoImpares = String(tImpar)
     let texto        = ''
     
-    if (tipoSaida === 'PARES') {
+    if (tipoSaida === 'PARES' || tipoSaida === 'PAR') {
         texto += `${textoPares}`
-    } else if (tipoSaida === 'ÍMPARES' || tipoSaida === 'IMPARES') {
+    } else if (tipoSaida === 'ÍMPARES' || tipoSaida === 'ÍMPAR' || tipoSaida === 'IMPARES' || tipoSaida === 'IMPAR') {
         texto += `${textoImpares}`
-    } else if (tipoSaida === 'AMBOS') {
+    } else if (tipoSaida === 'AMBOS' || tipoSaida === 'OS DOIS') {
         texto += `${textoPares}\n`
         texto += `${textoImpares}`
     } else {
