@@ -71,9 +71,9 @@ const formatarGeneroAluno = function (genero) {
     let sexo            = ''
 
     if (generoFormatado === 'MASCULINO' || generoFormatado === 'HOMEM')
-        sexo = 'aluno'
+        sexo = 'O aluno'
     else
-        sexo = 'aluna'
+        sexo = 'A aluna'
 
     return sexo
 }
@@ -108,11 +108,9 @@ const formatarMediaRecuperativa = function (media) {
 
 // Função que formata de forma completa a saída formatada da média com todos os valores pedidos nos requisitos
 const formatarSaidaMedia = function (
-    situacao, situacaoExame,
-    media, mediaExame,
+    situacao, situacaoExame, media, mediaExame,
     curso, disciplina,
-    nomeProf, nomeAluno,
-    genProf, genAluno,
+    nomeProf, nomeAluno, genProf, genAluno,
     nota1, nota2, nota3, nota4, notaExame
 ) {        
     let situacaoInf   = String(situacao)
@@ -133,9 +131,9 @@ const formatarSaidaMedia = function (
     let texto         = ''
     
     if (situacaoInf === 'recuperação')
-        texto += `\nO ${genAlunoInf} ${nomeAlunoInf} foi ${situacaoEx} na disciplina ${disciplinaInf}.`
+        texto += `\n${genAlunoInf} ${nomeAlunoInf} foi ${situacaoEx} na disciplina ${disciplinaInf}.`
     else
-        texto += `\nO ${genAlunoInf} ${nomeAlunoInf} foi ${situacaoInf} na disciplina ${disciplinaInf}.`
+        texto += `\n${genAlunoInf} ${nomeAlunoInf} foi ${situacaoInf} na disciplina ${disciplinaInf}.`
     
     texto += `\nCurso: ${cursoInf}`
     texto += `\n${genProfInf}: ${nomeProfInf}`
@@ -196,14 +194,14 @@ const formatarExpressaoFatorial = function (numero) {
 // FUNÇÕES PARA PAR E ÍMPAR
 // Função que formata o resultado do cálculo de pares e ímpares
 const formatarListaParesImpares = function (titulo, retornoCalculo) {
-    let tituloFormatado = titulo.trim().toUpperCase()
-    let partes          = retornoCalculo.split('|')
-    let lista           = partes[0]
-    let quantidade      = partes[1]
-    let texto           = '\n' + tituloFormatado + '\n'
+    let tituloFormat = titulo.trim().toUpperCase()
+    let partes       = retornoCalculo.split('|')
+    let lista        = partes[0]
+    let quantidade   = partes[1]
+    let texto        = `\n${tituloFormat}\n`
     
     texto += lista
-    texto += 'Quantidade de números encontrados: ' + quantidade + '\n'
+    texto += `Quantidade de números encontrados: ${quantidade}\n`
 
     return texto
 }

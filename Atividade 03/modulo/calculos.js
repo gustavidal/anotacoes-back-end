@@ -7,10 +7,10 @@
 
 // FUNÇÕES PADRÕES
 // Funções para cálculos matemáticos básicos (adição, subtração, multiplicação, divisão e potenciação)
-const somar         = (numero1, numero2) => Number(numero1) + Number(numero2)
-const multiplicar   = (numero1, numero2) => Number(numero1) * Number(numero2)
-const dividir       = (numero1, numero2) => Number(numero1) / Number(numero2)
-const elevar        = (base, expoente)   => Number(base)   ** Number(expoente)
+const somar       = (numero1, numero2) => Number(numero1) + Number(numero2)
+const multiplicar = (numero1, numero2) => Number(numero1) * Number(numero2)
+const dividir     = (numero1, numero2) => Number(numero1) / Number(numero2)
+const elevar      = (base, expoente)   => Number(base)   ** Number(expoente)
 
 
 
@@ -24,8 +24,6 @@ const calcularIMC = function (peso, altura, medicao) {
 
     if (medicaoAlt === 'CM')
         alturaInf = dividir(alturaInf, 100)
-    else if (medicaoAlt !== 'M')
-        return false
 
     imc = Number((dividir(pesoInf, elevar(alturaInf, 2))).toFixed(2))
     
@@ -50,11 +48,11 @@ const calcularMedia = function (nota1, nota2, nota3, nota4) {
 
 // Função que calcula a média recuperativa, pedindo uma nota para um novo cálculo
 const calcularMediaRecuperativa = function (media, notaRecuperacao) {
-    let mediaNum           = Number(media)
-    let notaRecuperacaoNum = Number(notaRecuperacao)
+    let mediaNum   = Number(media)
+    let notaRecNum = Number(notaRecuperacao)
     let mediaExame
 
-    mediaExame = Number((dividir(somar(mediaNum, notaRecuperacaoNum), 2)).toFixed(2))
+    mediaExame = Number((dividir(somar(mediaNum, notaRecNum), 2)).toFixed(2))
 
     return mediaExame
 }
@@ -77,36 +75,36 @@ const calcularFatorial = function (numero) {
 // FUNÇÕES PARA PAR E ÍMPAR
 // Função que calcula os números pares
 const calcularPares = function (numeroInicial, numeroFinal) {
-    let inicio   = Number(numeroInicial)
-    let fim      = Number(numeroFinal)
-    let lista    = ''
-    let contador = 0
+    let inicio = Number(numeroInicial)
+    let fim    = Number(numeroFinal)
+    let lista  = ''
+    let cont   = 0
 
     for (let i = inicio; i <= fim; i++) {
         if (i % 2 === 0) {
             lista += i + '\n'
-            contador++
+            cont++
         }
     }
 
-    return lista + '|' + contador
+    return lista + '|' + cont
 }
 
 // Função que calcula os números ímpares
 const calcularImpares = function (numeroInicial, numeroFinal) {
-    let inicio   = Number(numeroInicial)
-    let fim      = Number(numeroFinal)
-    let lista    = ''
-    let contador = 0
+    let inicio = Number(numeroInicial)
+    let fim    = Number(numeroFinal)
+    let lista  = ''
+    let cont   = 0
 
     for (let i = inicio; i <= fim; i++) {
         if (i % 2 !== 0) {
             lista += i + '\n'
-            contador++
+            cont++
         }
     }
 
-    return lista + '|' + contador
+    return lista + '|' + cont
 }
 
 

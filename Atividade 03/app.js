@@ -15,9 +15,9 @@ const entradaDeDados = readline.createInterface({
 });
 
 // Import das bibliotecas de cálculos, formatação e validação
-let calculos   = require('./modulo/calculo.js')
-let formatacao = require('./modulo/formatacao.js')
-let validacao  = require('./modulo/validacao.js')
+let calculos   = require('./modulo/calculos.js')
+let formatacao = require('./modulo/formatacoes.js')
+let validacao  = require('./modulo/validacoes.js')
 
 // Entrada do tipo de calculadora que o usuário deseja utilizar
 entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média, Tabuada, Fatorial ou Par/Ímpar): ', function (tipoCalculadora) {
@@ -27,6 +27,7 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
 
     if (tipoCalculadoraVal1 && tipoCalculadoraVal2) {
         let calculadora = formatacao.formatarTipoDeCalculadora(tipoCalculadoraInf)
+        
         if (calculadora === 'IMC') {
             // Entrada do peso
             entradaDeDados.question('\nDigite o peso em kg: ', function (peso) {
@@ -300,9 +301,10 @@ entradaDeDados.question('\nQual calculadora você deseja utilizar? (IMC, Média,
                         let numeroFinVal2 = validacao.validarNumeroInteiro(numeroFinInf)
                         let numeroFinVal3 = validacao.serMaior(numeroFinInf, 99)
                         let numeroFinVal4 = validacao.serMenor(numeroFinInf, 1001)
+                        let numeroFinVal5 = validacao.serIgual(numeroFinInf, numeroFinInf)
 
                         // Validação do número final e entrada do tipo de separação para o cálculo de pares e ímpares
-                        if (numeroFinVal1 && numeroFinVal2 && numeroFinVal3 && numeroFinVal4) {
+                        if (numeroFinVal1 && numeroFinVal2 && numeroFinVal3 && numeroFinVal4 && numeroFinVal5) {
                             entradaDeDados.question('\nVocê deseja calcular (PARES, ÍMPARES ou AMBOS)? ', function (tipoSeparacao) {
                                 let tipo    = tipoSeparacao.trim()
                                 let tipoVal = validacao.validarEntradaDeString(tipo)
