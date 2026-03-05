@@ -71,6 +71,18 @@ const exibirDados = function () {
     listaDeAlunos.forEach(function (aluno) {
         console.log(`O nome do aluno é: ${aluno}`)
     });
+
+    // Usando o for (--- of ---)
+    console.log('\nExemplo com for (--- of ---):')
+    for (aluno of listaDeAlunos) {
+        console.log(`O nome do aluno é: ${aluno}`)
+    }
+    
+    // Usando o for (--- in ---)
+    console.log('\nExemplo com for (--- in ---):')
+    for (item in listaDeAlunos) {
+        console.log(`O nome do aluno é: ${listaDeAlunos[item]}`)
+    }
 }
 
 exibirDados()
