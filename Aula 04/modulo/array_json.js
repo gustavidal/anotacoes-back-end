@@ -30,8 +30,9 @@
 */
 
 // Criando objetos do tipo ARRAY
-const listaDeAlunos = ['José', 'Maria', 'Luiz', 'Antônio', 'Carlos']
-const listaDeClientes = []
+const listaDeAlunos       = ['José', 'Maria', 'Luiz', 'Antônio', 'Carlos']
+const listaDeClientes     = []
+const listaDeFornecedores = []
 
 const exibirDados = function () {
     // Exibe o objeto ARRAY com o seu conteúdo
@@ -55,17 +56,17 @@ const exibirDados = function () {
     // Usando o while
     console.log('\nExemplo com while:')
     let cont = 0
-    while (cont < 5) {
+    while (cont < listaDeAlunos.length) {
         console.log(`O nome do aluno é: ${listaDeAlunos[cont]}`)
         cont += 1
     }
 
     // Usando o for
     console.log('\nExemplo com for:')
-    for (let contador = 0; contador < 5; contador++) {
+    for (let contador = 0; contador < listaDeAlunos.length; contador++) {
         console.log(`O nome do aluno é: ${listaDeAlunos[contador]}`)
     }
-    
+
     // Usando o forEach
     console.log('\nExemplo com forEach:')
     listaDeAlunos.forEach(function (aluno) {
@@ -77,12 +78,35 @@ const exibirDados = function () {
     for (aluno of listaDeAlunos) {
         console.log(`O nome do aluno é: ${aluno}`)
     }
-    
+
     // Usando o for (--- in ---)
     console.log('\nExemplo com for (--- in ---):')
     for (item in listaDeAlunos) {
         console.log(`O nome do aluno é: ${listaDeAlunos[item]}`)
     }
+
+    // Retorna a quantidade de itens em um ARRAY
+    console.log('')
+    console.log(listaDeAlunos.length)
 }
 
-exibirDados()
+const manipularDados = function () {
+    // Adicionando elementos de forma manual pelo índice
+    listaDeClientes[0] = 'José da Silva'
+    listaDeClientes[1] = 'Maria da Silva'
+    listaDeClientes[2] = 'Luiz da Silva'
+    listaDeClientes[3] = 'Ana da Silva'
+
+    console.log(listaDeClientes)
+
+    // Permite adicionar novos elementos no ARRAY, sempre no final
+    listaDeFornecedores.push('Antônio')
+    listaDeFornecedores.push('Caio')
+    listaDeFornecedores.push('Luiz')
+    listaDeFornecedores.push('Hugo', 'Maria', 'José', 'André')
+
+    console.log(listaDeFornecedores)
+}
+
+// exibirDados()
+manipularDados()
