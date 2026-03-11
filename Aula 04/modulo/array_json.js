@@ -18,20 +18,20 @@
                 Índices    0        1       2
             let nomes = ['José', 'Maria', 'João']
 
-    JSON é um espaço na memória para armazenar dados com CHAVE e VALOR.
+    JSON é um espaço na memória para armazenar dados com CHAVE e indice.
         Ex:
             let nome     = 'José'
             let telefone = '5511999999999'
             let email    = 'jose@gmail.com'
 
                             Atributo
-                            Chave    Valor     Chave         Valor        Chave         Valor
+                            Chave    indice     Chave         indice        Chave         indice
             let cliente  = {"nome": "José", "telefone": "5511999999999", "email": "jose@gmail.com"}
 */
 
 // Criando objetos do tipo ARRAY
-const listaDeAlunos       = ['José', 'Maria', 'Luiz', 'Antônio', 'Carlos']
-const listaDeClientes     = []
+const listaDeAlunos = ['José', 'Maria', 'Luiz', 'Antônio', 'Carlos']
+const listaDeClientes = []
 const listaDeFornecedores = []
 
 const exibirDados = function () {
@@ -104,9 +104,57 @@ const manipularDados = function () {
     listaDeFornecedores.push('Caio')
     listaDeFornecedores.push('Luiz')
     listaDeFornecedores.push('Hugo', 'Maria', 'José', 'André')
+    console.table(listaDeFornecedores)
 
-    console.log(listaDeFornecedores)
+    // Permite adicionar novos elementos no ARRAY, sempre no início
+    // Após a adição do elemento, ele reorganiza todos os outros itens
+    listaDeFornecedores.unshift('Luciano')
+    console.table(listaDeFornecedores)
+
+    // Permite adicionar novos elementos em uma determinada posição do ARRAY
+    //                  splice(índice, qtdeElementos, 'Conteúdo novo')
+    listaDeFornecedores.splice(3, 0, 'Bernardo')
+    console.table(listaDeFornecedores)
+
+    // Permite remover um determinado elemento, com base no índice do ARRAY
+    //                  splice(índice, qtdeRemocao)
+    listaDeFornecedores.splice(6, 1)
+    console.table(listaDeFornecedores)
+
+    // Permite remover o último elemento de um ARRAY
+    listaDeFornecedores.pop()
+    console.table(listaDeFornecedores)
+
+    // Permite remover o primeiro elemento de um ARRAY
+    // Após a remoção, os itens são reorganizados
+    listaDeFornecedores.shift()
+    console.table(listaDeFornecedores)
+}
+
+const removerNome = function (nome) {
+    //                          VERSÃO COM INDEX OF
+    // indexOf -> Retorna o índice referente ao conteúdo que esta sendo pesquisado
+    listaDeAlunos.splice(listaDeAlunos.indexOf(nome), 1)
+
+    //                            VERSÃO COM FOR
+    // for (indice = 0; listaDeAlunos[indice] !== nome; indice++) { }
+    // if (listaDeAlunos[indice] === nome)
+    //     listaDeAlunos.splice(indice, 1)
+
+    //                       VERSÃO COM FOR (-- IN --)
+    // for (indice in listaDeAlunos)
+    //     if (nome === listaDeAlunos[indice])
+    //         listaDeAlunos.splice(indice, 1)
+
+    console.table(listaDeAlunos)
+}
+
+const verificarItem = function (nome) {
+    // .includes -> Verifica se um elemento existe dentro de um ARRAY, retornando true ou false
+    console.log(listaDeAlunos.includes(nome))
 }
 
 // exibirDados()
-manipularDados()
+// manipularDados()
+// removerNome('Maria')
+verificarItem('José')
