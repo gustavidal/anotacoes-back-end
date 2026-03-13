@@ -186,17 +186,97 @@ const manipularDadosJSON = function () {
 
 const cadastroDeProdutos = function () {
     let cores = [
-        { "id": 1, "cor": "Branco", "hexadecimal": "#ffffff" },
-        { "id": 2, "cor": "Preto", "hexadecimal": "#000000" },
-        { "id": 3, "cor": "Azul", "hexadecimal": "#0000ff" },
-        { "id": 4, "cor": "Amarelo", "hexadecimal": "#ffff00" },
-        { "id": 5, "cor": "Rosa", "hexadecimal": "#ffb5c0" },
+        { "id": 1, "cor": "Branco",  "hexadecimal": "#ffffff" }, // 0
+        { "id": 2, "cor": "Preto",   "hexadecimal": "#000000" }, // 1
+        { "id": 3, "cor": "Azul",    "hexadecimal": "#0000ff" }, // 2
+        { "id": 4, "cor": "Amarelo", "hexadecimal": "#ffff00" }, // 3
+        { "id": 5, "cor": "Rosa",    "hexadecimal": "#ffb5c0" }, // 4
     ]
 
-    for (let indice = 0; indice < cores.length; indice++)
-        console.log(cores[indice].cor)
-}
+    // for (let indice = 0; indice < cores.length; indice++)
+    //     console.log(cores[indice].cor)
 
+    let marcas = [
+        { "id": 1, "marca": "Dell",       "telefone": "11987654321", "email": "dell@gmail.com" },       // 0
+        { "id": 2, "marca": "LogiTech",   "telefone": "11912345678", "email": "logitech@gmail.com" },   // 1
+        { "id": 3, "marca": "Samsung",    "telefone": "11913572468", "email": "samsung@gmail.com" },    // 2
+        { "id": 4, "marca": "Apple",      "telefone": "11924681357", "email": "apple@gmail.com" },      // 3
+        { "id": 5, "marca": "Multilaser", "telefone": "11975318642", "email": "multilaser@gmail.com" }, // 4
+        { "id": 6, "marca": "Positivo",   "telefone": "11986427531", "email": "positivo@gmail.com" }    // 5
+    ]
+
+    let produtos = [
+        {
+            "id": 1,
+            "nome": "Monitor",
+            "descricao": "Monitor de 27 polegadas",
+            "valor": 1500,
+            "quantidade": 20,
+            "cor": [
+                cores[0],
+                cores[1]
+            ],
+            "marca": [
+                marcas[0].marca
+            ]
+        },
+        {
+            "id": 2,
+            "nome": "Teclado",
+            "descricao": "Teclado mecânico RGB",
+            "valor": 250,
+            "quantidade": 500,
+            "cor": cores,
+            "marca": [
+                marcas[0].marca,
+                marcas[2].marca,
+                marcas[3].marca
+            ]
+        },
+        {
+            "id": 3,
+            "nome": "Mouse",
+            "descricao": "Mouse sem fio",
+            "valor": 80,
+            "quantidade": 160,
+            "cor": [
+                cores[1],
+                cores[3],
+                cores[4]
+            ],
+            "marca": [
+                marcas[0].marca,
+                marcas[1].marca,
+                marcas[4].marca,
+                marcas[5].marca
+            ]
+        }
+    ]
+
+    // console.log(produtos)
+    // console.table(produtos)
+    
+    // // Exibindo todas as cores referente ao produto "MONITOR"
+    // produtos[0].cor.forEach(function (itemCor) {
+    //     console.log(itemCor.cor)
+    // })
+
+    console.log('----------------------------------------')
+    produtos.forEach(function (itemProduto) {
+        console.log(`Produto: ${itemProduto.nome}`)
+        console.log(`Quantidade: ${itemProduto.quantidade}`)
+        console.log(`Valor: R$${itemProduto.valor}`)
+        console.log(`Cor:`)
+        itemProduto.cor.forEach(function (itemCor) {
+            console.log(`   ${itemCor.cor}`)
+        })
+        console.log(`Marca:`)
+        itemProduto.marca.forEach(function (itemMarca) {
+            console.log(`   ${itemMarca}`)
+        })
+        console.log('----------------------------------------')
+    })
+}
 
 // exibirDados()
 // manipularDados()
