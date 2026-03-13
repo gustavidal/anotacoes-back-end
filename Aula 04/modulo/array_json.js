@@ -26,7 +26,7 @@
 
                             Atributo
                             Chave    indice     Chave         indice        Chave         indice
-            let cliente  = {"nome": "José", "telefone": "5511999999999", "email": "jose@gmail.com"}
+            let cliente  = {'nome': 'José', 'telefone': '5511999999999', 'email': 'jose@gmail.com'}
 */
 
 // Criando objetos do tipo ARRAY
@@ -154,7 +154,53 @@ const verificarItem = function (nome) {
     console.log(listaDeAlunos.includes(nome))
 }
 
+const manipularDadosJSON = function () {
+    // A estrutura do JSON é Chave (atributo) : Valor (conteúdo)
+    let aluno = { "id": 1, "nome": "José da Silva", "ra": 28374, "email": "jose@gmail.com" }
+
+    // Exibe o objeto JSON
+    console.log(aluno)
+    console.table(aluno)
+
+    // Exibe um valor de atributo específico
+    console.log(aluno.nome)
+    console.log(aluno.email)
+
+    // Adiciona um novo atributo em um JSON existente
+    aluno.telefone = "11999999999"
+    aluno.data_nascimento = "01/01/2000"
+    console.log(aluno)
+
+    // Remove um atributo existente em um JSON existente
+    delete aluno.email
+    console.log(aluno)
+
+    // Renomeia um atributo existente
+    aluno.ra = 98423
+    console.log(aluno)
+
+    // Cria um atributo para uso posterior
+    aluno.nota = null
+    console.log(aluno)
+}
+
+const cadastroDeProdutos = function () {
+    let cores = [
+        { "id": 1, "cor": "Branco", "hexadecimal": "#ffffff" },
+        { "id": 2, "cor": "Preto", "hexadecimal": "#000000" },
+        { "id": 3, "cor": "Azul", "hexadecimal": "#0000ff" },
+        { "id": 4, "cor": "Amarelo", "hexadecimal": "#ffff00" },
+        { "id": 5, "cor": "Rosa", "hexadecimal": "#ffb5c0" },
+    ]
+
+    for (let indice = 0; indice < cores.length; indice++)
+        console.log(cores[indice].cor)
+}
+
+
 // exibirDados()
 // manipularDados()
 // removerNome('Maria')
-verificarItem('José')
+// verificarItem('José')
+// manipularDadosJSON()
+cadastroDeProdutos()
