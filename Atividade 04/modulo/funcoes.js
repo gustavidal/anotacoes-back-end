@@ -7,6 +7,9 @@
 
 let arquivo = require('./estados_cidades.js')
 
+const listaDeEstados = arquivo.listaDeEstados
+const ESTADOS = listaDeEstados.estados
+
 // Função que retorna uma lista com todas as siglas dos estados brasileiros junto com a quantidade de siglas
 const getListaDeEstados = function () {
     // Criação de variáveis
@@ -15,7 +18,7 @@ const getListaDeEstados = function () {
     let quantidade
 
     // Loop que lista todos os estados e seus atributos (nome, sigla, cidades e etc)
-    arquivo.listaDeEstados.estados.forEach(function (itemLista) {
+    ESTADOS.forEach(function (itemLista) {
         // Adiciona TODAS e SOMENTE as siglas dos estados brasileiros
         uf.push(itemLista.sigla)
     })
@@ -31,4 +34,14 @@ const getListaDeEstados = function () {
     return lista
 }
 
-getListaDeEstados()
+const getDadosEstados = function (siglaEstado) {
+    let lista = {}
+    let siglas = getListaDeEstados()
+
+    siglas.uf.forEach(function (itemLista) {
+        console.log(itemLista)
+    })
+}
+
+// getListaDeEstados()
+getDadosEstados('SP')
