@@ -38,10 +38,24 @@ const getDadosEstados = function (siglaEstado) {
     let lista = {}
     let siglas = getListaDeEstados()
 
-    siglas.uf.forEach(function (itemLista) {
-        console.log(itemLista)
+    siglas.uf.forEach(function (itemSigla) {
+        if (itemSigla == siglaEstado.toUpperCase()) {
+            lista.uf = itemSigla
+            
+            ESTADOS.forEach(function (itemLista) {
+                if (itemLista.sigla == itemSigla) {
+                    lista.descricao = itemLista.nome
+                    lista.capital = itemLista.capital
+                    lista.regiao = itemLista.regiao
+                }
+            })
+        } else {
+            return false
+        }
     })
+
+    return lista
 }
 
 // getListaDeEstados()
-getDadosEstados('SP')
+getDadosEstados('mg')
