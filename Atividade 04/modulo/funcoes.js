@@ -34,7 +34,7 @@ const getListaDeEstados = function () {
     return lista
 }
 
-// Função que retorna um JSON com os dados do estado, como nome, sigla, capital e região, a partir da sigla do estado
+// Função que retorna uma lista com os dados do estado, como nome, sigla, capital e região, a partir da sigla do estado
 const getDadosEstados = function (siglaEstado) {
     // Criação de variáveis
     let lista = {}
@@ -46,7 +46,7 @@ const getDadosEstados = function (siglaEstado) {
         if (itemSigla == siglaEstado.toUpperCase()) {
             // Adiciona a sigla do estado a um JSON
             lista.uf = itemSigla
-            
+
             // Loop que percorre a lista de estados brasileiros
             ESTADOS.forEach(function (itemLista) {
                 // Verifica se a sigla do estado é igual a sigla passada como parâmetro, caso seja, adiciona os dados do estado a um JSON
@@ -66,5 +66,33 @@ const getDadosEstados = function (siglaEstado) {
     return lista
 }
 
-// getListaDeEstados()
-getDadosEstados('mg')
+// Função que retorna uma lista com os dados do estado, como nome, sigla e capital, a partir da sigla do estado
+const getCapitalEstado = function (siglaEstado) {
+    // Criação de variáveis
+    let lista = {}
+    let siglas = getListaDeEstados()
+
+    // Loop que percorre a lista de siglas dos estados brasileiros
+    siglas.uf.forEach(function (itemSigla) {
+        // Verifica se a sigla passada como parâmetro é igual a alguma das siglas da lista de siglas dos estados brasileiros, caso seja, adiciona os dados do estado a um JSON, caso contrário, retorna false
+        if (itemSigla == siglaEstado.toUpperCase()) {
+            // Adiciona a sigla do estado a um JSON
+            lista.uf = itemSigla
+
+            // Loop que percorre a lista de estados brasileiros
+            ESTADOS.forEach(function (itemLista) {
+                // Verifica se a sigla do estado é igual a sigla passada como parâmetro, caso seja, adiciona os dados do estado a um JSON
+                if (itemLista.sigla == itemSigla) {
+                    // Adiciona os dados do estado a um JSON
+                    lista.descricao = itemLista.nome
+                    lista.capital = itemLista.capital
+                }
+            })
+        } else {
+            return false
+        }
+    })
+
+    // Retorna a lista final
+    return lista
+}
