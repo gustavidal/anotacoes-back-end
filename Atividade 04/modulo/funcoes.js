@@ -29,49 +29,86 @@ const getListaDeEstados = function () {
 
 // Função que retorna os dados completos de um estado
 const getDadosEstados = function (siglaEstado) {
+    // Validação de entrada
     if (!siglaEstado)
         return false
-
-    let lista = {}
+    
     let sigla = siglaEstado.toUpperCase()
-
-    for (let i = 0; i < ESTADOS.length; i++) {
-        if (ESTADOS[i].sigla == sigla) {
-            lista.uf = ESTADOS[i].sigla
-            lista.descricao = ESTADOS[i].nome
-            lista.capital = ESTADOS[i].capital
-            lista.regiao = ESTADOS[i].regiao
-            break
-        } else {
-            return false
+    
+    // Pega cada estado da lista de estados
+    for (let estado of ESTADOS) {
+        // Verifica se encontrou o estado
+        if (estado.sigla == sigla) {
+            // Retorna o JSON de resposta
+            return {
+                uf: estado.sigla,
+                descricao: estado.nome,
+                capital: estado.capital,
+                regiao: estado.regiao
+            }
         }
     }
 
-    return lista
+    // Caso não encontre o estado
+    return false
 }
 
 // Função que retorna apenas capital do estado
 const getCapitalEstado = function (siglaEstado) {
+    // Validação de entrada
     if (!siglaEstado)
         return false
 
-    let lista = {}
     let sigla = siglaEstado.toUpperCase()
 
-    for (let i = 0; i < ESTADOS.length; i++) {
-        if (ESTADOS[i].sigla == sigla) {
-            lista.uf = ESTADOS[i].sigla
-            lista.descricao = ESTADOS[i].nome
-            lista.capital = ESTADOS[i].capital
-            break
-        } else {
-            return false
+    // Pega cada estado da lista de estados
+    for (let estado of ESTADOS) {
+        // Verifica se encontrou o estado
+        if (estado.sigla == sigla) {
+            // Retorna o JSON de resposta
+            return {
+                uf: estado.sigla,
+                descricao: estado.nome,
+                capital: estado.capital,
+            }
         }
     }
+
+    // Caso não encontre o estado
+    return false
+}
+
+const getEstadosRegiao = function (regiaoEstados) {
+    // Validação de entrada
+    if (!regiaoEstados)
+        return false
+
+    let regiao = regiaoEstados.toUpperCase()
+    let lista = {
+        regiao: regiao,
+        estados: []
+    }
+
+    // Percorre todos os estados
+    for (let estado of ESTADOS) {
+        // Verifica se o estado pertence a região
+        if (estado.regiao.toUpperCase() == regiao) {
+            // Adiciona o estado a lista de resposta
+            lista.estados.push({
+                uf: estado.sigla,
+                descricao: estado.nome
+            })
+        }
+    }
+
+    // Se não encontrou nenhum estado
+    if (lista.estados.length == 0)
+        return false
 
     return lista
 }
 
 console.log(getListaDeEstados())
-console.log(getDadosEstados('ABC'))
-console.log(getCapitalEstado('ABC'))
+console.log(getDadosEstados('rs'))
+console.log(getCapitalEstado('am'))
+console.log(getEstadosRegiao('sudeste'))
