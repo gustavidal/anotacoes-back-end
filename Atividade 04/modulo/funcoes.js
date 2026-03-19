@@ -5,94 +5,69 @@
  * Versão: 1.0
 *************************************************************************************************/
 
+'use strict'
+
 let arquivo = require('./estados_cidades.js')
 
 const listaDeEstados = arquivo.listaDeEstados
 const ESTADOS = listaDeEstados.estados
 
-// Função que retorna uma lista com todas as siglas dos estados brasileiros junto com a quantidade de siglas
+// Função que retorna a lista de siglas dos estados
 const getListaDeEstados = function () {
-    // Criação de variáveis
     let lista = {}
     let uf = []
-    let quantidade
 
-    // Loop que lista todos os estados e seus atributos (nome, sigla, cidades e etc)
-    ESTADOS.forEach(function (itemLista) {
-        // Adiciona TODAS e SOMENTE as siglas dos estados brasileiros
-        uf.push(itemLista.sigla)
-    })
+    for (let i = 0; i < ESTADOS.length; i++) {
+        uf.push(ESTADOS[i].sigla)
+    }
 
-    // Define a quantidade de itens em uma mesma variável
-    quantidade = uf.length
-
-    // Adiciona atributos a um JSON
     lista.uf = uf
-    lista.quantidade = quantidade
+    lista.quantidade = uf.length
 
-    // Retorna a lista final
     return lista
 }
 
-// Função que retorna uma lista com os dados do estado, como nome, sigla, capital e região, a partir da sigla do estado
+// Função que retorna os dados completos de um estado
 const getDadosEstados = function (siglaEstado) {
-    // Criação de variáveis
+    if (!siglaEstado)
+        return false
+
     let lista = {}
-    let siglas = getListaDeEstados()
+    let sigla = siglaEstado.toUpperCase()
 
-    // Loop que percorre a lista de siglas dos estados brasileiros
-    siglas.uf.forEach(function (itemSigla) {
-        // Verifica se a sigla passada como parâmetro é igual a alguma das siglas da lista de siglas dos estados brasileiros, caso seja, adiciona os dados do estado a um JSON, caso contrário, retorna false
-        if (itemSigla == siglaEstado.toUpperCase()) {
-            // Adiciona a sigla do estado a um JSON
-            lista.uf = itemSigla
-
-            // Loop que percorre a lista de estados brasileiros
-            ESTADOS.forEach(function (itemLista) {
-                // Verifica se a sigla do estado é igual a sigla passada como parâmetro, caso seja, adiciona os dados do estado a um JSON
-                if (itemLista.sigla == itemSigla) {
-                    // Adiciona os dados do estado a um JSON
-                    lista.descricao = itemLista.nome
-                    lista.capital = itemLista.capital
-                    lista.regiao = itemLista.regiao
-                }
-            })
-        } else {
-            return false
+    for (let i = 0; i < ESTADOS.length; i++) {
+        if (ESTADOS[i].sigla == sigla) {
+            lista.uf = ESTADOS[i].sigla
+            lista.descricao = ESTADOS[i].nome
+            lista.capital = ESTADOS[i].capital
+            lista.regiao = ESTADOS[i].regiao
+            break
         }
-    })
+    }
 
-    // Retorna a lista final
     return lista
 }
 
-// Função que retorna uma lista com os dados do estado, como nome, sigla e capital, a partir da sigla do estado
+// Função que retorna apenas capital do estado
 const getCapitalEstado = function (siglaEstado) {
-    // Criação de variáveis
+    if (!siglaEstado)
+        return false
+
     let lista = {}
-    let siglas = getListaDeEstados()
+    let sigla = siglaEstado.toUpperCase()
 
-    // Loop que percorre a lista de siglas dos estados brasileiros
-    siglas.uf.forEach(function (itemSigla) {
-        // Verifica se a sigla passada como parâmetro é igual a alguma das siglas da lista de siglas dos estados brasileiros, caso seja, adiciona os dados do estado a um JSON, caso contrário, retorna false
-        if (itemSigla == siglaEstado.toUpperCase()) {
-            // Adiciona a sigla do estado a um JSON
-            lista.uf = itemSigla
-
-            // Loop que percorre a lista de estados brasileiros
-            ESTADOS.forEach(function (itemLista) {
-                // Verifica se a sigla do estado é igual a sigla passada como parâmetro, caso seja, adiciona os dados do estado a um JSON
-                if (itemLista.sigla == itemSigla) {
-                    // Adiciona os dados do estado a um JSON
-                    lista.descricao = itemLista.nome
-                    lista.capital = itemLista.capital
-                }
-            })
-        } else {
-            return false
+    for (let i = 0; i < ESTADOS.length; i++) {
+        if (ESTADOS[i].sigla == sigla) {
+            lista.uf = ESTADOS[i].sigla
+            lista.descricao = ESTADOS[i].nome
+            lista.capital = ESTADOS[i].capital
+            break
         }
-    })
+    }
 
-    // Retorna a lista final
     return lista
 }
+
+console.log(getListaDeEstados())
+console.log(getDadosEstados('SP'))
+console.log(getCapitalEstado('SP'))
