@@ -42,6 +42,8 @@ const getDadosEstados = function (siglaEstado) {
             lista.capital = ESTADOS[i].capital
             lista.regiao = ESTADOS[i].regiao
             break
+        } else {
+            return false
         }
     }
 
@@ -62,6 +64,8 @@ const getCapitalEstado = function (siglaEstado) {
             lista.descricao = ESTADOS[i].nome
             lista.capital = ESTADOS[i].capital
             break
+        } else {
+            return false
         }
     }
 
@@ -69,5 +73,5 @@ const getCapitalEstado = function (siglaEstado) {
 }
 
 console.log(getListaDeEstados())
-console.log(getDadosEstados('SP'))
-console.log(getCapitalEstado('SP'))
+console.log(getDadosEstados('ABC'))
+console.log(getCapitalEstado('ABC'))
