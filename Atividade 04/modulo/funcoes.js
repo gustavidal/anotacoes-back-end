@@ -29,12 +29,11 @@ const getListaDeEstados = function () {
 
 // Função que retorna os dados completos de um estado
 const getDadosEstado = function (siglaEstado) {
-    let sigla = siglaEstado.toUpperCase()
     
     // Pega cada estado da lista de estados
     for (let estado of ESTADOS) {
         // Verifica se encontrou o estado
-        if (estado.sigla === sigla) {
+        if (estado.sigla === siglaEstado.toUpperCase()) {
             // Retorna o JSON de resposta
             return {
                 uf:        estado.sigla,
@@ -51,17 +50,16 @@ const getDadosEstado = function (siglaEstado) {
 
 // Função que retorna apenas capital do estado
 const getCapitalEstado = function (siglaEstado) {
-    let sigla = siglaEstado.toUpperCase()
 
     // Pega cada estado da lista de estados
     for (let estado of ESTADOS) {
         // Verifica se encontrou o estado
-        if (estado.sigla == sigla) {
+        if (estado.sigla == siglaEstado.toUpperCase()) {
             // Retorna o JSON de resposta
             return {
-                uf: estado.sigla,
+                uf:        estado.sigla,
                 descricao: estado.nome,
-                capital: estado.capital,
+                capital:   estado.capital,
             }
         }
     }
@@ -70,21 +68,21 @@ const getCapitalEstado = function (siglaEstado) {
     return false
 }
 
-const getEstadosRegiao = function (regiaoEstados) {
+const getEstadosRegiao = function (regiaoEstadual) {
     let lista = {
-        regiao: regiaoEstados.toUpperCase(),
+        regiao: regiaoEstadual.toUpperCase(),
         estados: []
     }
 
     // Percorre todos os estados
     for (let estado of ESTADOS) {
         // Verifica se o estado pertence a região
-        if (estado.regiao.toUpperCase() ==! regiaoEstados.toUpperCase()) {
+        if (estado.regiao.toUpperCase() ==! regiaoEstadual.toUpperCase()) {
             return false
             // Adiciona o estado a lista de resposta
         } else {
             lista.estados.push({
-                uf: estado.sigla,
+                uf:        estado.sigla,
                 descricao: estado.nome
             })
         }
@@ -93,7 +91,29 @@ const getEstadosRegiao = function (regiaoEstados) {
     return lista
 }
 
-// console.log(getListaDeEstados())
-// console.log(getDadosEstado(''))
-// console.log(getCapitalEstado('am'))
-// console.log(getEstadosRegiao('sudeste'))
+const getCapitalPais = function () {
+    let lista = {
+        capitais: []
+    }
+
+    ESTADOS.forEach(function (estado) {
+        if (estado.capital_pais) {
+            lista.capitais.push({
+                capital_atual: estado.capital_pais.capital,
+                uf: estado.sigla,
+                descricao: estado.nome,
+                capital: estado.capital,
+                capital_pais_ano_inicio: estado.capital_pais.ano_inicio,
+                capital_pais_ano_termino: estado.capital_pais.ano_fim
+            })
+        }
+    })
+
+    return lista
+}
+
+console.log(getListaDeEstados())
+console.log(getDadosEstado('ac'))
+console.log(getCapitalEstado('am'))
+console.log(getEstadosRegiao('sudeste'))
+console.log(getCapitalPais())
