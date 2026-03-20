@@ -10,12 +10,12 @@
 let arquivo = require('./estados_cidades.js')
 
 const listaDeEstados = arquivo.listaDeEstados
-const ESTADOS = listaDeEstados.estados
+const ESTADOS        = listaDeEstados.estados
 
 // Função que retorna a lista de siglas dos estados
 const getListaDeEstados = function () {
     let lista = {}
-    let uf = []
+    let uf    = []
 
     for (let i = 0; i < ESTADOS.length; i++) {
         uf.push(ESTADOS[i].sigla)
@@ -28,23 +28,19 @@ const getListaDeEstados = function () {
 }
 
 // Função que retorna os dados completos de um estado
-const getDadosEstados = function (siglaEstado) {
-    // Validação de entrada
-    if (!siglaEstado)
-        return false
-    
+const getDadosEstado = function (siglaEstado) {
     let sigla = siglaEstado.toUpperCase()
     
     // Pega cada estado da lista de estados
     for (let estado of ESTADOS) {
         // Verifica se encontrou o estado
-        if (estado.sigla == sigla) {
+        if (estado.sigla === sigla) {
             // Retorna o JSON de resposta
             return {
-                uf: estado.sigla,
+                uf:        estado.sigla,
                 descricao: estado.nome,
-                capital: estado.capital,
-                regiao: estado.regiao
+                capital:   estado.capital,
+                regiao:    estado.regiao
             }
         }
     }
@@ -55,10 +51,6 @@ const getDadosEstados = function (siglaEstado) {
 
 // Função que retorna apenas capital do estado
 const getCapitalEstado = function (siglaEstado) {
-    // Validação de entrada
-    if (!siglaEstado)
-        return false
-
     let sigla = siglaEstado.toUpperCase()
 
     // Pega cada estado da lista de estados
@@ -79,21 +71,18 @@ const getCapitalEstado = function (siglaEstado) {
 }
 
 const getEstadosRegiao = function (regiaoEstados) {
-    // Validação de entrada
-    if (!regiaoEstados)
-        return false
-
-    let regiao = regiaoEstados.toUpperCase()
     let lista = {
-        regiao: regiao,
+        regiao: regiaoEstados.toUpperCase(),
         estados: []
     }
 
     // Percorre todos os estados
     for (let estado of ESTADOS) {
         // Verifica se o estado pertence a região
-        if (estado.regiao.toUpperCase() == regiao) {
+        if (estado.regiao.toUpperCase() ==! regiaoEstados.toUpperCase()) {
+            return false
             // Adiciona o estado a lista de resposta
+        } else {
             lista.estados.push({
                 uf: estado.sigla,
                 descricao: estado.nome
@@ -101,14 +90,10 @@ const getEstadosRegiao = function (regiaoEstados) {
         }
     }
 
-    // Se não encontrou nenhum estado
-    if (lista.estados.length == 0)
-        return false
-
     return lista
 }
 
-console.log(getListaDeEstados())
-console.log(getDadosEstados('rs'))
-console.log(getCapitalEstado('am'))
-console.log(getEstadosRegiao('sudeste'))
+// console.log(getListaDeEstados())
+// console.log(getDadosEstado(''))
+// console.log(getCapitalEstado('am'))
+// console.log(getEstadosRegiao('sudeste'))
