@@ -28,49 +28,59 @@ const getListaDeEstados = function () {
 
 // Função que retorna os dados completos de um estado
 const getDadosEstado = function (siglaEstado) {
+    let lista = {
+        "uf":        siglaEstado.toUpperCase(),
+        "descricao": false,
+        "capital":   false,
+        "regiao":    false
+    }
     
     // Pega cada estado da lista de estados
     for (let estado of ESTADOS) {
         // Verifica se encontrou o estado
         if (estado.sigla === siglaEstado.toUpperCase()) {
             // Retorna o JSON de resposta
-            return {
-                "uf":        estado.sigla,
-                "descricao": estado.nome,
-                "capital":   estado.capital,
-                "regiao":    estado.regiao
-            }
+            lista.uf        = estado.sigla
+            lista.descricao = estado.nome,
+            lista.capital   = estado.capital,
+            lista.regiao    = estado.regiao
         }
     }
 
-    // Caso não encontre o estado
-    return false
+    if (lista.descricao == false)
+        return false
+
+    return lista
 }
 
 // Função que retorna apenas capital do estado
 const getCapitalEstado = function (siglaEstado) {
+    let lista = {
+        "uf":        siglaEstado.toUpperCase(),
+        "descricao": false,
+        "capital":   false
+    }
 
     // Pega cada estado da lista de estados
     for (let estado of ESTADOS) {
         // Verifica se encontrou o estado
         if (estado.sigla === siglaEstado.toUpperCase()) {
             // Retorna o JSON de resposta
-            return {
-                "uf":        estado.sigla,
-                "descricao": estado.nome,
-                "capital":   estado.capital,
-            }
+            lista.descricao = estado.nome
+            lista.capital   = estado.capital
         }
     }
 
-    // Caso não encontre o estado
-    return false
+    if (lista.descricao == false)
+        return false
+
+    return lista
 }
 
 // Função que retorna todos os estados de uma região do Brasil
 const getEstadosRegiao = function (regiaoEstados) {
     let lista = {
-        "regiao": regiaoEstados.toUpperCase(),
+        "regiao":  regiaoEstados.toUpperCase(),
         "estados": []
     }
 
@@ -122,10 +132,10 @@ const getCapitalPais = function () {
 // Função que retorna todas as cidades de um estado
 const getCidades = function (siglaEstado) {
     let lista = {
-        "uf": siglaEstado.toUpperCase(),
-        "descricao": false,
+        "uf":         siglaEstado.toUpperCase(),
+        "descricao":  false,
         "quantidade": false,
-        "cidades": []
+        "cidades":    []
     }
 
     // Percorre os estados
