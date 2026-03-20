@@ -5,27 +5,23 @@
  * Versão: 1.0
 *************************************************************************************************/
 
-'use strict'
-
 let arquivo = require('./estados_cidades.js')
-
-const listaDeEstados = arquivo.listaDeEstados
-const ESTADOS        = listaDeEstados.estados
+const ESTADOS = arquivo.listaDeEstados.estados
 
 // Função que retorna a lista de siglas dos estados
 const getListaDeEstados = function () {
-    let lista = {}
-    let uf    = []
+    let lista = {
+        "uf": []
+    }
 
     // Percorre todos os estados
     for (let i = 0; i < ESTADOS.length; i++) {
         // Adiciona as informações em um array 
-        uf.push(ESTADOS[i].sigla)
+        lista.uf.push(ESTADOS[i].sigla)
     }
     
     // Adiciona os dados na lista
-    lista.uf = uf
-    lista.quantidade = uf.length
+    lista.quantidade = lista.uf.length
 
     return lista
 }
@@ -39,10 +35,10 @@ const getDadosEstado = function (siglaEstado) {
         if (estado.sigla === siglaEstado.toUpperCase()) {
             // Retorna o JSON de resposta
             return {
-                uf:        estado.sigla,
-                descricao: estado.nome,
-                capital:   estado.capital,
-                regiao:    estado.regiao
+                "uf":        estado.sigla,
+                "descricao": estado.nome,
+                "capital":   estado.capital,
+                "regiao":    estado.regiao
             }
         }
     }
@@ -60,9 +56,9 @@ const getCapitalEstado = function (siglaEstado) {
         if (estado.sigla === siglaEstado.toUpperCase()) {
             // Retorna o JSON de resposta
             return {
-                uf:        estado.sigla,
-                descricao: estado.nome,
-                capital:   estado.capital,
+                "uf":        estado.sigla,
+                "descricao": estado.nome,
+                "capital":   estado.capital,
             }
         }
     }
@@ -74,8 +70,8 @@ const getCapitalEstado = function (siglaEstado) {
 // Função que retorna todos os estados de uma região do Brasil
 const getEstadosRegiao = function (regiaoEstados) {
     let lista = {
-        regiao: regiaoEstados.toUpperCase(),
-        estados: []
+        "regiao": regiaoEstados.toUpperCase(),
+        "estados": []
     }
 
     // Percorre todos os estados
@@ -84,8 +80,8 @@ const getEstadosRegiao = function (regiaoEstados) {
         if (estado.regiao.toUpperCase() === regiaoEstados.toUpperCase()) {
             // Adiciona o estado a lista de resposta
             lista.estados.push({
-                uf: estado.sigla,
-                descricao: estado.nome
+                "uf": estado.sigla,
+                "descricao": estado.nome
             })
         }
     }
@@ -100,7 +96,7 @@ const getEstadosRegiao = function (regiaoEstados) {
 // Função que retorna informações sobre todas as cidades que já foram capitais do Brasil
 const getCapitalPais = function () {
     let lista = {
-        capitais: []
+        "capitais": []
     }
 
     // Percorre o arquivo
@@ -109,12 +105,12 @@ const getCapitalPais = function () {
         if (estado.capital_pais) {
             // Adiciona as informações ao array das capitais
             lista.capitais.push({
-                capital_atual: estado.capital_pais.capital,
-                uf: estado.sigla,
-                descricao: estado.nome,
-                capital: estado.capital,
-                capital_pais_ano_inicio: estado.capital_pais.ano_inicio,
-                capital_pais_ano_termino: estado.capital_pais.ano_fim
+                "capital_atual": estado.capital_pais.capital,
+                "uf": estado.sigla,
+                "descricao": estado.nome,
+                "capital": estado.capital,
+                "capital_pais_ano_inicio": estado.capital_pais.ano_inicio,
+                "capital_pais_ano_termino": estado.capital_pais.ano_fim
             })
         }
     })
@@ -122,8 +118,28 @@ const getCapitalPais = function () {
     return lista
 }
 
-console.log(getListaDeEstados())
-console.log(getDadosEstado('ac'))
-console.log(getCapitalEstado('am'))
-console.log(getEstadosRegiao('sudeste'))
-console.log(getCapitalPais())
+const getCidades = function (siglaEstado) {
+    let lista = {
+        "uf": siglaEstado.toUpperCase(),
+        "descricao": false,
+        "quantidade": false,
+        "cidades": []
+    }
+
+    for (let estado of ESTADOS) {
+        if (estado.sigla.toUpperCase() === siglaEstado.toUpperCase()) {
+            lista.descricao = estado.nome
+            lista.quantidade
+            estado.cidades.forEach(function (itemCidade) {
+                lista.cidades.push(itemCidade.nome)
+            })
+            lista.quantidade = lista.cidades.length
+        }
+
+    }
+
+    if (lista.cidades.length == 0)
+        return false
+
+    return lista
+}

@@ -10,7 +10,7 @@ var listaDeEstados = {
     estados: [
         {
             sigla: 'SP',
-            nome: 'Sao Paulo',
+            nome: 'São Paulo',
             capital: 'São Paulo',
             regiao: 'Sudeste',
             cidades: [
@@ -8920,7 +8920,7 @@ var listaDeEstados = {
         },
         {
             sigla: 'GO',
-            nome: 'Goias',
+            nome: 'Goiás',
             capital: 'Goiânia',
             regiao: 'Centro-Oeste',
             cidades: [
@@ -11964,7 +11964,7 @@ var listaDeEstados = {
         },
         {
             sigla: 'RR',
-            nome: 'Roraíma',
+            nome: 'Roraima',
             capital: 'Boa Vista',
             regiao: 'Norte',
             cidades: [
@@ -20224,7 +20224,7 @@ var listaDeEstados = {
         },
         {
             sigla: 'MS',
-            nome: 'Mato Grosso do Sula',
+            nome: 'Mato Grosso do Sul',
             capital: 'Campo Grande',
             regiao: 'Centro-Oeste',
             cidades: [
@@ -21420,7 +21420,7 @@ var listaDeEstados = {
         },
         {
             sigla: 'ES',
-            nome: 'Espirito Santo',
+            nome: 'Espírito Santo',
             capital: 'Vitória',
             regiao: 'Sudeste',
             cidades: [
