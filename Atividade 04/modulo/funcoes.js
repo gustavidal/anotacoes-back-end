@@ -29,7 +29,7 @@ const getListaDeEstados = function () {
 // Função que retorna os dados completos de um estado
 const getDadosEstado = function (siglaEstado) {
     let listaDadosEstado = {
-        "uf":        siglaEstado.toUpperCase(),
+        "uf":        String(siglaEstado).toUpperCase(),
         "descricao": false,
         "capital":   false,
         "regiao":    false
@@ -38,7 +38,7 @@ const getDadosEstado = function (siglaEstado) {
     // Pega cada estado da lista de estados
     for (let estado of ESTADOS) {
         // Verifica se encontrou o estado
-        if (estado.sigla === siglaEstado.toUpperCase()) {
+        if (estado.sigla === String(siglaEstado).toUpperCase()) {
             // Define os valores do JSON
             listaDadosEstado.descricao = estado.nome,
             listaDadosEstado.capital   = estado.capital,
@@ -47,7 +47,9 @@ const getDadosEstado = function (siglaEstado) {
     }
     
     // Caso não tenha encontrado o estado informado
-    if (listaDadosEstado.descricao == false)
+    if (listaDadosEstado.descricao === false ||
+        listaDadosEstado.capital   === false ||
+        listaDadosEstado.regiao    === false)
         return false
     
     return listaDadosEstado
@@ -56,7 +58,7 @@ const getDadosEstado = function (siglaEstado) {
 // Função que retorna apenas capital do estado
 const getCapitalEstado = function (siglaEstado) {
     let listaCapitalEstado = {
-        "uf":        siglaEstado.toUpperCase(),
+        "uf":        String(siglaEstado).toUpperCase(),
         "descricao": false,
         "capital":   false
     }
@@ -64,7 +66,7 @@ const getCapitalEstado = function (siglaEstado) {
     // Pega cada estado da lista de estados
     for (let estado of ESTADOS) {
         // Verifica se encontrou o estado
-        if (estado.sigla === siglaEstado.toUpperCase()) {
+        if (estado.sigla === String(siglaEstado).toUpperCase()) {
             // Define os valores do JSON
             listaCapitalEstado.descricao = estado.nome
             listaCapitalEstado.capital   = estado.capital
@@ -72,7 +74,8 @@ const getCapitalEstado = function (siglaEstado) {
     }
     
     // Caso não tenha encontrado o estado informado
-    if (listaCapitalEstado.descricao == false)
+    if (listaCapitalEstado.descricao === false ||
+        listaCapitalEstado.capital   === false)
         return false
     
     return listaCapitalEstado
@@ -81,14 +84,14 @@ const getCapitalEstado = function (siglaEstado) {
 // Função que retorna todos os estados de uma região do Brasil
 const getEstadosRegiao = function (regiaoEstados) {
     let listaEstadosRegiao = {
-        "regiao":  regiaoEstados.toUpperCase(),
+        "regiao":  String(regiaoEstados).toUpperCase(),
         "estados": []
     }
 
     // Percorre todos os estados
     for (let estado of ESTADOS) {
         // Verifica se o estado pertence a região
-        if (estado.regiao.toUpperCase() === regiaoEstados.toUpperCase()) {
+        if (estado.regiao.toUpperCase() === String(regiaoEstados).toUpperCase()) {
             // Adiciona o estado a lista de resposta
             listaEstadosRegiao.estados.push({
                 "uf":        estado.sigla,
@@ -98,7 +101,7 @@ const getEstadosRegiao = function (regiaoEstados) {
     }
 
     // Se não encontrou nenhum estado
-    if (listaEstadosRegiao.estados.length == 0)
+    if (listaEstadosRegiao.estados.length === 0)
         return false
 
     return listaEstadosRegiao
@@ -133,7 +136,7 @@ const getCapitalPais = function () {
 // Função que retorna todas as cidades de um estado
 const getCidades = function (siglaEstado) {
     let listaCidadesEstado = {
-        "uf":         siglaEstado.toUpperCase(),
+        "uf":         String(siglaEstado).toUpperCase(),
         "descricao":  false,
         "quantidade": false,
         "cidades":    []
@@ -142,7 +145,7 @@ const getCidades = function (siglaEstado) {
     // Percorre os estados
     for (let estado of ESTADOS) {
         // Caso as siglas forem iguais
-        if (estado.sigla.toUpperCase() === siglaEstado.toUpperCase()) {
+        if (estado.sigla.toUpperCase() === String(siglaEstado).toUpperCase()) {
             listaCidadesEstado.descricao = estado.nome
 
             // Percorre as cidades do estado informado
@@ -154,7 +157,9 @@ const getCidades = function (siglaEstado) {
     }
     
     // Valida caso não foi encontrado nenhuma cidade
-    if (listaCidadesEstado.cidades.length == 0)
+    if (listaCidadesEstado.descricao      === false ||
+        listaCidadesEstado.quantidade     === false ||
+        listaCidadesEstado.cidades.length === 0)
         return false
     
     // Define a quantidade de cidades do estado
