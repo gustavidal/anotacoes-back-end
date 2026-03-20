@@ -17,10 +17,13 @@ const getListaDeEstados = function () {
     let lista = {}
     let uf    = []
 
+    // Percorre todos os estados
     for (let i = 0; i < ESTADOS.length; i++) {
+        // Adiciona as informações em um array 
         uf.push(ESTADOS[i].sigla)
     }
-
+    
+    // Adiciona os dados na lista
     lista.uf = uf
     lista.quantidade = uf.length
 
@@ -54,7 +57,7 @@ const getCapitalEstado = function (siglaEstado) {
     // Pega cada estado da lista de estados
     for (let estado of ESTADOS) {
         // Verifica se encontrou o estado
-        if (estado.sigla == siglaEstado.toUpperCase()) {
+        if (estado.sigla === siglaEstado.toUpperCase()) {
             // Retorna o JSON de resposta
             return {
                 uf:        estado.sigla,
@@ -68,36 +71,43 @@ const getCapitalEstado = function (siglaEstado) {
     return false
 }
 
-const getEstadosRegiao = function (regiaoEstadual) {
+// Função que retorna todos os estados de uma região do Brasil
+const getEstadosRegiao = function (regiaoEstados) {
     let lista = {
-        regiao: regiaoEstadual.toUpperCase(),
+        regiao: regiaoEstados.toUpperCase(),
         estados: []
     }
 
     // Percorre todos os estados
     for (let estado of ESTADOS) {
         // Verifica se o estado pertence a região
-        if (estado.regiao.toUpperCase() ==! regiaoEstadual.toUpperCase()) {
-            return false
+        if (estado.regiao.toUpperCase() === regiaoEstados.toUpperCase()) {
             // Adiciona o estado a lista de resposta
-        } else {
             lista.estados.push({
-                uf:        estado.sigla,
+                uf: estado.sigla,
                 descricao: estado.nome
             })
         }
     }
 
+    // Se não encontrou nenhum estado
+    if (lista.estados.length == 0)
+        return false
+
     return lista
 }
 
+// Função que retorna informações sobre todas as cidades que já foram capitais do Brasil
 const getCapitalPais = function () {
     let lista = {
         capitais: []
     }
 
+    // Percorre o arquivo
     ESTADOS.forEach(function (estado) {
+        // Caso algum estado tenha o atributo de capital do país
         if (estado.capital_pais) {
+            // Adiciona as informações ao array das capitais
             lista.capitais.push({
                 capital_atual: estado.capital_pais.capital,
                 uf: estado.sigla,
