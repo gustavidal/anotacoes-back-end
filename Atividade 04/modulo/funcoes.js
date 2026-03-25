@@ -47,9 +47,7 @@ const getDadosEstado = function (siglaEstado) {
     }
     
     // Caso não tenha encontrado o estado informado
-    if (listaDadosEstado.descricao === false ||
-        listaDadosEstado.capital   === false ||
-        listaDadosEstado.regiao    === false)
+    if (listaDadosEstado.descricao === false)
         return false
     
     return listaDadosEstado
@@ -74,8 +72,7 @@ const getCapitalEstado = function (siglaEstado) {
     }
     
     // Caso não tenha encontrado o estado informado
-    if (listaCapitalEstado.descricao === false ||
-        listaCapitalEstado.capital   === false)
+    if (listaCapitalEstado.descricao === false)
         return false
     
     return listaCapitalEstado
@@ -157,9 +154,7 @@ const getCidades = function (siglaEstado) {
     }
     
     // Valida caso não foi encontrado nenhuma cidade
-    if (listaCidadesEstado.descricao      === false ||
-        listaCidadesEstado.quantidade     === false ||
-        listaCidadesEstado.cidades.length === 0)
+    if (listaCidadesEstado.descricao === false)
         return false
     
     // Define a quantidade de cidades do estado
