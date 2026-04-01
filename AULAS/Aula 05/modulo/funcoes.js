@@ -162,3 +162,12 @@ const getCidades = function (siglaEstado) {
 
     return listaCidadesEstado
 }
+
+module.exports = {
+    getListaDeEstados,
+    getDadosEstado,
+    getCapitalEstado,
+    getEstadosRegiao,
+    getCapitalPais,
+    getCidades
+}
