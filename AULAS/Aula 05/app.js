@@ -36,21 +36,6 @@ app.use(cors(corsOptions))
 // Import do arquivos de funções
 const estadosCidades = require('./modulo/funcoes.js')
 
-app.get('/docs', function (request, response) {
-    response.status(200)
-    response.json({
-        "message": "Abaixo está listado todas as rotas desta API",
-        "rotas": [
-            "/v1/senai/estados",
-            "/v1/senai/dados/estado/:uf",
-            "/v1/senai/capital/estado/:uf",
-            "/v1/senai/estados/regiao/:regiao",
-            "/v1/senai/estados/capital/pais/brasil",
-            "/v1/senai/cidades/estado/:uf"
-        ]
-    })
-})
-
 // Endpoint para listar os estados
 // Retorna uma lista da sigla de todos os estados do Brasil
 app.get('/v1/senai/estados', function (request, response) {
@@ -116,6 +101,44 @@ app.get('/v1/senai/cidades/estado/:uf', function (request, response) {
         response.status(404)
         response.json({ "message": "Nenhum estado foi encontrado." })
     }
+})
+
+app.get('/v1/senai/help', function (request, response) {
+    let docAPI = {
+        "api-description": "API para manipular dados de estados e cidades",
+        "date": "2026-04-02",
+        "development": "Gustavo Vidal de Abreu",
+        "version": 1.0,
+        "endpoints": [
+            {
+                "router1": "/v1/senai/estados",
+                "description": "Retorna a lista de todos os estados"
+            },
+            {
+                "router2": "/v1/senai/dados/estado/sp",
+                "description": "Retorna dados de um estado filtrado pela sigla"
+            },
+            {
+                "router3": "/v1/senai/capital/estado/sp",
+                "description": "Retorna dados da capital de um estado filtrado pela sigla"
+            },
+            {
+                "router4": "/v1/senai/estados/regiao/sudeste",
+                "description": "Retorna a lista de estados filtrados pela região"
+            },
+            {
+                "router5": "/v1/senai/estados/capital/pais/brasil",
+                "description": "Retorna a lista de estados que foram/é capital(ais) do país"
+            },
+            {
+                "router6": "/v1/senai/cidades/estado/sp",
+                "description": "Retorna a lista de cidades de um estado filtrado pela sigla"
+            }
+        ]
+    }
+
+    response.status(200)
+    response.json(docAPI)
 })
 
 // Iniciar a API
