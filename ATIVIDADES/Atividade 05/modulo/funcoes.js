@@ -8,7 +8,7 @@
 let arquivo = require('./contatos.js')
 const contatos = arquivo.contatos['whats-users']
 
-const getDadosGerais = function () {
+const getDados = function () {
     return { contatos }
 }
 
@@ -17,14 +17,15 @@ const getDadosUsuario = function (telefone) {
 
     for (let contato of contatos) {
         if (contato.number === String(telefone)) {
-            dados.nome               = contato.account
-            dados.nickname           = contato.nickname
-            dados.foto               = contato['profile-image']
-            dados.numero             = contato.number
-            dados.background         = contato.background
-            dados.dados_conta = {}
-            dados.dados_conta.inicio = contato['created-since'].start
-            dados.dados_conta.fim    = contato['created-since'].end
+            dados.nome = contato.account
+            dados.nickname = contato.nickname
+            dados.foto = contato['profile-image']
+            dados.numero = contato.number
+            dados.background = contato.background
+            dados.dados_conta = {
+                "inicio": contato['created-since'].start,
+                "fim": contato['created-since'].end
+            }
         }
     }
 
@@ -34,5 +35,30 @@ const getDadosUsuario = function (telefone) {
     return dados
 }
 
-// console.log(getDadosGerais())
-// console.table(getDadosUsuario('fbhn'))
+const getDadosContatos = function (telefone) {
+    let dados = {
+        "contatos": []
+    }
+
+    for (let usuario of contatos) {
+        if (usuario.number === String(telefone)) {
+            usuario.contacts.forEach(function (itemContato) {
+                dados.contatos.push({
+                    "nome": itemContato.name,
+                    "foto": itemContato.image,
+                    "descricao": itemContato.description
+                })
+            })
+        }
+    }
+
+    if (dados.contatos.length == 0)
+        return false
+
+    return dados
+}
+
+// console.log(getDados())
+// console.log(getDadosUsuario(11987876567))
+console.log(getDadosContatos(65737453))
+getDadosContatos(11987876567)
