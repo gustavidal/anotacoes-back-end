@@ -58,7 +58,24 @@ const getDadosContatos = function (telefone) {
     return dados
 }
 
+const getMensagensContatos = function (telefone) {
+    let dados = {
+        "contatos": false
+    }
+
+    for (let usuario of contatos) {
+        if (usuario.number === String(telefone)) {
+            dados.contatos = usuario.contacts
+        }
+    }
+
+    if (dados.contatos == false)
+        return false
+
+    return dados
+}
+
 // console.log(getDados())
 // console.log(getDadosUsuario(11987876567))
-console.log(getDadosContatos(65737453))
-getDadosContatos(11987876567)
+// console.log(getDadosContatos(65737453))
+console.log(getMensagensContatos(11987876567))
