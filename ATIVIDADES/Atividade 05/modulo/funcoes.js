@@ -69,13 +69,41 @@ const getMensagensContatos = function (telefone) {
         }
     }
 
-    if (dados.contatos == false)
+    if (!dados.contatos)
         return false
 
     return dados
 }
 
-// console.log(getDados())
-// console.log(getDadosUsuario(11987876567))
-// console.log(getDadosContatos(65737453))
-console.log(getMensagensContatos(11987876567))
+const getMensagensContato = function (telefone, nomeContato) {
+    let dados = {
+        "nome": false,
+        "telefone": telefone
+    }
+
+    for (let usuario of contatos) {
+        if (usuario.number === String(telefone)) {
+            usuario.contacts.forEach(function (itemContato) {
+                if (itemContato.name == String(nomeContato)) {
+                    dados.nome = itemContato.name
+                    dados.mensagens = []
+
+                    itemContato.messages.forEach(function (itemMensagem) {
+                        dados.mensagens.push({
+                            "remetente": itemMensagem.sender,
+                            "conteudo": itemMensagem.content,
+                            "tempo": itemMensagem.time
+                        })
+                    })
+                }
+            })
+        }
+    }
+
+    if (!dados.nome)
+        return false
+
+    return dados
+}
+
+console.log(getMensagensContato(11987876567, 'Ana Maria'))
