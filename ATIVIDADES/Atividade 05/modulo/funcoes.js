@@ -100,10 +100,23 @@ const getMensagensContato = function (telefone, nomeContato) {
         }
     }
 
-    if (!dados.nome)
-        return false
-
     return dados
 }
 
-console.log(getMensagensContato(11987876567, 'Ana Maria'))
+const filtrarMensagens = function (mensagens, busca) {
+    let resultado = []
+
+    // se busca vier vazia ou undefined
+    if (!busca) return []
+
+    for (let mensagem of mensagens) {
+        // garante que content existe
+        let texto = String(mensagem.conteudo || "").toLowerCase()
+
+        if (texto.includes(busca.toLowerCase())) {
+            resultado.push(mensagem)
+        }
+    }
+
+    return resultado
+}
