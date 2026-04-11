@@ -111,19 +111,19 @@ app.get('/v1/senai/help', function (request, response) {
                 "description": "Lista todos os usuários"
             },
             {
-                "router2": "/v1/senai/usuarios/{telefone}",
+                "router2": "/v1/senai/usuarios/11987876567",
                 "description": "Retorna um usuário pelo telefone"
             },
             {
-                "router3": "/v1/senai/usuarios/{telefone}/contatos",
+                "router3": "/v1/senai/usuarios/11987876567/contatos",
                 "description": "Lista os contatos de um usuário"
             },
             {
-                "router4": "/v1/senai/usuarios/{telefone}/contatos/mensagens",
+                "router4": "/v1/senai/usuarios/11987876567/contatos/mensagens",
                 "description": "Lista todas as mensagens dos contatos"
             },
             {
-                "router5": "/v1/senai/usuarios/{telefone}/contatos/{nomeContato}/mensagens",
+                "router5": "/v1/senai/usuarios/11987876567/contatos/Ana%20Maria/mensagens",
                 "description": "Lista mensagens de um contato (com filtro ?busca=)"
             }
         ]
