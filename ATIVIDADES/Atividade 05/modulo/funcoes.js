@@ -5,7 +5,7 @@
  * Versão: 1.0
 ******************************************************************************************/
 
-let arquivo = require('./contatos.js')
+let arquivo    = require('./contatos.js')
 const contatos = arquivo.contatos['whats-users']
 
 const getDados = function () {
@@ -106,7 +106,7 @@ const getMensagensContato = function (telefone, nomeContato) {
     return dados
 }
 
-function filtrarMensagens(mensagens, busca) {
+const getFiltroDeMensagens = function (mensagens, busca) {
     if (!busca) return mensagens
 
     return mensagens.filter(mensagem =>
@@ -114,4 +114,13 @@ function filtrarMensagens(mensagens, busca) {
             .toLowerCase()
             .includes(busca.toLowerCase())
     )
+}
+
+module.exports = {
+    getDados,
+    getDadosUsuario,
+    getDadosContatos,
+    getMensagensContatos,
+    getMensagensContato,
+    getFiltroDeMensagens
 }
