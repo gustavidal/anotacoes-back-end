@@ -26,7 +26,7 @@ app.use(cors(corsOptions))
 const contatosMensagens = require('./modulo/funcoes.js')
 
 // Endpoint para listar todos os usuários
-app.get('/v1/senai/usuarios', function (request, response) {
+app.get('/v1/whatsapp/usuarios', function (request, response) {
     let dados = contatosMensagens.getDados()
 
     response.status(200)
@@ -34,7 +34,7 @@ app.get('/v1/senai/usuarios', function (request, response) {
 })
 
 // Endpoint para listar um usuário pelo telefone
-app.get('/v1/senai/usuarios/:telefone', function (request, response) {
+app.get('/v1/whatsapp/usuarios/:telefone', function (request, response) {
     let telefone = request.params.telefone
     let contato  = contatosMensagens.getDadosUsuario(telefone)
 
@@ -48,7 +48,7 @@ app.get('/v1/senai/usuarios/:telefone', function (request, response) {
 })
 
 // Endpoint para listar contatos de um usuário
-app.get('/v1/senai/usuarios/:telefone/contatos', function (request, response) {
+app.get('/v1/whatsapp/usuarios/:telefone/contatos', function (request, response) {
     let telefone = request.params.telefone
     let contatos = contatosMensagens.getDadosContatos(telefone)
 
@@ -62,7 +62,7 @@ app.get('/v1/senai/usuarios/:telefone/contatos', function (request, response) {
 })
 
 // Endpoint para listar todas as mensagens dos contatos de um usuário
-app.get('/v1/senai/usuarios/:telefone/contatos/mensagens', function (request, response) {
+app.get('/v1/whatsapp/usuarios/:telefone/contatos/mensagens', function (request, response) {
     let telefone  = request.params.telefone
     let mensagens = contatosMensagens.getMensagensContatos(telefone)
 
@@ -76,7 +76,7 @@ app.get('/v1/senai/usuarios/:telefone/contatos/mensagens', function (request, re
 })
 
 // Endpoint para listar mensagens de um contato com possibilidade de filtro (?busca=)
-app.get('/v1/senai/usuarios/:telefone/contatos/:nomeContato/mensagens', function (request, response) {
+app.get('/v1/whatsapp/usuarios/:telefone/contatos/:nomeContato/mensagens', function (request, response) {
     let telefone    = request.params.telefone
     let nomeContato = request.params.nomeContato
     let busca       = request.query.busca
@@ -99,7 +99,7 @@ app.get('/v1/senai/usuarios/:telefone/contatos/:nomeContato/mensagens', function
 })
 
 // Endpoint de documentação da API
-app.get('/v1/senai/help', function (request, response) {
+app.get('/v1/whatsapp/help', function (request, response) {
     let docAPI = {
         "api-description": "API para manipular dados de contatos e mensagens",
         "date": "2026-04-11",
@@ -107,23 +107,23 @@ app.get('/v1/senai/help', function (request, response) {
         "version": 1.0,
         "endpoints": [
             {
-                "router1": "/v1/senai/usuarios",
+                "router1": "/v1/whatsapp/usuarios",
                 "description": "Lista todos os usuários"
             },
             {
-                "router2": "/v1/senai/usuarios/11987876567",
+                "router2": "/v1/whatsapp/usuarios/11987876567",
                 "description": "Retorna um usuário pelo telefone"
             },
             {
-                "router3": "/v1/senai/usuarios/11987876567/contatos",
+                "router3": "/v1/whatsapp/usuarios/11987876567/contatos",
                 "description": "Lista os contatos de um usuário"
             },
             {
-                "router4": "/v1/senai/usuarios/11987876567/contatos/mensagens",
+                "router4": "/v1/whatsapp/usuarios/11987876567/contatos/mensagens",
                 "description": "Lista todas as mensagens dos contatos"
             },
             {
-                "router5": "/v1/senai/usuarios/11987876567/contatos/Ana%20Maria/mensagens",
+                "router5": "/v1/whatsapp/usuarios/11987876567/contatos/Ana%20Maria/mensagens",
                 "description": "Lista mensagens de um contato (com filtro ?busca=)"
             }
         ]
