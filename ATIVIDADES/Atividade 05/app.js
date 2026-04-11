@@ -26,7 +26,7 @@ app.use(cors(corsOptions))
 const contatosMensagens = require('./modulo/funcoes.js')
 
 // Endpoint para listar todos os usuários
-app.get('/v1/senai/contatos', function (request, response) {
+app.get('/v1/senai/usuarios', function (request, response) {
     let dados = contatosMensagens.getDados()
 
     response.status(200)
@@ -34,7 +34,7 @@ app.get('/v1/senai/contatos', function (request, response) {
 })
 
 // Endpoint para listar um usuário pelo telefone
-app.get('/v1/senai/contatos/:telefone', function (request, response) {
+app.get('/v1/senai/usuarios/:telefone', function (request, response) {
     let telefone = request.params.telefone
     let contato  = contatosMensagens.getDadosUsuario(telefone)
 
@@ -48,7 +48,7 @@ app.get('/v1/senai/contatos/:telefone', function (request, response) {
 })
 
 // Endpoint para listar contatos de um usuário
-app.get('/v1/senai/contatos/:telefone/contatos', function (request, response) {
+app.get('/v1/senai/usuarios/:telefone/contatos', function (request, response) {
     let telefone = request.params.telefone
     let contatos = contatosMensagens.getDadosContatos(telefone)
 
@@ -62,7 +62,7 @@ app.get('/v1/senai/contatos/:telefone/contatos', function (request, response) {
 })
 
 // Endpoint para listar todas as mensagens dos contatos de um usuário
-app.get('/v1/senai/contatos/:telefone/contatos/mensagens', function (request, response) {
+app.get('/v1/senai/usuarios/:telefone/contatos/mensagens', function (request, response) {
     let telefone  = request.params.telefone
     let mensagens = contatosMensagens.getMensagensContatos(telefone)
 
@@ -76,7 +76,7 @@ app.get('/v1/senai/contatos/:telefone/contatos/mensagens', function (request, re
 })
 
 // Endpoint para listar mensagens de um contato com possibilidade de filtro (?busca=)
-app.get('/v1/senai/contatos/:telefone/contatos/:nomeContato/mensagens', function (request, response) {
+app.get('/v1/senai/usuarios/:telefone/contatos/:nomeContato/mensagens', function (request, response) {
     let telefone    = request.params.telefone
     let nomeContato = request.params.nomeContato
     let busca       = request.query.busca
@@ -91,7 +91,7 @@ app.get('/v1/senai/contatos/:telefone/contatos/:nomeContato/mensagens', function
         }
 
         response.status(200)
-        response.json(mensagens)
+        response.json({mensagens})
     } else {
         response.status(404)
         response.json({ "message": "Contato não encontrado." })
@@ -107,23 +107,23 @@ app.get('/v1/senai/help', function (request, response) {
         "version": 1.0,
         "endpoints": [
             {
-                "router1": "/v1/senai/contatos",
+                "router1": "/v1/senai/usuarios",
                 "description": "Lista todos os usuários"
             },
             {
-                "router2": "/v1/senai/contatos/{telefone}",
+                "router2": "/v1/senai/usuarios/{telefone}",
                 "description": "Retorna um usuário pelo telefone"
             },
             {
-                "router3": "/v1/senai/contatos/{telefone}/contatos",
+                "router3": "/v1/senai/usuarios/{telefone}/contatos",
                 "description": "Lista os contatos de um usuário"
             },
             {
-                "router4": "/v1/senai/contatos/{telefone}/contatos/mensagens",
+                "router4": "/v1/senai/usuarios/{telefone}/contatos/mensagens",
                 "description": "Lista todas as mensagens dos contatos"
             },
             {
-                "router5": "/v1/senai/contatos/{telefone}/contatos/{nomeContato}/mensagens",
+                "router5": "/v1/senai/usuarios/{telefone}/contatos/{nomeContato}/mensagens",
                 "description": "Lista mensagens de um contato (com filtro ?busca=)"
             }
         ]
