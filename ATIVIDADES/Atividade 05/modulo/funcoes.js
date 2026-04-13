@@ -84,7 +84,7 @@ const getMensagensContato = function (telefone, nomeContato) {
     for (let usuario of contatos) {
         if (usuario.number === String(telefone)) {
             usuario.contacts.forEach(function (itemContato) {
-                if (itemContato.name == String(nomeContato)) {
+                if (itemContato.name.toLowerCase() == String(nomeContato).toLowerCase()) {
                     dados.nome = itemContato.name
                     dados.mensagens = []
 
@@ -107,13 +107,20 @@ const getMensagensContato = function (telefone, nomeContato) {
 }
 
 const getFiltroDeMensagens = function (mensagens, busca) {
-    if (!busca) return mensagens
+    let resultado = []
+    let conversas
 
-    return mensagens.filter(mensagem =>
-        String(mensagem.conteudo || "")
-            .toLowerCase()
-            .includes(busca.toLowerCase())
-    )
+    for (let mensagem of mensagens) {
+        conversas = (mensagem.conteudo || "").toLowerCase()
+
+        if (conversas.includes(busca.toLowerCase()))
+            resultado.push(mensagem)
+    }
+
+    if (!busca || resultado.length == 0)
+        return false
+
+    return resultado
 }
 
 module.exports = {
