@@ -37,4 +37,6 @@ insert into tbl_filme (
     '01:39:00',
     '50.60',
     '3'
-)
+);
+
+select * from tbl_filme;
