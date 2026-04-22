@@ -16,15 +16,24 @@ const DEFAULT_MESSAGE = {
 }
 
 // Mensagens de ERRO do projeto de filmes
-const ERROR_BAD_REQUEST = { "status": false, "status_code": 400, "message": "Não foi possível processar a requisição devido a erros de entrada de dados." }
-const ERROR_INTERNAL_SERVER_MODEL = { "status": false, "status_code": 500, "message": "Não foi possível processar a requisição devido a um erro interno do servidor [MODEL]" }
+const ERROR_BAD_REQUEST                = { "status": false, "status_code": 400, "message": "Não foi possível processar a requisição devido a erros de entrada de dados." }
+const ERROR_CONTENT_TYPE               = { "status": false, "status_code": 415, "message": "Não foi possível processar a requisição devido ao formato de dados encaminhado não ser suportado pelo servidor. Deve-se ser utilizado apenas JSON." }
+const ERROR_INTERNAL_SERVER_CONTROLLER = { "status": false, "status_code": 500, "message": "Não foi possível processar a requisição devido a um erro interno do servidor [CONTROLLER]." }
+const ERROR_INTERNAL_SERVER_MODEL      = { "status": false, "status_code": 500, "message": "Não foi possível processar a requisição devido a um erro interno do servidor [MODEL]." }
 
 // Mensagens de SUCESSO do projeto de filmes
 const SUCCESS_CREATED_ITEM = { "status": true, "status_code": 201, "message": "Item inserido com sucesso." }
 
 module.exports = {
+    // Default
     DEFAULT_MESSAGE,
+
+    // Error
     ERROR_BAD_REQUEST,
+    ERROR_CONTENT_TYPE,
+    ERROR_INTERNAL_SERVER_CONTROLLER,
     ERROR_INTERNAL_SERVER_MODEL,
+
+    // Success
     SUCCESS_CREATED_ITEM
 }
