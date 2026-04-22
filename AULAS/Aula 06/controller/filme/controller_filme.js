@@ -31,20 +31,23 @@ const inserirNovoFilme = async function (filme) {
     } else if (filme.avaliacao == undefined || isNaN(filme.avaliacao) || filme.avaliacao.length > 3) {
         customMessages.ERROR_BAD_REQUEST.field = '[AVALIAÇÃO] INVÁLIDA'
     } else {
+        // Encaminha os dados do filme ao DAO para inserção no database
         let result = await filmeDAO.insertFilme(filme)
 
         if (result) {
-            customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_CREATED_ITEM.status
+            customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_CREATED_ITEM.status
             customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
-            customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_CREATED_ITEM.message
+            customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_CREATED_ITEM.message
         } else {
-            customMessages.DEFAULT_MESSAGE.status = customMessages.ERROR_INTERNAL_SERVER_MODEL.status
+            customMessages.DEFAULT_MESSAGE.status      = customMessages.ERROR_INTERNAL_SERVER_MODEL.status
             customMessages.DEFAULT_MESSAGE.status_code = customMessages.ERROR_INTERNAL_SERVER_MODEL.status_code
-            customMessages.DEFAULT_MESSAGE.message = customMessages.ERROR_INTERNAL_SERVER_MODEL.message
+            customMessages.DEFAULT_MESSAGE.message     = customMessages.ERROR_INTERNAL_SERVER_MODEL.message
         }
 
         return customMessages.DEFAULT_MESSAGE
     }
+
+    return customMessages.ERROR_BAD_REQUEST
 }
 
 // Função para atualizar um filme existente
