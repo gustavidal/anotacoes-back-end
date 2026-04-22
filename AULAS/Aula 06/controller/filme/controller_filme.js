@@ -11,8 +11,7 @@ const configMessages = require('../modulo/configMessages.js')
 // Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
 const filmeDAO = require('../../model/DAO/filme/filme.js')
 
-// Função para inserir um novo filme
-const inserirNovoFilme = async function (filme) {
+const validarDados = async function (filme) {
     // Cria uma cópia dos JSON's do arquivo de configurações de mensagens
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
@@ -31,6 +30,22 @@ const inserirNovoFilme = async function (filme) {
     } else if (filme.avaliacao == undefined || isNaN(filme.avaliacao) || filme.avaliacao.length > 3) {
         customMessages.ERROR_BAD_REQUEST.field = '[AVALIAÇÃO] INVÁLIDA'
     } else {
+        return true
+    }
+
+    return customMessages.ERROR_BAD_REQUEST
+}
+
+// Função para inserir um novo filme
+const inserirNovoFilme = async function (filme) {
+    // Cria uma cópia dos JSON's do arquivo de configurações de mensagens
+    let customMessages = JSON.parse(JSON.stringify(configMessages))
+
+    let resultadoValidacao = await validarDados(filme)
+    
+    if (resultadoValidacao !== true) {
+        return resultadoValidacao
+    } else {
         // Encaminha os dados do filme ao DAO para inserção no database
         let result = await filmeDAO.insertFilme(filme)
 
@@ -46,8 +61,6 @@ const inserirNovoFilme = async function (filme) {
 
         return customMessages.DEFAULT_MESSAGE
     }
-
-    return customMessages.ERROR_BAD_REQUEST
 }
 
 // Função para atualizar um filme existente
