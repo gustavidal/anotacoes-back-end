@@ -12,7 +12,7 @@ const knex = require('knex')
 const knexDatabaseConfig = require('../../database_config/knexConfig.js')
 
 // Criar conexão com o Banco de Dados MySQL conforme o arquivo de configuração
-const knexConection = knex(knexDatabaseConfig.development)
+const knexConnection = knex(knexDatabaseConfig.development)
 
 // Função para inserir um novo filme no banco de dados
 const insertFilme = async function (filme) {
@@ -36,7 +36,7 @@ const insertFilme = async function (filme) {
         );`
 
         // Encaminha o scriptSQL para o Banco de Dados
-        let result = await knexConection.raw(sql)
+        let result = await knexConnection.raw(sql)
 
         if (result)
             return true
@@ -55,12 +55,41 @@ const updateFilme = async function (filme) {
 
 // Função para retornar todos os dados de filme do banco de dados
 const selectAllFilme = async function () {
+    try {
+        // Script SQL para listar todos os filmes
+        let sql = 'select * from tbl_filme order by id desc;'
 
+        // Executa no database o script e guarda o retorno
+        let result = await knexConnection.raw(sql)
+
+        // Validação para verificar se o retorno é um Array ou um Boolean (false)
+        if (Array.isArray(result))
+            return result[0] // Retorna somente a lista de filmes (índice 0)
+        else
+            return false
+
+    } catch (error) {
+        return false
+    }
 }
 
 // Função para retornar um filme filtrado pelo id
 const selectByIdFilme = async function (id) {
+    try {
+        let sql = `select * from tbl_filme where id = ${id};`
 
+        // Executa no database o script e guarda o retorno
+        let result = await knexConnection.raw(sql)
+
+        // Validação para verificar se o retorno é um Array ou um Boolean (false)
+        if (Array.isArray(result))
+            return result[0] // Retorna somente a lista de filmes (índice 0)
+        else
+            return false
+        
+    } catch (error) {
+        return false
+    }
 }
 
 // Função para excluir um filme filtrado pelo id

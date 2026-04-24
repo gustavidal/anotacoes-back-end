@@ -40,3 +40,5 @@ insert into tbl_filme (
 );
 
 select * from tbl_filme;
+select * from tbl_filme order by id desc;
+select * from tbl_filme where id = 2;
