@@ -31,9 +31,13 @@ const inserirNovoFilme = async function (filme, contentType) {
                 let result = await filmeDAO.insertFilme(filme)
 
                 if (result) {
+                    // Adiciona o atributo id no JSON e retorna o valor gerado no DAO
+                    filme.id = result
+
                     customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_CREATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
                     customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_CREATED_ITEM.message
+                    customMessages.DEFAULT_MESSAGE.response    = filme
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 201
                 } else {
@@ -77,6 +81,7 @@ const atualizarFilme = async function (filme, id, contentType) {
                         customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_UPDATED_ITEM.message
+                        customMessages.DEFAULT_MESSAGE.response    = filme
 
                         return customMessages.DEFAULT_MESSAGE // status-code: 200
                     } else {
@@ -167,17 +172,16 @@ const excluirFilme = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
+        // Chama a função que valida a existência e os atributos do filme
         let buscarFilmeResult = await buscarFilme(id)
 
+        // Valida o boolean retornado
         if (buscarFilmeResult.status) {
+            // Encaminha o id do filme que será excluído do database ao DAO
             let result = await filmeDAO.deleteFilme(id)
 
             if (result) {
-                customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_DELETED_ITEM.status
-                customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_DELETED_ITEM.status_code
-                customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_DELETED_ITEM.message
-
-                return customMessages.DEFAULT_MESSAGE // status-code: 200
+                return customMessages.SUCCESS_DELETED_ITEM // status-code: 200
             } else {
                 return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
             }

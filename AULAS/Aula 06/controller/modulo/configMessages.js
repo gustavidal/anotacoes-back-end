@@ -25,8 +25,8 @@ const ERROR_INTERNAL_SERVER_MODEL      = { "status": false, "status_code": 500, 
 // Mensagens de SUCESSO do projeto de filmes
 const SUCCESS_RESPONSE     = { "status": true, "status_code": 200 }
 const SUCCESS_UPDATED_ITEM = { "status": true, "status_code": 200, "message": "Item atualizado com sucesso." }
+const SUCCESS_DELETED_ITEM = { "status": true, "status_code": 200, "message": "Item excluído com sucesso." }
 const SUCCESS_CREATED_ITEM = { "status": true, "status_code": 201, "message": "Item inserido com sucesso." }
-const SUCCESS_DELETED_ITEM = { "status": true, "status_code": 204 }
 
 module.exports = {
     // Default
