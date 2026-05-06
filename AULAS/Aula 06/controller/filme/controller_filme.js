@@ -28,7 +28,7 @@ const inserirNovoFilme = async function (filme, contentType) {
                 return validar // status-code: 400
             } else {
                 // Encaminha os dados do filme ao DAO para inserção no database
-                let result = await filmeDAO.insertFilme(filme)
+                let result = await filmeDAO.insertFilme(await tratarDados(filme))
 
                 if (result) {
                     // Adiciona o atributo id no JSON e retorna o valor gerado no DAO
@@ -75,7 +75,7 @@ const atualizarFilme = async function (filme, id, contentType) {
                     filme.id = Number(id)
 
                     // Encaminha os dados do filme ao DAO para atualização no database
-                    let result = await filmeDAO.updateFilme(filme)
+                    let result = await filmeDAO.updateFilme(await tratarDados(filme))
 
                     if (result) {
                         customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_UPDATED_ITEM.status
@@ -217,6 +217,19 @@ const validarDados = async function (filme) {
     }
 
     return customMessages.ERROR_BAD_REQUEST
+}
+
+const tratarDados = async function (filme) {
+    // Trata se os dados possuem aspas simples (')
+    filme.nome            = filme.nome.replaceAll("'", "")
+    filme.sinopse         = filme.sinopse.replaceAll("'", "")
+    filme.capa            = filme.capa.replaceAll("'", "")
+    filme.data_lancamento = filme.data_lancamento.replaceAll("'", "")
+    filme.duracao         = filme.duracao.replaceAll("'", "")
+    filme.valor           = filme.valor.replaceAll("'", "")
+    filme.avaliacao       = filme.avaliacao.replaceAll("'", "")
+
+    return filme
 }
 
 module.exports = {
