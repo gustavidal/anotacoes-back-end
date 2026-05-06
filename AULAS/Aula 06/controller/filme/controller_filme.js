@@ -219,6 +219,7 @@ const validarDados = async function (filme) {
     return customMessages.ERROR_BAD_REQUEST
 }
 
+// Função para tratamento de dados
 const tratarDados = async function (filme) {
     // Trata se os dados possuem aspas simples (')
     filme.nome            = filme.nome.replaceAll("'", "")
