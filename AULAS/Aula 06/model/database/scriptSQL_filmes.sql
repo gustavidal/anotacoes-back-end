@@ -39,8 +39,47 @@ insert into tbl_filme (
     '3'
 );
 
-select * from tbl_filme;
-select * from tbl_filme order by id desc;
-select * from tbl_filme where id = 2;
+# select * from tbl_genero;
+# select * from tbl_filme order by id desc;
+# select * from tbl_filme where id = 2;
 
-delete from tbl_filme where id > 20;
+# delete from tbl_filme where id > 20;
+
+# Tabela de gênero cênico
+create table tbl_genero (
+	id     int not null auto_increment primary key,
+    genero varchar(30) not null
+);
+
+# Tabela de classificação indicativa
+create table tbl_classificacao (
+	id            int not null auto_increment primary key,
+	classificacao varchar(5) not null,
+    descricao     text,
+    idade_minima  int default 0
+);
+
+# Tabela de sexo
+create table tbl_sexo (
+	id    int not null auto_increment primary key,
+    sigla varchar(3) not null,
+    sexo  varchar(15) not null
+);
+
+# Tabela de nacionalidade
+create table tbl_nacionalidade (
+	id            int not null auto_increment primary key,
+    nacionalidade varchar(25) not null
+);
+
+# Tabela de foto
+create table tbl_foto (
+	id   int not null auto_increment primary key,
+    foto varchar(255) not null
+);
+
+# Tabela de atividade (ator, produtor, produtor executivo, roteirista)
+create table tbl_atividade (
+	id           int not null auto_increment primary key,
+    area_atuacao varchar(40)
+);
