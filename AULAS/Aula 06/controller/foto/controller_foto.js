@@ -1,35 +1,35 @@
-/************************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD da nacionalidade.
+/***************************************************************************************************************
+ * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD da foto.
  * Data: 17/04/2026 (sexta-feira)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
-************************************************************************************************************************/
+***************************************************************************************************************/
 
 // Import do arquivo de configurações de mensagens do projeto
 const configMessages = require('../modulo/configMessages.js')
 
-// Import do arquivo do DAO para manipular os dados de nacionalidade no Banco de Dados
-const nacionalidadeDAO = require('../../model/DAO/nacionalidade/nacionalidade.js')
+// Import do arquivo do DAO para manipular os dados de foto no Banco de Dados
+const fotoDAO = require('../../model/DAO/foto/foto.js')
 
-const inserirNovaNacionalidade = async function (nacionalidade, contentType) {
+const inserirNovaFoto = async function (foto, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let validar = await validarDados(nacionalidade)
+            let validar = await validarDados(foto)
 
             if (validar) {
                 return validar // status-code: 400
             } else {
-                let result = await nacionalidadeDAO.insertNacionalidade(nacionalidade)
+                let result = await fotoDAO.insertFoto(foto)
 
                 if (result) {
-                    nacionalidade.id = result
+                    foto.id = result
 
                     customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_CREATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
                     customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_CREATED_ITEM.message
-                    customMessages.DEFAULT_MESSAGE.response    = nacionalidade
+                    customMessages.DEFAULT_MESSAGE.response    = foto
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 201
                 } else {
@@ -44,26 +44,26 @@ const inserirNovaNacionalidade = async function (nacionalidade, contentType) {
     }
 }
 
-const atualizarNacionalidade = async function (nacionalidade, id, contentType) {
+const atualizarFoto = async function (foto, id, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let buscarNacionalidadeResult = await buscarNacionalidade(id)
+            let buscarFotoResult = await buscarFoto(id)
 
-            if (buscarNacionalidadeResult.status) {
-                let validar = await validarDados(nacionalidade)
+            if (buscarFotoResult.status) {
+                let validar = await validarDados(foto)
 
                 if (!validar) {
-                    nacionalidade.id = Number(id)
+                    foto.id = Number(id)
 
-                    let result = await nacionalidadeDAO.updateNacionalidade(nacionalidade)
+                    let result = await fotoDAO.updateFoto(foto)
 
                     if (result) {
                         customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_UPDATED_ITEM.message
-                        customMessages.DEFAULT_MESSAGE.response    = nacionalidade
+                        customMessages.DEFAULT_MESSAGE.response    = foto
 
                         return customMessages.DEFAULT_MESSAGE // status-code: 200
                     } else {
@@ -73,7 +73,7 @@ const atualizarNacionalidade = async function (nacionalidade, id, contentType) {
                     return validar // status-code: 400 (atributo)
                 }
             } else {
-                return buscarNacionalidadeResult // status-code: 400 (id) ou 404
+                return buscarFotoResult // status-code: 400 (id) ou 404
             }
         } else {
             return customMessages.ERROR_CONTENT_TYPE // status-code: 415
@@ -83,18 +83,18 @@ const atualizarNacionalidade = async function (nacionalidade, id, contentType) {
     }
 }
 
-const listarNacionalidade = async function () {
+const listarFoto = async function () {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let result = await nacionalidadeDAO.selectAllNacionalidade()
+        let result = await fotoDAO.selectAllFoto()
 
         if (result) {
             if (result.length > 0) {
-                customMessages.DEFAULT_MESSAGE.status                  = customMessages.SUCCESS_RESPONSE.status
-                customMessages.DEFAULT_MESSAGE.status_code             = customMessages.SUCCESS_RESPONSE.status_code
-                customMessages.DEFAULT_MESSAGE.response.count          = result.length
-                customMessages.DEFAULT_MESSAGE.response.nacionalidades = result
+                customMessages.DEFAULT_MESSAGE.status         = customMessages.SUCCESS_RESPONSE.status
+                customMessages.DEFAULT_MESSAGE.status_code    = customMessages.SUCCESS_RESPONSE.status_code
+                customMessages.DEFAULT_MESSAGE.response.count = result.length
+                customMessages.DEFAULT_MESSAGE.response.fotos = result
 
                 return customMessages.DEFAULT_MESSAGE // status-code: 200
             } else {
@@ -109,7 +109,7 @@ const listarNacionalidade = async function () {
     }
 }
 
-const buscarNacionalidade = async function (id) {
+const buscarFoto = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
@@ -117,13 +117,13 @@ const buscarNacionalidade = async function (id) {
             customMessages.ERROR_BAD_REQUEST.field = '[ID] INVÁLIDO'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
-            let result = await nacionalidadeDAO.selectByIdNacionalidade(id)
+            let result = await fotoDAO.selectByIdFoto(id)
 
             if (result) {
                 if (result.length > 0) {
-                    customMessages.DEFAULT_MESSAGE.status                 = customMessages.SUCCESS_RESPONSE.status
-                    customMessages.DEFAULT_MESSAGE.status_code            = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.nacionalidade = result
+                    customMessages.DEFAULT_MESSAGE.status        = customMessages.SUCCESS_RESPONSE.status
+                    customMessages.DEFAULT_MESSAGE.status_code   = customMessages.SUCCESS_RESPONSE.status_code
+                    customMessages.DEFAULT_MESSAGE.response.foto = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -138,14 +138,14 @@ const buscarNacionalidade = async function (id) {
     }
 }
 
-const excluirNacionalidade = async function (id) {
+const excluirFoto = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let buscarNacionalidadeResult = await buscarNacionalidade(id)
+        let buscarFotoResult = await buscarFoto(id)
 
-        if (buscarNacionalidadeResult.status) {
-            let result = await nacionalidadeDAO.deleteNacionalidade(id)
+        if (buscarFotoResult.status) {
+            let result = await fotoDAO.deleteFoto(id)
 
             if (result) {
                 return customMessages.SUCCESS_DELETED_ITEM // status-code: 200
@@ -153,18 +153,18 @@ const excluirNacionalidade = async function (id) {
                 return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
             }
         } else {
-            return buscarNacionalidadeResult // status-code: 400 (id) ou 404
+            return buscarFotoResult // status-code: 400 (id) ou 404
         }
     } catch (error) {
         return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
     }
 }
 
-const validarDados = async function (nacionalidade) {
+const validarDados = async function (foto) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
-    if (nacionalidade.nacionalidade == undefined || nacionalidade.nacionalidade == '' || nacionalidade.nacionalidade == null || nacionalidade.nacionalidade.length > 25) {
-        customMessages.ERROR_BAD_REQUEST.field = '[NACIONALIDADE] INVÁLIDO'
+    if (foto.foto == undefined || foto.foto == '' || foto.foto == null || foto.foto.length > 255) {
+        customMessages.ERROR_BAD_REQUEST.field = '[FOTO] INVÁLIDA'
     } else {
         return false
     }
@@ -173,9 +173,9 @@ const validarDados = async function (nacionalidade) {
 }
 
 module.exports = {
-    inserirNovaNacionalidade,
-    atualizarNacionalidade,
-    listarNacionalidade,
-    buscarNacionalidade,
-    excluirNacionalidade
+    inserirNovaFoto,
+    atualizarFoto,
+    listarFoto,
+    buscarFoto,
+    excluirFoto
 }

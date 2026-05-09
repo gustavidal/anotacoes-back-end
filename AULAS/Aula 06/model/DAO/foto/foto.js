@@ -1,6 +1,6 @@
 /********************************************************************************************
- * Objetivo: Arquivo responsável pelo CRUD de dados da nacionalidade no banco de dados MySQL.
- * Data: 08/05/2026 (sexta-feira)
+ * Objetivo: Arquivo responsável pelo CRUD de dados da foto no banco de dados MySQL.
+ * Data: 09/05/2026 (sábado)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
 ********************************************************************************************/
@@ -14,14 +14,14 @@ const knexDatabaseConfig = require('../../database_config/knexConfig.js')
 // Criar conexão com o Banco de Dados MySQL conforme o arquivo de configuração
 const knexConnection = knex(knexDatabaseConfig.development)
 
-const insertNacionalidade = async function (nacionalidade) {
+const insertFoto = async function (foto) {
     try {
         // Script SQL para inserção no database
         let sql = `
-        insert into tbl_nacionalidade (
-            nacionalidade
+        insert into tbl_foto (
+            foto
         ) values (
-            replace("${nacionalidade.nacionalidade}", "'", "")
+            replace("${foto.foto}", "'", "")
         );`
 
         // Roda o script no database
@@ -38,12 +38,12 @@ const insertNacionalidade = async function (nacionalidade) {
     }
 }
 
-const updateNacionalidade = async function (nacionalidade) {
+const updateFoto = async function (foto) {
     try {
         let sql = `
-        update tbl_nacionalidade set
-            nacionalidade = replace("${nacionalidade.nacionalidade}", "'", "")
-        where id = ${nacionalidade.id};`
+        update tbl_foto set
+            foto = replace("${foto.foto}", "'", "")
+        where id = ${foto.id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -57,10 +57,10 @@ const updateNacionalidade = async function (nacionalidade) {
     }
 }
 
-const selectAllNacionalidade = async function () {
+const selectAllFoto = async function () {
     try {
         // Script SQL para inserção no database
-        let sql = `select * from tbl_nacionalidade order by id desc;`
+        let sql = `select * from tbl_foto order by id desc;`
 
         // Roda o script no database
         let result = await knexConnection.raw(sql)
@@ -76,9 +76,9 @@ const selectAllNacionalidade = async function () {
     }
 }
 
-const selectByIdNacionalidade = async function (id) {
+const selectByIdFoto = async function (id) {
     try {
-        let sql = `select * from tbl_nacionalidade where id = ${id};`
+        let sql = `select * from tbl_foto where id = ${id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -92,9 +92,9 @@ const selectByIdNacionalidade = async function (id) {
     }
 }
 
-const deleteNacionalidade = async function (id) {
+const deleteFoto = async function (id) {
     try {
-        let sql = `delete from tbl_nacionalidade where id = ${id};`
+        let sql = `delete from tbl_foto where id = ${id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -102,16 +102,16 @@ const deleteNacionalidade = async function (id) {
             return true
         else
             return false
-        
+
     } catch (error) {
         return false
     }
 }
 
 module.exports = {
-    insertNacionalidade,
-    updateNacionalidade,
-    selectAllNacionalidade,
-    selectByIdNacionalidade,
-    deleteNacionalidade
+    insertFoto,
+    updateFoto,
+    selectAllFoto,
+    selectByIdFoto,
+    deleteFoto
 }

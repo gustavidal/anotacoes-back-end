@@ -172,6 +172,55 @@ app.delete('/v1/senai/locadora/nacionalidade/:id', async function (request, resp
     response.json(result)
 })
 
+
+
+//************************//
+// ENDPOINTS - Tabela "FOTO"
+//************************//
+const controllerFoto = require('./controller/foto/controller_foto.js')
+
+app.post('/v1/senai/locadora/foto', bodyParserJSON, async function (request, response) {
+    let dados = request.body
+    let contentType = request.headers['content-type']
+    let result = await controllerFoto.inserirNovaFoto(dados, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/foto', async function (request, response) {
+    let result = await controllerFoto.listarFoto()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/foto/:id', async function (request, response) {
+    let id = request.params.id
+    let result = await controllerFoto.buscarFoto(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/foto/:id', bodyParserJSON, async function (request, response) {
+    let contentType = request.headers['content-type']
+    let id = request.params.id
+    let dados = request.body
+    let result = await controllerFoto.atualizarFoto(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/foto/:id', async function (request, response) {
+    let id = request.params.id
+    let result = await controllerFoto.excluirFoto(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
 // Iniciar a API
 app.listen(8080, function () {
     console.log('API aguardando novas requisições...')
