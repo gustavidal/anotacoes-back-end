@@ -1,9 +1,9 @@
-/***********************************************************************************
- * Objetivo: Arquivo responsável pelo CRUD de dados da foto no banco de dados MySQL.
- * Data: 09/05/2026 (sábado)
+/*****************************************************************************************************
+ * Objetivo: Arquivo responsável pelo CRUD de dados da atividade profissional no banco de dados MySQL.
+ * Data: 13/05/2026 (sexta-feira)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
-***********************************************************************************/
+*****************************************************************************************************/
 
 // Import da biblioteca para manipular dados no Banco de Dados MySQL
 const knex = require('knex')
@@ -14,20 +14,18 @@ const knexDatabaseConfig = require('../../database_config/knexConfig.js')
 // Criar conexão com o Banco de Dados MySQL conforme o arquivo de configuração
 const knexConnection = knex(knexDatabaseConfig.development)
 
-const insertFoto = async function (foto) {
+// Função para inserir uma nova atividade profissional no banco de dados
+const insertAtividade = async function (atividade) {
     try {
-        // Script SQL para inserção no database
         let sql = `
-        insert into tbl_foto (
-            foto
+        insert into tbl_atividade (
+            area_atuacao
         ) values (
-            replace("${foto.foto}", "'", "")
+            replace("${atividade.area_atuacao}", "'", "")
         );`
 
-        // Roda o script no database
         let result = await knexConnection.raw(sql)
 
-        // Condiciona o retorno do encaminhamento do script
         if (result)
             return result[0].insertId
         else
@@ -38,12 +36,12 @@ const insertFoto = async function (foto) {
     }
 }
 
-const updateFoto = async function (foto) {
+const updateAtividade = async function (atividade) {
     try {
         let sql = `
-        update tbl_foto set
-            foto = replace("${foto.foto}", "'", "")
-        where id = ${foto.id};`
+        update tbl_atividade set
+            area_atuacao = replace("${atividade.area_atuacao}", "'", "")
+        where id = ${atividade.id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -57,28 +55,25 @@ const updateFoto = async function (foto) {
     }
 }
 
-const selectAllFoto = async function () {
+const selectAllAtividade = async function () {
     try {
-        // Script SQL para inserção no database
-        let sql = `select * from tbl_foto order by id desc;`
+        let sql = `select * from tbl_atividade order by id desc;`
 
-        // Roda o script no database
         let result = await knexConnection.raw(sql)
 
-        // Condiciona o retorno do encaminhamento do script
         if (Array.isArray(result))
             return result[0]
         else
             return false
 
     } catch (error) {
-        return false
+        return false   
     }
 }
 
-const selectByIdFoto = async function (id) {
+const selectByIdAtividade = async function (id) {
     try {
-        let sql = `select * from tbl_foto where id = ${id};`
+        let sql = `select * from tbl_atividade where id = ${id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -92,9 +87,9 @@ const selectByIdFoto = async function (id) {
     }
 }
 
-const deleteFoto = async function (id) {
+const deleteAtividade = async function (id) {
     try {
-        let sql = `delete from tbl_foto where id = ${id};`
+        let sql = `delete from tbl_atividade where id = ${id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -109,9 +104,9 @@ const deleteFoto = async function (id) {
 }
 
 module.exports = {
-    insertFoto,
-    updateFoto,
-    selectAllFoto,
-    selectByIdFoto,
-    deleteFoto
+    insertAtividade,
+    updateAtividade,
+    selectAllAtividade,
+    selectByIdAtividade,
+    deleteAtividade
 }
