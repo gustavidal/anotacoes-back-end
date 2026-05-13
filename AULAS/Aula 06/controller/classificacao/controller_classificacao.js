@@ -1,35 +1,35 @@
-/***************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD do sexo.
+/***********************************************************************************************************************************
+ * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD da classificação indicativa.
  * Data: 17/04/2026 (sexta-feira)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
-***************************************************************************************************************/
+***********************************************************************************************************************************/
 
 // Import do arquivo de configurações de mensagens do projeto
 const configMessages = require('../modulo/configMessages.js')
 
-// Import do arquivo do DAO para manipular os dados de sexo no Banco de Dados
-const sexoDAO = require('../../model/DAO/sexo/sexo.js')
+// Import do arquivo do DAO para manipular os dados de classificação indicativa no Banco de Dados
+const classificacaoDAO = require('../../model/DAO/classificacao/classificacao.js')
 
-const inserirNovoSexo = async function (sexo, contentType) {
+const inserirNovaClassificacao = async function (classificacao, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let validar = await validarDados(sexo)
+            let validar = await validarDados(classificacao)
 
             if (validar) {
                 return validar // status-code: 400
             } else {
-                let result = await sexoDAO.insertSexo(sexo)
+                let result = await classificacaoDAO.insertClassificacao(classificacao)
 
                 if (result) {
-                    sexo.id = result
+                    classificacao.id = result
 
-                    customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_CREATED_ITEM.status
+                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_CREATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
-                    customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_CREATED_ITEM.message
-                    customMessages.DEFAULT_MESSAGE.response    = sexo
+                    customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_CREATED_ITEM.message
+                    customMessages.DEFAULT_MESSAGE.response = classificacao
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 201
                 } else {
@@ -44,26 +44,26 @@ const inserirNovoSexo = async function (sexo, contentType) {
     }
 }
 
-const atualizarSexo = async function (sexo, id, contentType) {
+const atualizarClassificacao = async function (classificacao, id, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let buscarSexoResult = await buscarSexo(id)
+            let buscarClassificacaoResult = await buscarClassificacao(id)
 
-            if (buscarSexoResult.status) {
-                let validar = await validarDados(sexo)
+            if (buscarClassificacaoResult.status) {
+                let validar = await validarDados(classificacao)
 
                 if (!validar) {
-                    sexo.id = Number(id)
+                    classificacao.id = Number(id)
 
-                    let result = await sexoDAO.updateSexo(sexo)
+                    let result = await classificacaoDAO.updateClassificacao(classificacao)
 
                     if (result) {
-                        customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_UPDATED_ITEM.status
+                        customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
-                        customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_UPDATED_ITEM.message
-                        customMessages.DEFAULT_MESSAGE.response    = sexo
+                        customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
+                        customMessages.DEFAULT_MESSAGE.response = classificacao
 
                         return customMessages.DEFAULT_MESSAGE // status-code: 200
                     } else {
@@ -73,7 +73,7 @@ const atualizarSexo = async function (sexo, id, contentType) {
                     return validar // status-code: 400 (atributo)
                 }
             } else {
-                return buscarSexoResult // status-code: 400 (id) ou 404
+                return buscarClassificacaoResult // status-code: 400 (id) ou 404
             }
         } else {
             return customMessages.ERROR_CONTENT_TYPE // status-code: 415
@@ -83,18 +83,18 @@ const atualizarSexo = async function (sexo, id, contentType) {
     }
 }
 
-const listarSexo = async function () {
+const listarClassificacao = async function () {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let result = await sexoDAO.selectAllSexo()
+        let result = await classificacaoDAO.selectAllClassificacao()
 
         if (result) {
             if (result.length > 0) {
-                customMessages.DEFAULT_MESSAGE.status         = customMessages.SUCCESS_RESPONSE.status
-                customMessages.DEFAULT_MESSAGE.status_code    = customMessages.SUCCESS_RESPONSE.status_code
+                customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
                 customMessages.DEFAULT_MESSAGE.response.count = result.length
-                customMessages.DEFAULT_MESSAGE.response.sexos = result
+                customMessages.DEFAULT_MESSAGE.response.classificacoes = result
 
                 return customMessages.DEFAULT_MESSAGE // status-code: 200
             } else {
@@ -109,7 +109,7 @@ const listarSexo = async function () {
     }
 }
 
-const buscarSexo = async function (id) {
+const buscarClassificacao = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
@@ -117,13 +117,13 @@ const buscarSexo = async function (id) {
             customMessages.ERROR_BAD_REQUEST.field = '[ID] INVÁLIDO'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
-            let result = await sexoDAO.selectByIdSexo(id)
+            let result = await classificacaoDAO.selectByIdClassificacao(id)
 
             if (result) {
                 if (result.length > 0) {
-                    customMessages.DEFAULT_MESSAGE.status        = customMessages.SUCCESS_RESPONSE.status
-                    customMessages.DEFAULT_MESSAGE.status_code   = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.sexo = result
+                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                    customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
+                    customMessages.DEFAULT_MESSAGE.response.classificacao = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -138,14 +138,14 @@ const buscarSexo = async function (id) {
     }
 }
 
-const excluirSexo = async function (id) {
+const excluirClassificacao = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let buscarSexoResult = await buscarSexo(id)
+        let buscarClassificacaoResult = await buscarClassificacao(id)
 
-        if (buscarSexoResult.status) {
-            let result = await sexoDAO.deleteSexo(id)
+        if (buscarClassificacaoResult.status) {
+            let result = await classificacaoDAO.deleteClassificacao(id)
 
             if (result) {
                 return customMessages.SUCCESS_DELETED_ITEM // status-code: 200
@@ -153,20 +153,22 @@ const excluirSexo = async function (id) {
                 return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
             }
         } else {
-            return buscarSexoResult // status-code: 400 (id) ou 404
+            return buscarClassificacaoResult // status-code: 400 (id) ou 404
         }
     } catch (error) {
         return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
     }
 }
 
-const validarDados = async function (sexo) {
+const validarDados = async function (classificacao) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
-    if (sexo.sigla == undefined || sexo.sigla == '' || sexo.sigla == null || sexo.sigla.length > 3) {
-        customMessages.ERROR_BAD_REQUEST.field = '[SIGLA] INVÁLIDA'
-    } else if (sexo.sexo == undefined || sexo.sexo == '' || sexo.sexo == null || sexo.sexo.length > 15){
-        customMessages.ERROR_BAD_REQUEST.field = '[SEXO] INVÁLIDO'
+    if (classificacao.classificacao == undefined || classificacao.classificacao == '' || classificacao.classificacao == null || classificacao.classificacao.length > 5) {
+        customMessages.ERROR_BAD_REQUEST.field = '[CLASSIFICAÇÃO INDICATIVA] INVÁLIDA'
+    } else if (classificacao.descricao == undefined || classificacao.descricao == '') {
+        customMessages.ERROR_BAD_REQUEST.field = '[DESCRIÇÃO] INVÁLIDA'
+    } else if (classificacao.idade_minima == undefined || classificacao.idade_minima < 0) {
+        customMessages.ERROR_BAD_REQUEST.field = '[IDADE MÍNIMA] INVÁLIDA'
     } else {
         return false
     }
@@ -175,9 +177,9 @@ const validarDados = async function (sexo) {
 }
 
 module.exports = {
-    inserirNovoSexo,
-    atualizarSexo,
-    listarSexo,
-    buscarSexo,
-    excluirSexo
+    inserirNovaClassificacao,
+    atualizarClassificacao,
+    listarClassificacao,
+    buscarClassificacao,
+    excluirClassificacao
 }
