@@ -270,6 +270,55 @@ app.delete('/v1/senai/locadora/atividade/:id', async function (request, response
     response.json(result)
 })
 
+
+
+//************************//
+// ENDPOINTS - Tabela "SEXO"
+//************************//
+const controllerSexo = require('./controller/sexo/controller_sexo.js')
+
+app.post('/v1/senai/locadora/sexo', bodyParserJSON, async function (request, response) {
+    let dados       = request.body
+    let contentType = request.headers['content-type']
+    let result      = await controllerSexo.inserirNovoSexo(dados, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/sexo', async function (request, response) {
+    let result = await controllerSexo.listarSexo()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/sexo/:id', async function (request, response) {
+    let id     = request.params.id
+    let result = await controllerSexo.buscarSexo(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response) {
+    let contentType = request.headers['content-type']
+    let id          = request.params.id
+    let dados       = request.body
+    let result      = await controllerSexo.atualizarSexo(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/sexo/:id', async function (request, response) {
+    let id     = request.params.id
+    let result = await controllerSexo.excluirSexo(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
 // Iniciar a API
 app.listen(8080, function () {
     console.log('API aguardando novas requisições...')
