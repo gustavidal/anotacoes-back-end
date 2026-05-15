@@ -163,11 +163,11 @@ const excluirClassificacao = async function (id) {
 const validarDados = async function (classificacao) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
-    if (classificacao.classificacao == undefined || classificacao.classificacao == '' || classificacao.classificacao == null || classificacao.classificacao.length > 5) {
+    if (classificacao.classificacao == undefined || classificacao.classificacao == '' || classificacao.classificacao == null || !isNaN(classificacao.classificacao) || classificacao.classificacao.length > 5) {
         customMessages.ERROR_BAD_REQUEST.field = '[CLASSIFICAÇÃO INDICATIVA] INVÁLIDA'
     } else if (classificacao.descricao == undefined || classificacao.descricao == '') {
         customMessages.ERROR_BAD_REQUEST.field = '[DESCRIÇÃO] INVÁLIDA'
-    } else if (classificacao.idade_minima == undefined || classificacao.idade_minima < 0) {
+    } else if (classificacao.idade_minima == undefined || isNaN(classificacao.idade_minima) || classificacao.idade_minima < 0) {
         customMessages.ERROR_BAD_REQUEST.field = '[IDADE MÍNIMA] INVÁLIDA'
     } else {
         return false
