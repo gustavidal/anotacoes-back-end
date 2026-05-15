@@ -272,7 +272,7 @@ components:
           type: string
           description: O número máximo de caracteres é de 40
 
-    Classificação:
+    Classificacao:
       required:
         - classificacao
       type: object
@@ -340,7 +340,7 @@ components:
           example: "https://fotos.com/foto_do_ator"
           description: O número máximo de caracteres é de 255
     
-    Gênero:
+    Genero:
       required:
         - genero
       type: object
