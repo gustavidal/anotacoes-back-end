@@ -1,0 +1,430 @@
+openapi: 3.0.3
+info:
+  title: Projeto de Controle de Filmes - SENAI Jandira
+  description: |-
+   API destinada a controle de filmes para o projeto "Bem Legal" do SENAI
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: gustavovidalgva@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://
+paths:
+  # ENDPOINTS - ATIVIDADE
+  /v1/senai/locadora/atividade:
+    post:
+      tags:
+        - Atividade
+      summary: Adiciona uma nova atividade
+      description: Endpoint para enviar os dados da atividade a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados da nova atividade a ser inserida no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Atividade'
+        required: true
+      responses:
+        '201':
+          description: Success Created Item
+        '400':
+          description: Error Bad Request
+        '415':
+          description: Error Content Type
+        '500':
+          description: Error Internal Server (Controller | Model)
+    get:
+      tags:
+        - Atividade
+      summary: Lista todos as atividades
+      description: Endpoint para listar todos as atividades cadastradas
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Atividade'
+        '404':
+          description: Error Not Found
+        '500':
+          description: Error Internal Server (Controller | Model)
+  /v1/senai/locadora/atividade/{id}:
+    get:
+      tags:
+        - Atividade
+      summary: Busca uma atividade pelo id
+      description: Endpoint para retornar uma atividade pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca da atividade
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filme'          
+        '400':
+          description: Error Bad Request (id)
+        '404':
+          description: Error Not found
+        '500':
+          description: Error Internal Server (Controller | Model)
+    put:
+      tags:
+        - Atividade
+      summary: Atualiza uma atividade pelo id
+      description: Endpoint para atualizar uma atividade pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca da atividade
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Dados para atualizar uma atividade existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Atividade'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request (id | dados)
+        '404':
+          description: Error Not Found
+        '415':
+          description: Error Content Type
+        '500':
+          description: Error internal server (Controller | Model)
+    delete:
+      tags:
+        - Atividade
+      summary: Exclui uma atividade
+      description: Endpoint para excluir uma atividade pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca da atividade
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Error Bad Request (id)
+        '404':
+          description: Error Not Found
+        '500':
+          description: Error Internal Server (Controller | Model)
+
+  # ENDPOINTS - FILME
+  /v1/senai/locadora/filme:
+    post:
+      tags:
+        - Filme
+      summary: Adiciona um novo filme
+      description: Endpoint para enviar os dados do filme a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados do novo filme a ser inserido no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filme'
+        required: true
+      responses:
+        '201':
+          description: Success Created Item
+        '400':
+          description: Error Bad Request
+        '415':
+          description: Error Content Type
+        '500':
+          description: Error Internal Server (Controller | Model)
+    get:
+      tags:
+        - Filme
+      summary: Lista todos os filmes
+      description: Endpoint para listar todos os filmes cadastrados
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filme'
+        '404':
+          description: Not Found
+        '500':
+          description: Error internal server (Controller | Model)
+  /v1/senai/locadora/filme/{id}:
+    get:
+      tags:
+        - Filme
+      summary: Busca um filme pelo id
+      description: Endpoint para retornar um aluno pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca do filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filme'          
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error internal server (Controller | Model)
+    put:
+      tags:
+        - Filme
+      summary: Atualiza um filme pelo id
+      description: Endpoint para atualizar um filme pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca do filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Dados para atualizar um filme existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filme'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid content type
+        '500':
+          description: Error internal server (Controller | Model)
+    delete:
+      tags:
+        - Filme
+      summary: Exclui um filme
+      description: Endpoint para excluir um filme pelo id
+      parameters:
+        - name: id
+          in: path
+          description: id para realizar a busca do filme
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error internal server (Controller | Model)
+components:
+  schemas:
+    Atividade:
+      required:
+        - area_atuacao
+      type: object
+      properties:
+        id:
+          type: integer
+        area_atuacao:
+          type: string
+          description: O número máximo de caracteres é de 40
+
+    Classificação:
+      required:
+        - classificacao
+      type: object
+      properties:
+        id:
+          type: integer
+        classificacao:
+          type: string
+          example: "+12"
+          description: O número máximo de caracteres é de 5; Em caso de "Livre", se guarda a letra "L"
+        descricao:
+          type: string
+          description: O número máximo de caracteres é ilimitado
+        idade_minima:
+          type: integer
+
+    Filme:
+      required:
+        - nome
+        - sinopse
+        - data_lancamento
+        - capa
+        - duracao
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+          description: O número máximo de caracteres é de 80
+        sinopse:
+          type: string
+          description: O número máximo de caracteres é ilimitado
+        data_lancamento:
+          type: string
+          format: date
+          example: "2026-01-01"
+        capa:
+          type: string
+          description: O número máximo de caracteres é de 255
+        duracao:
+          type: string
+          example: "01:45"
+          pattern: '^(?:[01]\d|2[0-3]):[0-5]\d$'
+        valor:
+          type: number
+          format: double
+          example: "999.99"
+          description: O número máximo de caracteres é de 9 centenas, 9 dezenas e 9 unidades (999) e duas casas decimais (.99)
+        avaliacao:
+          type: number
+          format: double
+          example: "5.0"
+          description: O número máximo de caracteres é de 5 unidades (5) e 1 casa decimal (.9), porém tendo como valor máximo 5.0
+
+    Foto:
+      required:
+        - foto
+      type: object
+      properties:
+        id:
+          type: integer
+        foto:
+          type: string
+          example: "https://fotos.com/foto_do_ator"
+          description: O número máximo de caracteres é de 255
+    
+    Gênero:
+      required:
+        - genero
+      type: object
+      properties:
+        id:
+          type: integer
+        genero:
+          type: string
+          description: O número máximo de caracteres é de 30
+
+    Nacionalidade:
+      required:
+        - nacionalidade
+      type: object
+      properties:
+        id:
+          type: integer
+        nacionalidade:
+          type: string
+          example: "Papua-nova-guineense"
+          description: O número máximo de caracteres é de 25
+    
+    Sexo:
+      required:
+        - sigla
+        - sexo
+      type: object
+      properties:
+        id:
+          type: integer
+        sigla:
+          type: string
+          example: "MAS"
+          description: O número máximo de caracteres é de 3
+        sexo:
+          type: string
+          example: "MASCULINO"
+          description: O número máximo de caracteres é de 15
+  requestBodies:
+    Atividade:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Atividade'
+
+    Classificacao:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Classificacao'
+
+    Filme:
+      description: Objeto que deve ser enviado no Body das requisições
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Filme'
+
+    Foto:
+      description: Objeto que deve ser enviado no Body das requisições
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Foto'
+
+    Genero:
+      description: Objeto que deve ser enviado no Body das requisições
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Genero'
+
+    Nacionalidade:
+      description: Objeto que deve ser enviado no Body das requisições
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Nacionalidade'
+
+    Sexo:
+      description: Objeto que deve ser enviado no Body das requisições
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Sexo'
