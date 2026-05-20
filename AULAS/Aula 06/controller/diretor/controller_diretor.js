@@ -1,14 +1,14 @@
-/***************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD de ator.
+/******************************************************************************************************************
+ * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD de diretor.
  * Data: 20/05/2026 (quarta-feira)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
-***************************************************************************************************************/
+******************************************************************************************************************/
 
 // Import do arquivo de configurações de mensagens do projeto
 const configMessages = require('../modulo/configMessages.js')
 
-// Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
+// Import do arquivo do DAO para manipular os dados de diretor no Banco de Dados
 const diretorDAO = require('../../model/DAO/diretor/diretor.js')
 
 // Import das Controllers
@@ -66,7 +66,7 @@ const excluirDiretor = async function (id) {
 const validarDados = async function (diretor) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
-    if (diretor.nome = undefined || diretor.nome == '' || diretor.nome == null || diretor.nome.length > 100) {
+    if (diretor.nome == undefined || diretor.nome == '' || diretor.nome == null || diretor.nome.length > 100) {
         customMessages.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO'
     } else if (diretor.data_nascimento == undefined || diretor.data_nascimento == '' || diretor.data_nascimento == null || diretor.data_nascimento.length != 10) {
         customMessages.ERROR_BAD_REQUEST.field = '[DATA DE NASCIMENTO] INVÁLIDA'
