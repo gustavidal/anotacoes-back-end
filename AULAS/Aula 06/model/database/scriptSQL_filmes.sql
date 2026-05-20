@@ -83,3 +83,41 @@ create table tbl_atividade (
 	id           int not null auto_increment primary key,
     area_atuacao varchar(40)
 );
+
+
+
+delete from tbl_filme;
+
+select * from tbl_filme;
+
+alter table tbl_filme
+	add column id_classificacao int not null,
+    add constraint FK_CLASSIFICACAO_FILME
+		foreign key (id_classificacao)
+        references tbl_classificacao(id);
+        
+        
+create table tbl_ator (
+	id              int not null auto_increment primary key,
+    nome            varchar(100) not null,
+    data_nascimento date not null,
+    inicio_carreira year not null,
+    biografia       text not null,
+    id_sexo         int not null,
+    
+    constraint FK_SEXO_ATOR
+    foreign key (id_sexo)
+    references tbl_sexo(id)
+);
+
+create table tbl_diretor (
+	id              int not null auto_increment primary key,
+    nome            varchar(100) not null,
+    data_nascimento date not null,
+	inicio_carreira year not null,
+    id_sexo         int not null,
+    
+    constraint FK_SEXO_DIRETOR
+    foreign key (id_sexo)
+    references tbl_sexo(id)
+);

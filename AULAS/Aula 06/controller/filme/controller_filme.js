@@ -11,6 +11,9 @@ const configMessages = require('../modulo/configMessages.js')
 // Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
 const filmeDAO = require('../../model/DAO/filme/filme.js')
 
+// Import das Controllers
+const controllerClassificacao = require('../classificacao/controller_classificacao.js')
+
 // Função para inserir um novo filme
 const inserirNovoFilme = async function (filme, contentType) {
     // Cria uma cópia dos JSON's do arquivo de configurações de mensagens
@@ -34,10 +37,10 @@ const inserirNovoFilme = async function (filme, contentType) {
                     // Adiciona o atributo id no JSON e retorna o valor gerado no DAO
                     filme.id = result
 
-                    customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_CREATED_ITEM.status
+                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_CREATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
-                    customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_CREATED_ITEM.message
-                    customMessages.DEFAULT_MESSAGE.response    = filme
+                    customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_CREATED_ITEM.message
+                    customMessages.DEFAULT_MESSAGE.response = filme
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 201
                 } else {
@@ -78,10 +81,10 @@ const atualizarFilme = async function (filme, id, contentType) {
                     let result = await filmeDAO.updateFilme(await tratarDados(filme))
 
                     if (result) {
-                        customMessages.DEFAULT_MESSAGE.status      = customMessages.SUCCESS_UPDATED_ITEM.status
+                        customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
-                        customMessages.DEFAULT_MESSAGE.message     = customMessages.SUCCESS_UPDATED_ITEM.message
-                        customMessages.DEFAULT_MESSAGE.response    = filme
+                        customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
+                        customMessages.DEFAULT_MESSAGE.response = filme
 
                         return customMessages.DEFAULT_MESSAGE // status-code: 200
                     } else {
@@ -114,9 +117,24 @@ const listarFilme = async function () {
         if (result) {
             // Validação para verificar se o conteúdo do Array tem dados de retorno
             if (result.length > 0) {
-                customMessages.DEFAULT_MESSAGE.status          = customMessages.SUCCESS_RESPONSE.status
-                customMessages.DEFAULT_MESSAGE.status_code     = customMessages.SUCCESS_RESPONSE.status_code
-                customMessages.DEFAULT_MESSAGE.response.count  = result.length
+                // Manipulação dos dados da classificação
+                // Percorre o array de filmes
+                for (filme of result) {
+                    // Busca na controller da classificação o id referente à FK da classificação
+                    let resultClassificacao = await controllerClassificacao.buscarClassificacao(filme.id_classificacao)
+
+                    // Se encontrar o id
+                    if (resultClassificacao.status) {
+                        // Adiciona um atributo classificação no JSON do filme e coloca o resultado com os dados da mesma
+                        filme.classificacao = resultClassificacao.response.classificacao
+                        // Apaga o atributo id_classificacao do JSON de filme
+                        delete filme.id_classificacao
+                    }
+                }
+
+                customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
+                customMessages.DEFAULT_MESSAGE.response.count = result.length
                 customMessages.DEFAULT_MESSAGE.response.filmes = result
 
                 return customMessages.DEFAULT_MESSAGE // status-code: 200
@@ -149,8 +167,23 @@ const buscarFilme = async function (id) {
             if (result) {
                 // Verificação se há item dentro do Array
                 if (result.length > 0) {
-                    customMessages.DEFAULT_MESSAGE.status         = customMessages.SUCCESS_RESPONSE.status
-                    customMessages.DEFAULT_MESSAGE.status_code    = customMessages.SUCCESS_RESPONSE.status_code
+                    // Manipulação dos dados da classificação
+                    // Percorre o array de filmes
+                    for (filme of result) {
+                        // Busca na controller da classificação o id referente à FK da classificação
+                        let resultClassificacao = await controllerClassificacao.buscarClassificacao(filme.id_classificacao)
+
+                        // Se encontrar o id
+                        if (resultClassificacao.status) {
+                            // Adiciona um atributo classificação no JSON do filme e coloca o resultado com os dados da mesma
+                            filme.classificacao = resultClassificacao.response.classificacao
+                            // Apaga o atributo id_classificacao do JSON de filme
+                            delete filme.id_classificacao
+                        }
+                    }
+
+                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                    customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
                     customMessages.DEFAULT_MESSAGE.response.filme = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
@@ -212,6 +245,9 @@ const validarDados = async function (filme) {
         customMessages.ERROR_BAD_REQUEST.field = '[VALOR] INVÁLIDO'
     } else if (filme.avaliacao == undefined || isNaN(filme.avaliacao) || filme.avaliacao.length > 3) {
         customMessages.ERROR_BAD_REQUEST.field = '[AVALIAÇÃO] INVÁLIDA'
+        // Validação de chave estrangeira (classificação)
+    } else if (filme.id_classificacao == undefined || filme.id_classificacao == '' || filme.id_classificacao == null || isNaN(filme.id_classificacao) || filme.id_classificacao < 1) {
+        customMessages.ERROR_BAD_REQUEST.field = '[ID DE CLASSIFICAÇÃO] INVÁLIDO'
     } else {
         return false
     }
@@ -222,13 +258,13 @@ const validarDados = async function (filme) {
 // Função para tratamento de dados
 const tratarDados = async function (filme) {
     // Trata se os dados possuem aspas simples (')
-    filme.nome            = filme.nome.replaceAll("'", "")
-    filme.sinopse         = filme.sinopse.replaceAll("'", "")
-    filme.capa            = filme.capa.replaceAll("'", "")
+    filme.nome = filme.nome.replaceAll("'", "")
+    filme.sinopse = filme.sinopse.replaceAll("'", "")
+    filme.capa = filme.capa.replaceAll("'", "")
     filme.data_lancamento = filme.data_lancamento.replaceAll("'", "")
-    filme.duracao         = filme.duracao.replaceAll("'", "")
-    filme.valor           = filme.valor.replaceAll("'", "")
-    filme.avaliacao       = filme.avaliacao.replaceAll("'", "")
+    filme.duracao = filme.duracao.replaceAll("'", "")
+    filme.valor = filme.valor.replaceAll("'", "")
+    filme.avaliacao = filme.avaliacao.replaceAll("'", "")
 
     return filme
 }

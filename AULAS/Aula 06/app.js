@@ -370,6 +370,55 @@ app.delete('/v1/senai/locadora/classificacao/:id', async function (request, resp
 
 
 
+//***************************//
+// ENDPOINTS - Tabela "DIRETOR"
+//***************************//
+const controllerDiretor = require('./controller/diretor/controller_diretor.js')
+
+app.post('/v1/senai/locadora/diretor', bodyParserJSON, async function (request, response) {
+    let dados       = request.body
+    let contentType = request.headers['content-type']
+    let result      = await controllerDiretor.inserirNovoDiretor(dados, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/diretor', async function (request, response) {
+    let result = await controllerDiretor.listarDiretor()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/diretor/:id', async function (request, response) {
+    let id     = request.params.id
+    let result = await controllerDiretor.buscarDiretor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/diretor/:id', bodyParserJSON, async function (request, response) {
+    let contentType = request.headers['content-type']
+    let id          = request.params.id
+    let dados       = request.body
+    let result      = await controllerDiretor.atualizarDiretor(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/diretor/:id', async function (request, response) {
+    let id     = request.params.id
+    let result = await controllerDiretor.excluirDiretor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+
+
 // Iniciar a API
 app.listen(8080, function () {
     console.log('API aguardando novas requisições...')

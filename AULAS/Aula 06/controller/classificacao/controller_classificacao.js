@@ -163,7 +163,7 @@ const excluirClassificacao = async function (id) {
 const validarDados = async function (classificacao) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
-    if (classificacao.classificacao == undefined || classificacao.classificacao == '' || classificacao.classificacao == null || !isNaN(classificacao.classificacao) || classificacao.classificacao.length > 5) {
+    if (classificacao.classificacao == undefined || classificacao.classificacao == '' || classificacao.classificacao == null || classificacao.classificacao.length > 5) {
         customMessages.ERROR_BAD_REQUEST.field = '[CLASSIFICAÇÃO INDICATIVA] INVÁLIDA'
     } else if (classificacao.descricao == undefined || classificacao.descricao == '') {
         customMessages.ERROR_BAD_REQUEST.field = '[DESCRIÇÃO] INVÁLIDA'
