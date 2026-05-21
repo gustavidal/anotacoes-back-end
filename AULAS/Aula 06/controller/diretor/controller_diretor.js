@@ -88,26 +88,63 @@ const atualizarDiretor = async function (diretor, id, contentType) {
 
 const listarDiretor = async function () {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
-    
-        try {
-            let result = await diretorDAO.selectAllDiretor()
-    
+
+    try {
+        let result = await diretorDAO.selectAllDiretor()
+
+        if (result) {
+            if (result.length > 0) {
+                for (let diretor of result) {
+                    let resultSexo = await controllerSexo.buscarSexo(diretor.id_sexo)
+
+                    if (resultSexo.status) {
+                        diretor.sexo = resultSexo.response.sexo
+                        delete diretor.id_sexo
+                    }
+                }
+
+                customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
+                customMessages.DEFAULT_MESSAGE.response.count = result.length
+                customMessages.DEFAULT_MESSAGE.response.diretores = result
+
+                return customMessages.DEFAULT_MESSAGE // status-code: 200
+            } else {
+                return customMessages.ERROR_NOT_FOUND // status-code: 404
+            }
+        } else {
+            return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
+        }
+    } catch (error) {
+        return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
+    }
+}
+
+const buscarDiretor = async function (id) {
+    let customMessages = JSON.parse(JSON.stringify(configMessages))
+
+    try {
+        if (id == undefined || String(id).replaceAll(' ', '') == '' || id == null || isNaN(id) || id < 1) {
+            customMessages.ERROR_BAD_REQUEST.field = '[ID] INVÁLIDO'
+            return customMessages.ERROR_BAD_REQUEST // status-code: 400
+        } else {
+            let result = await diretorDAO.selectByIdDiretor(id)
+
             if (result) {
                 if (result.length > 0) {
                     for (let diretor of result) {
                         let resultSexo = await controllerSexo.buscarSexo(diretor.id_sexo)
-    
+
                         if (resultSexo.status) {
                             diretor.sexo = resultSexo.response.sexo
                             delete diretor.id_sexo
                         }
                     }
-    
+
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.count = result.length
-                    customMessages.DEFAULT_MESSAGE.response.diretores = result
-    
+                    customMessages.DEFAULT_MESSAGE.response.diretor = result
+
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
                     return customMessages.ERROR_NOT_FOUND // status-code: 404
@@ -115,13 +152,10 @@ const listarDiretor = async function () {
             } else {
                 return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
             }
-        } catch (error) {
-            return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
         }
-}
-
-const buscarDiretor = async function (id) {
-
+    } catch (error) {
+        return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
+    }
 }
 
 const excluirDiretor = async function (id) {
