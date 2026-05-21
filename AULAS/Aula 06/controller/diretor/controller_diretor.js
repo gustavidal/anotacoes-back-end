@@ -48,11 +48,76 @@ const inserirNovoDiretor = async function (diretor, contentType) {
 }
 
 const atualizarDiretor = async function (diretor, id, contentType) {
+    let customMessages = JSON.parse(JSON.stringify(configMessages))
 
+    try {
+        if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
+            let buscarDiretorResult = await buscarDiretor(id)
+
+            if (buscarDiretorResult.status) {
+                let validar = await validarDados(diretor)
+
+                if (!validar) {
+                    diretor.id = Number(id)
+
+                    let result = await diretorDAO.updateDiretor(diretor)
+
+                    if (result) {
+                        customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
+                        customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
+                        customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
+                        customMessages.DEFAULT_MESSAGE.response = diretor
+
+                        return customMessages.DEFAULT_MESSAGE // status-code: 200
+                    } else {
+                        return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
+                    }
+                } else {
+                    return validar // status-code: 400 (atributo)
+                }
+            } else {
+                return buscarDiretorResult // status-code: 400 (id) ou 404 (not found)
+            }
+        } else {
+            return customMessages.ERROR_CONTENT_TYPE // status-code: 415
+        }
+    } catch (error) {
+        return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
+    }
 }
 
 const listarDiretor = async function () {
-
+    let customMessages = JSON.parse(JSON.stringify(configMessages))
+    
+        try {
+            let result = await diretorDAO.selectAllDiretor()
+    
+            if (result) {
+                if (result.length > 0) {
+                    for (let diretor of result) {
+                        let resultSexo = await controllerSexo.buscarSexo(diretor.id_sexo)
+    
+                        if (resultSexo.status) {
+                            diretor.sexo = resultSexo.response.sexo
+                            delete diretor.id_sexo
+                        }
+                    }
+    
+                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                    customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
+                    customMessages.DEFAULT_MESSAGE.response.count = result.length
+                    customMessages.DEFAULT_MESSAGE.response.diretores = result
+    
+                    return customMessages.DEFAULT_MESSAGE // status-code: 200
+                } else {
+                    return customMessages.ERROR_NOT_FOUND // status-code: 404
+                }
+            } else {
+                return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
+            }
+        } catch (error) {
+            return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
+        }
 }
 
 const buscarDiretor = async function (id) {

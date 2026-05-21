@@ -119,7 +119,7 @@ const listarFilme = async function () {
             if (result.length > 0) {
                 // Manipulação dos dados da classificação
                 // Percorre o array de filmes
-                for (filme of result) {
+                for (let filme of result) {
                     // Busca na controller da classificação o id referente à FK da classificação
                     let resultClassificacao = await controllerClassificacao.buscarClassificacao(filme.id_classificacao)
 
