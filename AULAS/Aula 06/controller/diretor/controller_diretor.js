@@ -159,7 +159,25 @@ const buscarDiretor = async function (id) {
 }
 
 const excluirDiretor = async function (id) {
+    let customMessages = JSON.parse(JSON.stringify(configMessages))
 
+    try {
+        let buscarDiretorResult = await buscarDiretor(id)
+
+        if (buscarDiretorResult.status) {
+            let result = await diretorDAO.deleteDiretor(id)
+
+            if (result) {
+                return customMessages.SUCCESS_DELETED_ITEM // status-code: 200
+            } else {
+                return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
+            }
+        } else {
+            return buscarDiretorResult // status-code: 400 (id) ou 404 (not found)
+        }
+    } catch (error) {
+        return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
+    }
 }
 
 const validarDados = async function (diretor) {
