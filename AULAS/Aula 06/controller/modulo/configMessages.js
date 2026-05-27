@@ -23,10 +23,11 @@ const ERROR_INTERNAL_SERVER_CONTROLLER = { "status": false, "status_code": 500, 
 const ERROR_INTERNAL_SERVER_MODEL      = { "status": false, "status_code": 500, "message": "Não foi possível processar a requisição devido a um erro interno do servidor [MODEL]." }
 
 // Mensagens de SUCESSO do projeto de filmes
-const SUCCESS_RESPONSE     = { "status": true, "status_code": 200 }
-const SUCCESS_UPDATED_ITEM = { "status": true, "status_code": 200, "message": "Item atualizado com sucesso." }
-const SUCCESS_DELETED_ITEM = { "status": true, "status_code": 200, "message": "Item excluído com sucesso." }
-const SUCCESS_CREATED_ITEM = { "status": true, "status_code": 201, "message": "Item inserido com sucesso." }
+const SUCCESS_RESPONSE             = { "status": true, "status_code": 200 }
+const SUCCESS_UPDATED_ITEM         = { "status": true, "status_code": 200, "message": "Item atualizado com sucesso." }
+const SUCCESS_DELETED_ITEM         = { "status": true, "status_code": 200, "message": "Item excluído com sucesso." }
+const SUCCESS_CREATED_ITEM         = { "status": true, "status_code": 201, "message": "Item inserido com sucesso." }
+const SUCCESS_CREATED_ITEM_WARNING = { "status": true, "status_code": 201, "message": "Item inserido com sucesso, porém alguns dados tiveram problemas no cadastro [DADOS DE RELACIONAMENTO]." }
 
 module.exports = {
     // Default
@@ -43,5 +44,6 @@ module.exports = {
     SUCCESS_RESPONSE,
     SUCCESS_UPDATED_ITEM,
     SUCCESS_DELETED_ITEM,
-    SUCCESS_CREATED_ITEM
+    SUCCESS_CREATED_ITEM,
+    SUCCESS_CREATED_ITEM_WARNING
 }

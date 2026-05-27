@@ -157,6 +157,22 @@ const deleteFilmeGenero = async function (id) {
     }
 }
 
+const deleteGenerosByIdFilme = async function (idFilme) {
+    try {
+        let sql = `delete from tbl_filme_genero where id_filme = ${idFilme};`
+
+        let result = await knexConnection.raw(sql)
+
+        if (result)
+            return true
+        else
+            return false
+        
+    } catch (error) {
+        return false
+    }
+}
+
 module.exports = {
     insertFilmeGenero,
     updateFilmeGenero,
@@ -164,5 +180,6 @@ module.exports = {
     selectByIdFilmeGenero,
     selectGenerosByIdFilme,
     selectFilmesByIdGenero,
-    deleteFilmeGenero
+    deleteFilmeGenero,
+    deleteGenerosByIdFilme
 }
