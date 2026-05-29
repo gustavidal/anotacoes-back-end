@@ -12,7 +12,8 @@ const configMessages = require('../modulo/configMessages.js')
 const diretorDAO = require('../../model/DAO/diretor/diretor.js')
 
 // Import das Controllers
-const controllerSexo = require('../sexo/controller_sexo.js')
+const controllerSexo        = require('../sexo/controller_sexo.js')
+const controllerDiretorFoto = require('./controller_diretor_foto.js')
 
 const inserirNovoDiretor = async function (diretor, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
@@ -28,6 +29,19 @@ const inserirNovoDiretor = async function (diretor, contentType) {
 
                 if (result) {
                     diretor.id = result
+
+                    for (let foto of diretor.foto) {
+                        let diretorFoto = {
+                            "id_diretor": diretor.id,
+                            "id_foto": foto.id
+                        }
+
+                        let resultDiretorFoto = await controllerDiretorFoto.inserirNovoDiretorFoto(diretorFoto)
+
+                        // Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultDiretorFoto.status)
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                    }
 
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_CREATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
