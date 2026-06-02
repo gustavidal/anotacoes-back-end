@@ -1127,7 +1127,6 @@ components:
         area_atuacao:
           type: string
           description: O número máximo de caracteres é de 40
-    
     Ator:
       required:
         - id
@@ -1157,7 +1156,6 @@ components:
           description: O formato de ano é de no máximo 4 dígitos (AAAA)
         id_sexo:
           type: integer
-
     Classificacao:
       required:
         - id
@@ -1175,7 +1173,6 @@ components:
           description: O número máximo de caracteres é ilimitado
         idade_minima:
           type: integer
-
     Diretor:
       required:
         - id
@@ -1201,7 +1198,6 @@ components:
           description: O formato de ano é de no máximo 4 dígitos (AAAA)
         id_sexo:
           type: integer
-
     Filme:
       required:
         - id
@@ -1244,7 +1240,6 @@ components:
           description: O número máximo de caracteres é de 5 unidades (5) e 1 casa decimal (.9), porém tendo como valor máximo 5.0
         id_classificacao:
           type: integer
-          
     Foto:
       required:
         - id
@@ -1256,8 +1251,7 @@ components:
         foto:
           type: string
           example: "https://fotos.com/foto_do_ator"
-          description: O número máximo de caracteres é de 255
-    
+          description: O número máximo de caracteres é de 255    
     Genero:
       required:
         - id
@@ -1269,7 +1263,6 @@ components:
         genero:
           type: string
           description: O número máximo de caracteres é de 30
-
     Nacionalidade:
       required:
         - id
@@ -1282,7 +1275,6 @@ components:
           type: string
           example: "Papua-nova-guineense"
           description: O número máximo de caracteres é de 25
-    
     Sexo:
       required:
         - id
@@ -1300,7 +1292,6 @@ components:
           type: string
           example: "MASCULINO"
           description: O número máximo de caracteres é de 15
-    
     # SCHEMAS PARA OS GETS (RELAÇÕES)
     AtorGet:
       required:
@@ -1333,7 +1324,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Sexo'
-
     DiretorGet:
       required:
         - id
@@ -1361,7 +1351,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Sexo'
-
     FilmeGet:
       required:
         - id
@@ -1406,7 +1395,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Classificacao'
-
   requestBodies:
     Atividade:
       description: Objeto que deve ser enviado no Body das requisicoes
@@ -1414,64 +1402,67 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Atividade'
-
+    Ator:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ator'
     Classificacao:
       description: Objeto que deve ser enviado no Body das requisicoes
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Classificacao'
-
     Diretor:
       description: Objeto que deve ser enviado no Body das requisicoes
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Diretor'
-
     Filme:
       description: Objeto que deve ser enviado no Body das requisições
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Filme'
-    
     Foto:
       description: Objeto que deve ser enviado no Body das requisições
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Foto'
-
     Genero:
       description: Objeto que deve ser enviado no Body das requisições
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Genero'
-
     Nacionalidade:
       description: Objeto que deve ser enviado no Body das requisições
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Nacionalidade'
-
     Sexo:
       description: Objeto que deve ser enviado no Body das requisições
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Sexo'
-
     # CAMINHOS PARA DOCUMENTAR (RELAÇÕES)
+    AtorGet:
+      description: Objeto que deve ser enviado no Body das requisições
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtorGet'
     FilmeGet:
       description: Objeto que deve ser enviado no Body das requisições
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/FilmeGet'
-
     DiretorGet:
       description: Objeto que deve ser enviado no Body das requisições
       content:
