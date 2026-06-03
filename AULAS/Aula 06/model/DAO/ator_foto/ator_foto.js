@@ -1,9 +1,9 @@
-/***********************************************************************************************************
- * Objetivo: Arquivo responsável pelo CRUD de dados de relação entre diretor e foto no banco de dados MySQL.
- * Data: 29/05/2026 (sexta-feira)
+/********************************************************************************************************
+ * Objetivo: Arquivo responsável pelo CRUD de dados de relação entre ator e foto no banco de dados MySQL.
+ * Data: 03/06/2026 (quarta-feira)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
-***********************************************************************************************************/
+********************************************************************************************************/
 
 // Import da biblioteca para manipular dados no Banco de Dados MySQL
 const knex = require('knex')
@@ -14,16 +14,16 @@ const knexDatabaseConfig = require('../../database_config/knexConfig.js')
 // Criar conexão com o Banco de Dados MySQL conforme o arquivo de configuração
 const knexConnection = knex(knexDatabaseConfig.development)
 
-const insertDiretorFoto = async function (diretorFoto) {
+const insertAtorFoto = async function (atorFoto) {
     try {
         // Script SQL para inserção no database
         let sql = `
-        insert into tbl_diretor_foto (
-            id_diretor,
+        insert into tbl_ator_foto (
+            id_ator,
             id_foto
         ) values (
-            ${diretorFoto.id_diretor},
-            ${diretorFoto.id_foto}
+            ${atorFoto.id_ator},
+            ${atorFoto.id_foto}
         );`
 
         // Roda o script no database
@@ -40,13 +40,13 @@ const insertDiretorFoto = async function (diretorFoto) {
     }
 }
 
-const updateDiretorFoto = async function (diretorFoto) {
+const updateAtorFoto = async function (atorFoto) {
     try {
         let sql = `
-        update tbl_diretor_foto set
-            id_diretor = ${diretorFoto.id_diretor},
-            id_foto    = ${diretorFoto.id_foto}
-        where id = ${diretorFoto.id};`
+        update tbl_ator_foto set
+            id_ator = ${atorFoto.id_ator},
+            id_foto = ${atorFoto.id_foto}
+        where id = ${atorFoto.id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -60,10 +60,10 @@ const updateDiretorFoto = async function (diretorFoto) {
     }
 }
 
-const selectAllDiretorFoto = async function () {
+const selectAllAtorFoto = async function () {
     try {
         // Script SQL para inserção no database
-        let sql = `select * from tbl_diretor_foto order by id desc;`
+        let sql = `select * from tbl_ator_foto order by id desc;`
 
         // Roda o script no database
         let result = await knexConnection.raw(sql)
@@ -79,9 +79,9 @@ const selectAllDiretorFoto = async function () {
     }
 }
 
-const selectByIdDiretorFoto = async function (id) {
+const selectByIdAtorFoto = async function (id) {
     try {
-        let sql = `select * from tbl_diretor_foto where id = ${id};`
+        let sql = `select * from tbl_ator_foto where id = ${id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -95,16 +95,16 @@ const selectByIdDiretorFoto = async function (id) {
     }
 }
 
-const selectFotosByIdDiretor = async function (idDiretor) {
+const selectFotosByIdAtor = async function (idAtor) {
     try {
         let sql = `
         select tbl_foto.*
-        from tbl_diretor
-            inner join tbl_diretor_foto
-                on tbl_diretor.id = tbl_diretor_foto.id_diretor
+        from tbl_ator
+            inner join tbl_ator_foto
+                on tbl_ator.id = tbl_ator_foto.id_ator
             inner join tbl_foto
-                on tbl_foto.id = tbl_diretor_foto.id_foto
-        where tbl_diretor.id = ${idDiretor};`
+                on tbl_foto.id = tbl_ator_foto.id_foto
+        where tbl_ator.id = ${idAtor};`
 
         let result = await knexConnection.raw(sql)
 
@@ -118,16 +118,16 @@ const selectFotosByIdDiretor = async function (idDiretor) {
     }
 }
 
-const selectDiretoresByIdFoto = async function (idFoto) {
+const selectAtoresByIdFoto = async function (idFoto) {
     try {
         let sql = `
         select tbl_foto.*
-        from tbl_diretor
-            inner join tbl_diretor_foto
-                on tbl_diretor.id = tbl_diretor_foto.id_diretor
+        from tbl_ator
+            inner join tbl_ator_foto
+                on tbl_ator.id = tbl_ator_foto.id_ator
             inner join tbl_foto
-                on tbl_foto.id = tbl_diretor_foto.id_foto
-        where tbl_foto.id = ${idFoto};`
+                on tbl_foto.id = tbl_ator_foto.id_foto
+        where tbl_ator.id = ${idFoto};`
 
         let result = await knexConnection.raw(sql)
 
@@ -141,9 +141,9 @@ const selectDiretoresByIdFoto = async function (idFoto) {
     }
 }
 
-const deleteDiretorFoto = async function (id) {
+const deleteAtorFoto = async function (id) {
     try {
-        let sql = `delete from tbl_diretor_foto where id = ${id};`
+        let sql = `delete from tbl_ator_foto where id = ${id};`
 
         let result = await knexConnection.raw(sql)
 
@@ -157,9 +157,9 @@ const deleteDiretorFoto = async function (id) {
     }
 }
 
-const deleteFotosByIdDiretor = async function (idDiretor) {
+const deleteFotosByIdAtor = async function (idDiretor) {
     try {
-        let sql = `delete from tbl_diretor_foto where id_diretor = ${idDiretor};`
+        let sql = `delete from tbl_ator_foto where id_ator = ${idDiretor};`
 
         let result = await knexConnection.raw(sql)
 
@@ -174,12 +174,12 @@ const deleteFotosByIdDiretor = async function (idDiretor) {
 }
 
 module.exports = {
-    insertDiretorFoto,
-    updateDiretorFoto,
-    selectAllDiretorFoto,
-    selectByIdDiretorFoto,
-    selectFotosByIdDiretor,
-    selectDiretoresByIdFoto,
-    deleteDiretorFoto,
-    deleteFotosByIdDiretor
+    insertAtorFoto,
+    updateAtorFoto,
+    selectAllAtorFoto,
+    selectByIdAtorFoto,
+    selectFotosByIdAtor,
+    selectAtoresByIdFoto,
+    deleteAtorFoto,
+    deleteFotosByIdAtor
 }

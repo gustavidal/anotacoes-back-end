@@ -135,3 +135,31 @@ create table tbl_filme_genero (
     foreign key (id_genero)
     references tbl_genero(id)
 );
+
+create table tbl_diretor_foto (
+	id         int not null auto_increment primary key,
+    id_diretor int not null,
+    id_foto    int not null,
+    
+    constraint FK_DIRETOR_DIRETORFOTO
+    foreign key (id_diretor)
+    references tbl_diretor(id),
+    
+    constraint FK_FOTO_DIRETORFOTO
+    foreign key (id_foto)
+    references tbl_foto(id)
+);
+
+create table tbl_ator_foto (
+	id      int not null auto_increment primary key,
+    id_ator int not null,
+    id_foto int not null,
+    
+    constraint FK_ATOR_ATORFOTO
+    foreign key (id_ator)
+    references tbl_ator(id),
+    
+    constraint FK_FOTO_ATORFOTO
+    foreign key (id_foto)
+    references tbl_foto(id)
+);

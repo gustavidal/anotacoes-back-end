@@ -13,6 +13,7 @@ const atorDAO = require('../../model/DAO/ator/ator.js')
 
 // Import das Controllers
 const controllerSexo = require('../sexo/controller_sexo.js')
+const controllerAtorFoto = require('./controller_ator_foto.js')
 
 const inserirNovoAtor = async function (ator, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
@@ -28,6 +29,20 @@ const inserirNovoAtor = async function (ator, contentType) {
 
                 if (result) {
                     ator.id = result
+
+                    for (let foto of ator.foto) {
+                        let atorFoto = {
+                            "id_ator": ator.id,
+                            "id_foto": foto.id
+                        }
+
+                        let resultAtorFoto = await controllerAtorFoto.inserirNovoAtorFoto(atorFoto)
+                        console.log(resultAtorFoto)
+
+                        // Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultAtorFoto.status)
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                    }
 
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_CREATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
@@ -63,6 +78,23 @@ const atualizarAtor = async function (ator, id, contentType) {
                     let result = await atorDAO.updateAtor(ator)
 
                     if (result) {
+                        let resultDeleteFotos = await controllerAtorFoto.excluirFotosIdAtor(ator.id)
+
+                        if (resultDeleteFotos.status) {
+                            for (let foto of ator.foto) {
+                                let atorFoto = {
+                                    "id_ator": ator.id,
+                                    "id_foto": foto.id
+                                }
+
+                                let resultAtorFoto = await controllerAtorFoto.inserirNovoAtorFoto(atorFoto)
+
+                                // Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultAtorFoto.status)
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                            }
+                        }
+
                         customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message

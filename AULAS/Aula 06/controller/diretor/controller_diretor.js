@@ -77,6 +77,23 @@ const atualizarDiretor = async function (diretor, id, contentType) {
                     let result = await diretorDAO.updateDiretor(diretor)
 
                     if (result) {
+                        let resultDeleteFotos = await controllerDiretorFoto.excluirFotosIdDiretor(diretor.id)
+
+                        if (resultDeleteFotos.status) {
+                            for (let foto of diretor.foto) {
+                                let diretorFoto = {
+                                    "id_diretor": diretor.id,
+                                    "id_foto": foto.id
+                                }
+
+                                let resultDiretorFoto = await controllerDiretorFoto.inserirNovoDiretorFoto(diretorFoto)
+
+                                // Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultDiretorFoto.status)
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                            }
+                        }
+
                         customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
@@ -115,6 +132,12 @@ const listarDiretor = async function () {
                         diretor.sexo = resultSexo.response.sexo
                         delete diretor.id_sexo
                     }
+
+                    let resultFoto = await controllerDiretorFoto.buscarFotosIdDiretor(diretor.id)
+
+                    if (resultFoto.status) {
+                        diretor.foto = resultFoto.response.fotos_diretor
+                    }
                 }
 
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
@@ -148,10 +171,16 @@ const buscarDiretor = async function (id) {
                 if (result.length > 0) {
                     for (let diretor of result) {
                         let resultSexo = await controllerSexo.buscarSexo(diretor.id_sexo)
-
+    
                         if (resultSexo.status) {
                             diretor.sexo = resultSexo.response.sexo
                             delete diretor.id_sexo
+                        }
+    
+                        let resultFoto = await controllerDiretorFoto.buscarFotosIdDiretor(diretor.id)
+    
+                        if (resultFoto.status) {
+                            diretor.foto = resultFoto.response.fotos_diretor
                         }
                     }
 
