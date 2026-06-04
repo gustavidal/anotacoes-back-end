@@ -1135,6 +1135,9 @@ components:
         - biografia
         - inicio_carreira
         - id_sexo
+        - foto
+        - nacionalidade
+        - atividade
       type: object
       properties:
         id:
@@ -1156,6 +1159,27 @@ components:
           description: O formato de ano é de no máximo 4 dígitos (AAAA)
         id_sexo:
           type: integer
+        foto:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+        nacionalidade:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+        atividade:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
     Classificacao:
       required:
         - id
@@ -1180,6 +1204,9 @@ components:
         - data_nascimento
         - inicio_carreira
         - id_sexo
+        - foto
+        - nacionalidade
+        - atividade
       type: object
       properties:
         id:
@@ -1198,6 +1225,27 @@ components:
           description: O formato de ano é de no máximo 4 dígitos (AAAA)
         id_sexo:
           type: integer
+        foto:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+        nacionalidade:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+        atividade:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
     Filme:
       required:
         - id
@@ -1207,6 +1255,8 @@ components:
         - capa
         - duracao
         - id_classificacao
+        - ator
+        - diretor
       type: object
       properties:
         id:
@@ -1240,6 +1290,27 @@ components:
           description: O número máximo de caracteres é de 5 unidades (5) e 1 casa decimal (.9), porém tendo como valor máximo 5.0
         id_classificacao:
           type: integer
+        genero:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+        ator:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+        diretor:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
     Foto:
       required:
         - id
@@ -1296,11 +1367,6 @@ components:
     AtorGet:
       required:
         - id
-        - nome
-        - data_nascimento
-        - biografia
-        - inicio_carreira
-        - id_sexo
       type: object
       properties:
         id:
@@ -1324,13 +1390,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Sexo'
+        foto:
+          type: array
+          items:
+            $ref: '#/components/schemas/Foto'
+        nacionalidade:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nacionalidade'
+        atividade:
+          type: array
+          items:
+            $ref: '#/components/schemas/Atividade'
     DiretorGet:
       required:
         - id
-        - nome
-        - data_nascimento
-        - inicio_carreira
-        - sexo
       type: object
       properties:
         id:
@@ -1351,15 +1425,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Sexo'
+        foto:
+          type: array
+          items:
+            $ref: '#/components/schemas/Foto'
+        nacionalidade:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nacionalidade'
+        atividade:
+          type: array
+          items:
+            $ref: '#/components/schemas/Atividade'
     FilmeGet:
       required:
         - id
-        - nome
-        - sinopse
-        - data_lancamento
-        - capa
-        - duracao
-        - classificacao
       type: object
       properties:
         id:
@@ -1395,6 +1475,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Classificacao'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/AtorGet'
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiretorGet'
   requestBodies:
     Atividade:
       description: Objeto que deve ser enviado no Body das requisicoes
