@@ -12,8 +12,9 @@ const configMessages = require('../modulo/configMessages.js')
 const diretorDAO = require('../../model/DAO/diretor/diretor.js')
 
 // Import das Controllers
-const controllerSexo        = require('../sexo/controller_sexo.js')
+const controllerSexo = require('../sexo/controller_sexo.js')
 const controllerDiretorFoto = require('./controller_diretor_foto.js')
+const controllerDiretorNacionalidade = require('./controller_diretor_nacionalidade.js')
 
 const inserirNovoDiretor = async function (diretor, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
@@ -40,6 +41,19 @@ const inserirNovoDiretor = async function (diretor, contentType) {
 
                         // Validação para verificar se todos os itens de relacionamento foram inseridos
                         if (!resultDiretorFoto.status)
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                    }
+
+                    for (let nacionalidade of diretor.nacionalidade) {
+                        let diretorNacionalidade = {
+                            "id_diretor": diretor.id,
+                            "id_nacionalidade": nacionalidade.id
+                        }
+
+                        let resultDiretorNacionalidade = await controllerDiretorNacionalidade.inserirNovoDiretorNacionalidade(diretorNacionalidade)
+
+                        // Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultDiretorNacionalidade.status)
                             return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
                     }
 
@@ -94,6 +108,23 @@ const atualizarDiretor = async function (diretor, id, contentType) {
                             }
                         }
 
+                        let resultDeleteNacionalidades = await controllerDiretorNacionalidade.excluirNacionalidadesIdDiretor(diretor.id)
+
+                        if (resultDeleteNacionalidades.status) {
+                            for (let nacionalidade of diretor.nacionalidade) {
+                                let diretorNacionalidade = {
+                                    "id_diretor": diretor.id,
+                                    "id_nacionalidade": nacionalidade.id
+                                }
+
+                                let resultDiretorNacionalidade = await controllerDiretorNacionalidade.inserirNovoDiretorNacionalidade(diretorNacionalidade)
+
+                                // Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultDiretorNacionalidade.status)
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                            }
+                        }
+
                         customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
@@ -138,6 +169,12 @@ const listarDiretor = async function () {
                     if (resultFoto.status) {
                         diretor.foto = resultFoto.response.fotos_diretor
                     }
+
+                    let resultNacionalidade = await controllerDiretorNacionalidade.buscarNacionalidadesIdDiretor(diretor.id)
+
+                    if (resultNacionalidade.status) {
+                        diretor.nacionalidade = resultNacionalidade.response.nacionalidades_diretor
+                    }
                 }
 
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
@@ -171,16 +208,22 @@ const buscarDiretor = async function (id) {
                 if (result.length > 0) {
                     for (let diretor of result) {
                         let resultSexo = await controllerSexo.buscarSexo(diretor.id_sexo)
-    
+
                         if (resultSexo.status) {
                             diretor.sexo = resultSexo.response.sexo
                             delete diretor.id_sexo
                         }
-    
+
                         let resultFoto = await controllerDiretorFoto.buscarFotosIdDiretor(diretor.id)
-    
+
                         if (resultFoto.status) {
                             diretor.foto = resultFoto.response.fotos_diretor
+                        }
+
+                        let resultNacionalidade = await controllerDiretorNacionalidade.buscarNacionalidadesIdDiretor(diretor.id)
+
+                        if (resultNacionalidade.status) {
+                            diretor.nacionalidade = resultNacionalidade.response.nacionalidades_diretor
                         }
                     }
 

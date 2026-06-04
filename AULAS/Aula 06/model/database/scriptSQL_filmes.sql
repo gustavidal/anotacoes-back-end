@@ -21,35 +21,24 @@ create table tbl_filme (
     avaliacao 			decimal(3,2) default null
 );
 
-insert into tbl_filme (
-	nome,
-    sinopse,
-    capa,
-    data_lancamento,
-    duracao,
-    valor,
-    avaliacao
-) values (
-	'Super Mario Galaxy: O Filme',
-    'Uma nova aventura leva Mario a enfrentar um inédito e ameaçador super vilão. Em Super Mario Galaxy: O Filme, o bigodudo encanador italiano e seus aliados embarcam numa aventura galáctica repleta de ação e momentos emocionantes depois de salvar o Reino dos Cogumelos.',
-    'https://br.web.img3.acsta.net/c_310_420/img/5b/ea/5bea1aeac3323aeaaf82449a34fafbbf.jpg',
-    '2026-04-02',
-    '01:39:00',
-    '50.60',
-    '3'
-);
-
-# select * from tbl_genero;
-# select * from tbl_filme order by id desc;
-# select * from tbl_filme where id = 2;
-
-# delete from tbl_filme where id > 20;
-
 # Tabela de gênero cênico
 create table tbl_genero (
 	id     int not null auto_increment primary key,
     genero varchar(30) not null
 );
+
+insert into tbl_genero (genero) values
+('Fantasia'),
+('Documentário'),
+('Terror'),
+('Thriller'),
+('Drama'),
+('Suspense'),
+('Comédia'),
+('Animação'),
+('Infantil'),
+('Aventura'),
+('Ação');
 
 # Tabela de classificação indicativa
 create table tbl_classificacao (
@@ -66,6 +55,10 @@ create table tbl_sexo (
     sexo  varchar(15) not null
 );
 
+insert into tbl_sexo (sigla, sexo) values
+('M', 'Masculino'),
+('F', 'Feminino');
+
 # Tabela de nacionalidade
 create table tbl_nacionalidade (
 	id            int not null auto_increment primary key,
@@ -78,24 +71,23 @@ create table tbl_foto (
     foto varchar(255) not null
 );
 
+insert into tbl_foto (foto) values
+('https://paternoster'),
+('https://credoinunodeum');
+
 # Tabela de atividade (ator, produtor, produtor executivo, roteirista)
 create table tbl_atividade (
 	id           int not null auto_increment primary key,
     area_atuacao varchar(40)
 );
 
-
-
 delete from tbl_filme;
-
-select * from tbl_filme;
 
 alter table tbl_filme
 	add column id_classificacao int not null,
     add constraint FK_CLASSIFICACAO_FILME
 		foreign key (id_classificacao)
         references tbl_classificacao(id);
-        
         
 create table tbl_ator (
 	id              int not null auto_increment primary key,
@@ -150,6 +142,20 @@ create table tbl_diretor_foto (
     references tbl_foto(id)
 );
 
+create table tbl_diretor_nacionalidade (
+	id               int not null auto_increment primary key,
+    id_diretor       int not null,
+    id_nacionalidade int not null,
+    
+    constraint FK_DIRETOR_DIRETORNACIONALIDADE
+    foreign key (id_diretor)
+    references tbl_diretor(id),
+    
+    constraint FK_NACIONALIDADE_DIRETORNACIONALIDADE
+    foreign key (id_nacionalidade)
+    references tbl_nacionalidade(id)
+);
+
 create table tbl_ator_foto (
 	id      int not null auto_increment primary key,
     id_ator int not null,
@@ -162,4 +168,38 @@ create table tbl_ator_foto (
     constraint FK_FOTO_ATORFOTO
     foreign key (id_foto)
     references tbl_foto(id)
+);
+
+create table tbl_ator_nacionalidade (
+	id               int not null auto_increment primary key,
+    id_ator          int not null,
+    id_nacionalidade int not null,
+    
+    constraint FK_ATOR_ATORNACIONALIDADE
+    foreign key (id_ator)
+    references tbl_ator(id),
+    
+    constraint FK_NACIONALIDADE_ATORNACIONALIDADE
+    foreign key (id_nacionalidade)
+    references tbl_nacionalidade(id)
+);
+
+insert into tbl_classificacao (classificacao, descricao, idade_minima) values
+('L', 'Classificação Livre', 0),
+('+10', 'Conteúdo indicado para maiores de 10 anos', 10),
+('+12', 'Conteúdo indicado para maiores de 12 anos', 12),
+('+14', 'Conteúdo indicado para maiores de 14 anos', 14),
+('+16', 'Conteúdo indicado para maiores de 16 anos', 16),
+('+18', 'Conteúdo indicado para maiores de 18 anos', 18);
+
+insert into tbl_filme (nome, sinopse, capa, data_lancamento, duracao, valor, avaliacao, id_classificacao) values (
+	'Super Mario Galaxy: O Filme',
+    'Uma nova aventura leva Mario a enfrentar um inédito e ameaçador super vilão. Em Super Mario Galaxy: O Filme, o bigodudo encanador italiano e seus aliados embarcam numa aventura galáctica repleta de ação e momentos emocionantes depois de salvar o Reino dos Cogumelos.',
+    'https://br.web.img3.acsta.net/c_310_420/img/5b/ea/5bea1aeac3323aeaaf82449a34fafbbf.jpg',
+    '2026-04-02', '01:39:00', '50.60', '3', 2
+), (
+	'Homem Aranha: Um Novo Dia',
+    'Em Homem-Aranha: Um Novo Dia, Peter Parker (Tom Holland) está completamente focado em sua vida acadêmica, almejando viver uma vida comum com o pessoal da sua faculdade e longe dos ‘’perigos’’ oferecidos pelo amigão da vizinhança. No entanto, um ataque inesperado coloca em risco a vida de seus amigos e Peter é obrigado a colocar o seu traje especial para salvar aqueles que ama. Do lado de aliados inesperados e tentando acabar com adversários cada vez piores, o Homem-Aranha usa toda a sua força para manter a paz na cidade. Além de Zendaya, o novo filme contará com a presença de Sadie Sink.',
+    'https://br.web.img3.acsta.net/c_310_420/img/55/7c/557c22ce839ded98babe8e3224c16e4c.jpg',
+    '2026-07-30', '02:50:00', '0.0', '5', 4
 );

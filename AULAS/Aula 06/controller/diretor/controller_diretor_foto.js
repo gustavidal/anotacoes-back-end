@@ -135,7 +135,7 @@ const buscarFotosIdDiretor = async function (idDiretor) {
 
     try {
         if (idDiretor == undefined || String(idDiretor).replaceAll(' ', '') == '' || idDiretor == null || isNaN(idDiretor) || idDiretor < 1) {
-            customMessages.ERROR_BAD_REQUEST.field = '[ID DO FILME] INVÁLIDO'
+            customMessages.ERROR_BAD_REQUEST.field = '[ID DO DIRETOR] INVÁLIDO'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
             let result = await diretorFotoDAO.selectFotosByIdDiretor(idDiretor)
@@ -164,7 +164,7 @@ const buscarDiretoresIdFoto = async function (idFoto) {
 
     try {
         if (idFoto == undefined || String(idFoto).replaceAll(' ', '') == '' || idFoto == null || isNaN(idFoto) || idFoto < 1) {
-            customMessages.ERROR_BAD_REQUEST.field = '[ID DO FILME] INVÁLIDO'
+            customMessages.ERROR_BAD_REQUEST.field = '[ID DA FOTO] INVÁLIDA'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
             let result = await diretorFotoDAO.selectDiretoresByIdFoto(idFoto)
@@ -233,7 +233,7 @@ const validarDados = async function (diretorFoto) {
     if (diretorFoto.id_diretor == undefined || diretorFoto.id_diretor == '' || diretorFoto.id_diretor == null || isNaN(diretorFoto.id_diretor) || diretorFoto.id_diretor < 1) {
         customMessages.ERROR_BAD_REQUEST.field = '[ID DO DIRETOR] INVÁLIDO'
     } else if (diretorFoto.id_foto == undefined || diretorFoto.id_foto == '' || diretorFoto.id_foto == null || isNaN(diretorFoto.id_foto) || diretorFoto.id_foto < 1) {
-        customMessages.ERROR_BAD_REQUEST.field = '[ID DA FOTO] INVÁLIDO'
+        customMessages.ERROR_BAD_REQUEST.field = '[ID DA FOTO] INVÁLIDA'
     } else {
         return false
     }

@@ -14,6 +14,7 @@ const atorDAO = require('../../model/DAO/ator/ator.js')
 // Import das Controllers
 const controllerSexo = require('../sexo/controller_sexo.js')
 const controllerAtorFoto = require('./controller_ator_foto.js')
+const controllerAtorNacionalidade = require('./controller_ator_nacionalidade.js')
 
 const inserirNovoAtor = async function (ator, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
@@ -37,10 +38,22 @@ const inserirNovoAtor = async function (ator, contentType) {
                         }
 
                         let resultAtorFoto = await controllerAtorFoto.inserirNovoAtorFoto(atorFoto)
-                        console.log(resultAtorFoto)
 
                         // Validação para verificar se todos os itens de relacionamento foram inseridos
                         if (!resultAtorFoto.status)
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                    }
+
+                    for (let nacionalidade of ator.nacionalidade) {
+                        let atorNacionalidade = {
+                            "id_ator": ator.id,
+                            "id_nacionalidade": nacionalidade.id
+                        }
+
+                        let resultAtorNacionalidade = await controllerAtorNacionalidade.inserirNovoAtorNacionalidade(atorNacionalidade)
+
+                        // Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultAtorNacionalidade.status)
                             return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
                     }
 
@@ -95,6 +108,23 @@ const atualizarAtor = async function (ator, id, contentType) {
                             }
                         }
 
+                        let resultDeleteNacionalidades = await controllerAtorNacionalidade.excluirNacionalidadesIdAtor(ator.id)
+
+                        if (resultDeleteNacionalidades.status) {
+                            for (let nacionalidade of ator.nacionalidade) {
+                                let atorNacionalidade = {
+                                    "id_ator": ator.id,
+                                    "id_nacionalidade": nacionalidade.id
+                                }
+
+                                let resultAtorNacionalidade = await controllerAtorNacionalidade.inserirNovoAtorNacionalidade(atorNacionalidade)
+
+                                // Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultAtorNacionalidade.status)
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                            }
+                        }
+
                         customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
@@ -133,6 +163,18 @@ const listarAtor = async function () {
                         ator.sexo = resultSexo.response.sexo
                         delete ator.id_sexo
                     }
+
+                    let resultFoto = await controllerAtorFoto.buscarFotosIdAtor(ator.id)
+
+                    if (resultFoto.status) {
+                        ator.foto = resultFoto.response.fotos_ator
+                    }
+
+                    let resultNacionalidade = await controllerAtorNacionalidade.buscarNacionalidadesIdAtor(ator.id)
+
+                    if (resultNacionalidade.status) {
+                        ator.nacionalidade = resultNacionalidade.response.nacionalidades_ator
+                    }
                 }
 
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
@@ -170,6 +212,18 @@ const buscarAtor = async function (id) {
                         if (resultSexo.status) {
                             ator.sexo = resultSexo.response.sexo
                             delete ator.id_sexo
+                        }
+
+                        let resultFoto = await controllerAtorFoto.buscarFotosIdAtor(ator.id)
+
+                        if (resultFoto.status) {
+                            ator.foto = resultFoto.response.fotos_ator
+                        }
+
+                        let resultNacionalidade = await controllerAtorNacionalidade.buscarNacionalidadesIdAtor(ator.id)
+
+                        if (resultNacionalidade.status) {
+                            ator.nacionalidade = resultNacionalidade.response.nacionalidades_ator
                         }
                     }
 
