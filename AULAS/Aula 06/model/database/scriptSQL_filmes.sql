@@ -1,14 +1,9 @@
 # Permite criar um database
-create database db_filmes_20261_b;
-
-# Permite visualizar todos os databases existentes
-show databases;
+drop database if exists db_filmes_20261_b;
+create database if not exists db_filmes_20261_b;
 
 # Permite escolher o database a ser utilizado
 use db_filmes_20261_b;
-
-# Permite visualizar todas as tabelas existentes dentro do database
-show tables;
 
 create table tbl_filme (
 	id 					int not null auto_increment primary key,
@@ -48,6 +43,14 @@ create table tbl_classificacao (
     idade_minima  int default 0
 );
 
+insert into tbl_classificacao (classificacao, descricao, idade_minima) values
+('L', 'Classificação livre para todos os públicos', 0),
+('+10', 'Conteúdo indicado para maiores de 10 anos', 10),
+('+12', 'Conteúdo indicado para maiores de 12 anos', 12),
+('+14', 'Conteúdo indicado para maiores de 14 anos', 14),
+('+16', 'Conteúdo indicado para maiores de 16 anos', 16),
+('+18', 'Conteúdo indicado para maiores de 18 anos', 18);
+
 # Tabela de sexo
 create table tbl_sexo (
 	id    int not null auto_increment primary key,
@@ -64,6 +67,19 @@ create table tbl_nacionalidade (
 	id            int not null auto_increment primary key,
     nacionalidade varchar(25) not null
 );
+
+insert into tbl_nacionalidade (nacionalidade) values
+('Brasileiro'),
+('Estadunidense'),
+('Canadense'),
+('Mexicano'),
+('Espanhol'),
+('Francês'),
+('Argentino'),
+('Português'),
+('Australiano'),
+('Uruguaio'),
+('Russo');
 
 # Tabela de foto
 create table tbl_foto (
@@ -184,13 +200,61 @@ create table tbl_ator_nacionalidade (
     references tbl_nacionalidade(id)
 );
 
-insert into tbl_classificacao (classificacao, descricao, idade_minima) values
-('L', 'Classificação Livre', 0),
-('+10', 'Conteúdo indicado para maiores de 10 anos', 10),
-('+12', 'Conteúdo indicado para maiores de 12 anos', 12),
-('+14', 'Conteúdo indicado para maiores de 14 anos', 14),
-('+16', 'Conteúdo indicado para maiores de 16 anos', 16),
-('+18', 'Conteúdo indicado para maiores de 18 anos', 18);
+create table tbl_ator_atividade (
+	id           int not null auto_increment primary key,
+    id_ator      int not null,
+    id_atividade int not null,
+    
+    constraint FK_ATOR_ATORATIVIDADE
+    foreign key (id_ator)
+    references tbl_ator(id),
+    
+    constraint FK_ATIVIDADE_ATORATIVIDADE
+    foreign key (id_atividade)
+    references tbl_atividade(id)
+);
+
+create table tbl_diretor_atividade (
+	id           int not null auto_increment primary key,
+    id_diretor   int not null,
+    id_atividade int not null,
+    
+    constraint FK_DIRETOR_DIRETORATIVIDADE
+    foreign key (id_diretor)
+    references tbl_diretor(id),
+    
+    constraint FK_ATIVIDADE_DIRETORATIVIDADE
+    foreign key (id_atividade)
+    references tbl_atividade(id)
+);
+
+create table tbl_filme_ator (
+	id       int not null auto_increment primary key,
+    id_filme int not null,
+    id_ator  int not null,
+    
+    constraint FK_FILME_FILMEATOR
+    foreign key (id_filme)
+    references tbl_filme(id),
+    
+    constraint FK_ATOR_FILMEATOR
+    foreign key (id_ator)
+    references tbl_ator(id)
+);
+
+create table tbl_filme_diretor (
+	id         int not null auto_increment primary key,
+    id_filme   int not null,
+    id_diretor int not null,
+    
+    constraint FK_FILME_FILMEDIRETOR
+    foreign key (id_filme)
+    references tbl_filme(id),
+    
+    constraint FK_DIRETOR_FILMEDIRETOR
+    foreign key (id_diretor)
+    references tbl_diretor(id)
+);
 
 insert into tbl_filme (nome, sinopse, capa, data_lancamento, duracao, valor, avaliacao, id_classificacao) values (
 	'Super Mario Galaxy: O Filme',
@@ -203,3 +267,6 @@ insert into tbl_filme (nome, sinopse, capa, data_lancamento, duracao, valor, ava
     'https://br.web.img3.acsta.net/c_310_420/img/55/7c/557c22ce839ded98babe8e3224c16e4c.jpg',
     '2026-07-30', '02:50:00', '0.0', '5', 4
 );
+
+# Permite visualizar todas as tabelas existentes dentro do database
+show tables;

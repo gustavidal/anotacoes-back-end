@@ -15,6 +15,7 @@ const atorDAO = require('../../model/DAO/ator/ator.js')
 const controllerSexo = require('../sexo/controller_sexo.js')
 const controllerAtorFoto = require('./controller_ator_foto.js')
 const controllerAtorNacionalidade = require('./controller_ator_nacionalidade.js')
+const controllerAtorAtividade = require('./controller_ator_atividade.js')
 
 const inserirNovoAtor = async function (ator, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
@@ -54,6 +55,19 @@ const inserirNovoAtor = async function (ator, contentType) {
 
                         // Validação para verificar se todos os itens de relacionamento foram inseridos
                         if (!resultAtorNacionalidade.status)
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                    }
+
+                    for (let atividade of ator.atividade) {
+                        let atorAtividade = {
+                            "id_ator": ator.id,
+                            "id_atividade": atividade.id
+                        }
+
+                        let resultAtorAtividade = await controllerAtorAtividade.inserirNovoAtorAtividade(atorAtividade)
+
+                        // Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultAtorAtividade.status)
                             return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
                     }
 
@@ -125,6 +139,23 @@ const atualizarAtor = async function (ator, id, contentType) {
                             }
                         }
 
+                        let resultDeleteAtividades = await controllerAtorAtividade.excluirAtividadesIdAtor(ator.id)
+
+                        if (resultDeleteAtividades.status) {
+                            for (let atividade of ator.atividade) {
+                                let atorAtividade = {
+                                    "id_ator": ator.id,
+                                    "id_atividade": atividade.id
+                                }
+
+                                let resultAtorAtividade = await controllerAtorAtividade.inserirNovoAtorAtividade(atorAtividade)
+
+                                // Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultAtorAtividade.status)
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING
+                            }
+                        }
+
                         customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
@@ -175,6 +206,12 @@ const listarAtor = async function () {
                     if (resultNacionalidade.status) {
                         ator.nacionalidade = resultNacionalidade.response.nacionalidades_ator
                     }
+
+                    let resultAtividade = await controllerAtorAtividade.buscarAtividadesIdAtor(ator.id)
+
+                    if (resultAtividade.status) {
+                        ator.atividade = resultAtividade.response.atividades_ator
+                    }
                 }
 
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
@@ -224,6 +261,12 @@ const buscarAtor = async function (id) {
 
                         if (resultNacionalidade.status) {
                             ator.nacionalidade = resultNacionalidade.response.nacionalidades_ator
+                        }
+
+                        let resultAtividade = await controllerAtorAtividade.buscarAtividadesIdAtor(ator.id)
+
+                        if (resultAtividade.status) {
+                            ator.atividade = resultAtividade.response.atividades_ator
                         }
                     }
 

@@ -1,34 +1,34 @@
-/************************************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD de relação entre ator e foto.
- * Data: 03/06/2026 (quarta-feira)
+/*************************************************************************************************************************************
+ * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD de relação entre filme e ator.
+ * Data: 22/05/2026 (sexta-feira)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
-************************************************************************************************************************************/
+*************************************************************************************************************************************/
 
 // Import do arquivo de configurações de mensagens do projeto
 const configMessages = require('../modulo/configMessages.js')
 
-// Import do arquivo do DAO para manipular os dados de atorFoto no Banco de Dados
-const atorFotoDAO = require('../../model/DAO/ator_foto/ator_foto.js')
+// Import do arquivo do DAO para manipular os dados de filmeAtor no Banco de Dados
+const filmeAtorDAO = require('../../model/DAO/filme_ator/filme_ator.js')
 
-const inserirNovoAtorFoto = async function (atorFoto) {
+const inserirNovoFilmeAtor = async function (filmeAtor) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let validar = await validarDados(atorFoto)
+        let validar = await validarDados(filmeAtor)
 
         if (validar) {
             return validar // status-code: 400
         } else {
-            let result = await atorFotoDAO.insertAtorFoto(atorFoto)
+            let result = await filmeAtorDAO.insertFilmeAtor(filmeAtor)
 
             if (result) {
-                atorFoto.id = result
+                filmeAtor.id = result
 
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_CREATED_ITEM.status
                 customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
                 customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_CREATED_ITEM.message
-                customMessages.DEFAULT_MESSAGE.response = atorFoto
+                customMessages.DEFAULT_MESSAGE.response = filmeAtor
 
                 return customMessages.DEFAULT_MESSAGE // status-code: 201
             } else {
@@ -40,25 +40,25 @@ const inserirNovoAtorFoto = async function (atorFoto) {
     }
 }
 
-const atualizarAtorFoto = async function (atorFoto, id) {
+const atualizarFilmeAtor = async function (filmeAtor, id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let buscarAtorFotoResult = await buscarAtorFoto(id)
+        let buscarFilmeAtorResult = await buscarFilmeAtor(id)
 
-        if (buscarAtorFotoResult.status) {
-            let validar = await validarDados(atorFoto)
+        if (buscarFilmeAtorResult.status) {
+            let validar = await validarDados(filmeAtor)
 
             if (!validar) {
-                atorFoto.id = Number(id)
+                filmeAtor.id = Number(id)
 
-                let result = await atorFotoDAO.updateAtorFoto(atorFoto)
+                let result = await filmeAtorDAO.updateFilmeAtor(filmeAtor)
 
                 if (result) {
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                     customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
-                    customMessages.DEFAULT_MESSAGE.response = atorFoto
+                    customMessages.DEFAULT_MESSAGE.response = filmeAtor
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -68,25 +68,25 @@ const atualizarAtorFoto = async function (atorFoto, id) {
                 return validar // status-code: 400 (atributo)
             }
         } else {
-            return buscarAtorFotoResult // status-code: 400 (id) ou 404
+            return buscarFilmeAtorResult // status-code: 400 (id) ou 404
         }
     } catch (error) {
         return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
     }
 }
 
-const listarAtorFoto = async function () {
+const listarFilmeAtor = async function () {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let result = await atorFotoDAO.selectAllAtorFoto()
+        let result = await filmeAtorDAO.selectAllFilmeAtor()
 
         if (result) {
             if (result.length > 0) {
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                 customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
                 customMessages.DEFAULT_MESSAGE.response.count = result.length
-                customMessages.DEFAULT_MESSAGE.response.ator_fotos = result
+                customMessages.DEFAULT_MESSAGE.response.filme_atores = result
 
                 return customMessages.DEFAULT_MESSAGE // status-code: 200
             } else {
@@ -101,7 +101,7 @@ const listarAtorFoto = async function () {
     }
 }
 
-const buscarAtorFoto = async function (id) {
+const buscarFilmeAtor = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
@@ -109,13 +109,13 @@ const buscarAtorFoto = async function (id) {
             customMessages.ERROR_BAD_REQUEST.field = '[ID] INVÁLIDO'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
-            let result = await atorFotoDAO.selectByIdAtorFoto(id)
+            let result = await filmeAtorDAO.selectByIdFilmeAtor(id)
 
             if (result) {
                 if (result.length > 0) {
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.ator_foto = result
+                    customMessages.DEFAULT_MESSAGE.response.filme_atores = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -130,7 +130,36 @@ const buscarAtorFoto = async function (id) {
     }
 }
 
-const buscarFotosIdAtor = async function (idAtor) {
+const buscarAtoresIdFilme = async function (idFilme) {
+    let customMessages = JSON.parse(JSON.stringify(configMessages))
+
+    try {
+        if (idFilme == undefined || String(idFilme).replaceAll(' ', '') == '' || idFilme == null || isNaN(idFilme) || idFilme < 1) {
+            customMessages.ERROR_BAD_REQUEST.field = '[ID DO FILME] INVÁLIDO'
+            return customMessages.ERROR_BAD_REQUEST // status-code: 400
+        } else {
+            let result = await filmeAtorDAO.selectAtoresByIdFilme(idFilme)
+
+            if (result) {
+                if (result.length > 0) {
+                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
+                    customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
+                    customMessages.DEFAULT_MESSAGE.response.atores_filme = result
+
+                    return customMessages.DEFAULT_MESSAGE // status-code: 200
+                } else {
+                    return customMessages.ERROR_NOT_FOUND // status-code: 404
+                }
+            } else {
+                return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
+            }
+        }
+    } catch (error) {
+        return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
+    }
+}
+
+const buscarFilmesIdAtor = async function (idAtor) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
@@ -138,13 +167,13 @@ const buscarFotosIdAtor = async function (idAtor) {
             customMessages.ERROR_BAD_REQUEST.field = '[ID DO ATOR] INVÁLIDO'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
-            let result = await atorFotoDAO.selectFotosByIdAtor(idAtor)
+            let result = await filmeAtorDAO.selectFilmesByIdAtor(idAtor)
 
             if (result) {
                 if (result.length > 0) {
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.fotos_ator = result
+                    customMessages.DEFAULT_MESSAGE.response.filmes_ator = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -159,43 +188,14 @@ const buscarFotosIdAtor = async function (idAtor) {
     }
 }
 
-const buscarAtoresIdFoto = async function (idFoto) {
+const excluirFilmeAtor = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        if (idFoto == undefined || String(idFoto).replaceAll(' ', '') == '' || idFoto == null || isNaN(idFoto) || idFoto < 1) {
-            customMessages.ERROR_BAD_REQUEST.field = '[ID DA FOTO] INVÁLIDA'
-            return customMessages.ERROR_BAD_REQUEST // status-code: 400
-        } else {
-            let result = await atorFotoDAO.selectAtoresByIdFoto(idFoto)
+        let buscarFilmeAtorResult = await buscarFilmeAtor(id)
 
-            if (result) {
-                if (result.length > 0) {
-                    customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
-                    customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.atores_foto = result
-
-                    return customMessages.DEFAULT_MESSAGE // status-code: 200
-                } else {
-                    return customMessages.ERROR_NOT_FOUND // status-code: 404
-                }
-            } else {
-                return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
-            }
-        }
-    } catch (error) {
-        return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
-    }
-}
-
-const excluirAtorFoto = async function (id) {
-    let customMessages = JSON.parse(JSON.stringify(configMessages))
-
-    try {
-        let buscarAtorFotoResult = await buscarAtorFoto(id)
-
-        if (buscarAtorFotoResult.status) {
-            let result = await atorFotoDAO.deleteAtorFoto(id)
+        if (buscarFilmeAtorResult.status) {
+            let result = await filmeAtorDAO.deleteFilmeAtor(id)
 
             if (result) {
                 return customMessages.SUCCESS_DELETED_ITEM // status-code: 200
@@ -203,18 +203,18 @@ const excluirAtorFoto = async function (id) {
                 return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
             }
         } else {
-            return buscarAtorFotoResult // status-code: 400 (id) ou 404
+            return buscarFilmeAtorResult // status-code: 400 (id) ou 404
         }
     } catch (error) {
         return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
     }
 }
 
-const excluirFotosIdAtor = async function (idAtor) {
+const excluirAtoresIdFilme = async function (idFilme) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let result = await atorFotoDAO.deleteFotosByIdAtor(idAtor)
+        let result = await filmeAtorDAO.deleteAtoresByIdFilme(idFilme)
 
         if (result) {
             return customMessages.SUCCESS_DELETED_ITEM // status-code: 200
@@ -227,13 +227,13 @@ const excluirFotosIdAtor = async function (idAtor) {
     }
 }
 
-const validarDados = async function (atorFoto) {
+const validarDados = async function (filmeAtor) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
-    if (atorFoto.id_ator == undefined || atorFoto.id_ator == '' || atorFoto.id_ator == null || isNaN(atorFoto.id_ator) || atorFoto.id_ator < 1) {
+    if (filmeAtor.id_filme == undefined || filmeAtor.id_filme == '' || filmeAtor.id_filme == null || isNaN(filmeAtor.id_filme) || filmeAtor.id_filme < 1) {
+        customMessages.ERROR_BAD_REQUEST.field = '[ID DO FILME] INVÁLIDO'
+    } else if (filmeAtor.id_ator == undefined || filmeAtor.id_ator == '' || filmeAtor.id_ator == null || isNaN(filmeAtor.id_ator) || filmeAtor.id_ator < 1) {
         customMessages.ERROR_BAD_REQUEST.field = '[ID DO ATOR] INVÁLIDO'
-    } else if (atorFoto.id_foto == undefined || atorFoto.id_foto == '' || atorFoto.id_foto == null || isNaN(atorFoto.id_foto) || atorFoto.id_foto < 1) {
-        customMessages.ERROR_BAD_REQUEST.field = '[ID DA FOTO] INVÁLIDA'
     } else {
         return false
     }
@@ -242,12 +242,12 @@ const validarDados = async function (atorFoto) {
 }
 
 module.exports = {
-    inserirNovoAtorFoto,
-    atualizarAtorFoto,
-    listarAtorFoto,
-    buscarAtorFoto,
-    buscarFotosIdAtor,
-    buscarAtoresIdFoto,
-    excluirAtorFoto,
-    excluirFotosIdAtor
+    inserirNovoFilmeAtor,
+    atualizarFilmeAtor,
+    listarFilmeAtor,
+    buscarFilmeAtor,
+    buscarAtoresIdFilme,
+    buscarFilmesIdAtor,
+    excluirFilmeAtor,
+    excluirAtoresIdFilme
 }

@@ -15,6 +15,7 @@ const diretorDAO = require('../../model/DAO/diretor/diretor.js')
 const controllerSexo = require('../sexo/controller_sexo.js')
 const controllerDiretorFoto = require('./controller_diretor_foto.js')
 const controllerDiretorNacionalidade = require('./controller_diretor_nacionalidade.js')
+const controllerDiretorAtividade = require('./controller_diretor_atividade.js')
 
 const inserirNovoDiretor = async function (diretor, contentType) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
@@ -54,6 +55,19 @@ const inserirNovoDiretor = async function (diretor, contentType) {
 
                         // Validação para verificar se todos os itens de relacionamento foram inseridos
                         if (!resultDiretorNacionalidade.status)
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                    }
+
+                    for (let atividade of diretor.atividade) {
+                        let diretorAtividade = {
+                            "id_diretor": diretor.id,
+                            "id_atividade": atividade.id
+                        }
+
+                        let resultDiretorAtividade = await controllerDiretorAtividade.inserirNovoDiretorAtividade(diretorAtividade)
+
+                        // Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultDiretorAtividade.status)
                             return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
                     }
 
@@ -125,6 +139,23 @@ const atualizarDiretor = async function (diretor, id, contentType) {
                             }
                         }
 
+                        let resultDeleteAtividades = await controllerDiretorAtividade.excluirAtividadesIdDiretor(diretor.id)
+
+                        if (resultDeleteAtividades.status) {
+                            for (let atividade of diretor.atividade) {
+                                let diretorAtividade = {
+                                    "id_diretor": diretor.id,
+                                    "id_atividade": atividade.id
+                                }
+
+                                let resultDiretorAtividade = await controllerDiretorAtividade.inserirNovoDiretorAtividade(diretorAtividade)
+
+                                // Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultDiretorAtividade.status)
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                            }    
+                        }
+
                         customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
@@ -175,6 +206,12 @@ const listarDiretor = async function () {
                     if (resultNacionalidade.status) {
                         diretor.nacionalidade = resultNacionalidade.response.nacionalidades_diretor
                     }
+
+                    let resultAtividade = await controllerDiretorAtividade.buscarAtividadesIdDiretor(diretor.id)
+
+                    if (resultAtividade.status) {
+                        diretor.atividade = resultAtividade.response.atividades_diretor
+                    }
                 }
 
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
@@ -224,6 +261,12 @@ const buscarDiretor = async function (id) {
 
                         if (resultNacionalidade.status) {
                             diretor.nacionalidade = resultNacionalidade.response.nacionalidades_diretor
+                        }
+
+                        let resultAtividade = await controllerDiretorAtividade.buscarAtividadesIdDiretor(diretor.id)
+
+                        if (resultAtividade.status) {
+                            diretor.atividade = resultAtividade.response.atividades_diretor
                         }
                     }
 

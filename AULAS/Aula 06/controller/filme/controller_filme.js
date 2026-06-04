@@ -14,6 +14,8 @@ const filmeDAO = require('../../model/DAO/filme/filme.js')
 // Import das Controllers
 const controllerClassificacao = require('../classificacao/controller_classificacao.js')
 const controllerFilmeGenero   = require('./controller_filme_genero.js')
+const controllerFilmeAtor     = require('./controller_filme_ator.js')
+const controllerFilmeDiretor  = require('./controller_filme_diretor.js')
 
 // Função para inserir um novo filme
 const inserirNovoFilme = async function (filme, contentType) {
@@ -50,6 +52,32 @@ const inserirNovoFilme = async function (filme, contentType) {
 
                         // Validação para verificar se todos os itens de relacionamento foram inseridos
                         if (!resultFilmeGenero.status)
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                    }
+
+                    for (let ator of filme.ator) {
+                        let filmeAtor = {
+                            "id_filme": filme.id,
+                            "id_ator": ator.id
+                        }
+
+                        let resultFilmeAtor = await controllerFilmeAtor.inserirNovoFilmeAtor(filmeAtor)
+
+                        // Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultFilmeAtor.status)
+                            return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                    }
+
+                    for (let diretor of filme.diretor) {
+                        let filmeDiretor = {
+                            "id_filme": filme.id,
+                            "id_diretor": diretor.id
+                        }
+
+                        let resultFilmeDiretor = await controllerFilmeDiretor.inserirNovoFilmeDiretor(filmeDiretor)
+
+                        // Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultFilmeDiretor.status)
                             return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
                     }
 
@@ -116,6 +144,44 @@ const atualizarFilme = async function (filme, id, contentType) {
                             }
                         }
 
+                        // Excluir as relações entre o filme e os atores
+                        let resultDeleteAtores = await controllerFilmeAtor.excluirAtoresIdFilme(filme.id)
+
+                        if (resultDeleteAtores.status) {
+                            for (let ator of filme.ator) {
+                                let filmeAtor = {
+                                    "id_filme": filme.id,
+                                    "id_ator": ator.id
+                                }
+
+                                let resultFilmeAtor = await controllerFilmeAtor.inserirNovoFilmeAtor(filmeAtor)
+
+                                // Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultFilmeAtor.status) {
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                                }
+                            }
+                        }
+
+                        // Excluir as relações entre o filme e os diretores
+                        let resultDeleteDiretores = await controllerFilmeDiretor.excluirDiretoresIdFilme(filme.id)
+
+                        if (resultDeleteDiretores.status) {
+                            for (let diretor of filme.diretor) {
+                                let filmeDiretor = {
+                                    "id_filme": filme.id,
+                                    "id_diretor": diretor.id
+                                }
+
+                                let resultFilmeDiretor = await controllerFilmeDiretor.inserirNovoFilmeDiretor(filmeDiretor)
+
+                                // Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultFilmeDiretor.status) {
+                                    return customMessages.SUCCESS_CREATED_ITEM_WARNING // status-code: 201, porém com problema na inserção de alguns dados
+                                }
+                            }
+                        }
+
                         customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                         customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                         customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
@@ -171,6 +237,20 @@ const listarFilme = async function () {
 
                     if (resultGeneros.status) {
                         filme.generos = resultGeneros.response.generos_filme
+                    }
+
+                    // Manipulação de dados para retornar todos os atores relacionados ao filme
+                    let resultAtores = await controllerFilmeAtor.buscarAtoresIdFilme(filme.id)
+
+                    if (resultAtores.status) {
+                        filme.atores = resultAtores.response.atores_filme
+                    }
+
+                    // Manipulação de dados para retornar todos os diretores relacionados ao filme
+                    let resultDiretores = await controllerFilmeDiretor.buscarDiretoresIdFilme(filme.id)
+
+                    if (resultDiretores.status) {
+                        filme.diretores = resultDiretores.response.diretores_filme
                     }
                 }
 
@@ -228,6 +308,20 @@ const buscarFilme = async function (id) {
 
                         if (resultGeneros.status) {
                             filme.generos = resultGeneros.response.generos_filme
+                        }
+
+                        // Manipulação de dados para retornar todos os atores relacionados ao filme
+                        let resultAtores = await controllerFilmeAtor.buscarAtoresIdFilme(filme.id)
+
+                        if (resultAtores.status) {
+                            filme.atores = resultAtores.response.atores_filme
+                        }
+
+                        // Manipulação de dados para retornar todos os diretores relacionados ao filme
+                        let resultDiretores = await controllerFilmeDiretor.buscarDiretoresIdFilme(filme.id)
+
+                        if (resultDiretores.status) {
+                            filme.diretores = resultDiretores.response.diretores_filme
                         }
                     }
 

@@ -1321,7 +1321,7 @@ components:
           type: integer
         foto:
           type: string
-          example: "https://fotos.com/foto_do_ator"
+          example: "https://fotos.com/foto_da_pessoa"
           description: O número máximo de caracteres é de 255    
     Genero:
       required:

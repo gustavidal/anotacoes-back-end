@@ -1,34 +1,34 @@
-/************************************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD de relação entre ator e foto.
- * Data: 03/06/2026 (quarta-feira)
+/*****************************************************************************************************************************************
+ * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para realizar o CRUD de relação entre ator e atividade.
+ * Data: 04/06/2026 (quinta-feira)
  * Autor: Gustavo Vidal de Abreu
  * Versão: 1.0
-************************************************************************************************************************************/
+*****************************************************************************************************************************************/
 
 // Import do arquivo de configurações de mensagens do projeto
 const configMessages = require('../modulo/configMessages.js')
 
-// Import do arquivo do DAO para manipular os dados de atorFoto no Banco de Dados
-const atorFotoDAO = require('../../model/DAO/ator_foto/ator_foto.js')
+// Import do arquivo do DAO para manipular os dados de atorAtividade no Banco de Dados
+const atorAtividadeDAO = require('../../model/DAO/ator_atividade/ator_atividade.js')
 
-const inserirNovoAtorFoto = async function (atorFoto) {
+const inserirNovoAtorAtividade = async function (atorAtividade) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let validar = await validarDados(atorFoto)
+        let validar = await validarDados(atorAtividade)
 
         if (validar) {
             return validar // status-code: 400
         } else {
-            let result = await atorFotoDAO.insertAtorFoto(atorFoto)
+            let result = await atorAtividadeDAO.insertAtorAtividade(atorAtividade)
 
             if (result) {
-                atorFoto.id = result
+                atorAtividade.id = result
 
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_CREATED_ITEM.status
                 customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_CREATED_ITEM.status_code
                 customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_CREATED_ITEM.message
-                customMessages.DEFAULT_MESSAGE.response = atorFoto
+                customMessages.DEFAULT_MESSAGE.response = atorAtividade
 
                 return customMessages.DEFAULT_MESSAGE // status-code: 201
             } else {
@@ -40,25 +40,25 @@ const inserirNovoAtorFoto = async function (atorFoto) {
     }
 }
 
-const atualizarAtorFoto = async function (atorFoto, id) {
+const atualizarAtorAtividade = async function (atorAtividade, id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let buscarAtorFotoResult = await buscarAtorFoto(id)
+        let buscarAtorAtividadeResult = await buscarAtorAtividade(id)
 
-        if (buscarAtorFotoResult.status) {
-            let validar = await validarDados(atorFoto)
+        if (buscarAtorAtividadeResult.status) {
+            let validar = await validarDados(atorAtividade)
 
             if (!validar) {
-                atorFoto.id = Number(id)
+                atorAtividade.id = Number(id)
 
-                let result = await atorFotoDAO.updateAtorFoto(atorFoto)
+                let result = await atorAtividadeDAO.updateAtorAtividade(atorAtividade)
 
                 if (result) {
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_UPDATED_ITEM.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_UPDATED_ITEM.status_code
                     customMessages.DEFAULT_MESSAGE.message = customMessages.SUCCESS_UPDATED_ITEM.message
-                    customMessages.DEFAULT_MESSAGE.response = atorFoto
+                    customMessages.DEFAULT_MESSAGE.response = atorAtividade
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -68,25 +68,25 @@ const atualizarAtorFoto = async function (atorFoto, id) {
                 return validar // status-code: 400 (atributo)
             }
         } else {
-            return buscarAtorFotoResult // status-code: 400 (id) ou 404
+            return buscarAtorAtividadeResult // status-code: 400 (id) ou 404
         }
     } catch (error) {
         return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
     }
 }
 
-const listarAtorFoto = async function () {
+const listarAtorAtividade = async function () {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let result = await atorFotoDAO.selectAllAtorFoto()
+        let result = await atorAtividadeDAO.selectAllAtorAtividade()
 
         if (result) {
             if (result.length > 0) {
                 customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                 customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
                 customMessages.DEFAULT_MESSAGE.response.count = result.length
-                customMessages.DEFAULT_MESSAGE.response.ator_fotos = result
+                customMessages.DEFAULT_MESSAGE.response.ator_atividades = result
 
                 return customMessages.DEFAULT_MESSAGE // status-code: 200
             } else {
@@ -101,7 +101,7 @@ const listarAtorFoto = async function () {
     }
 }
 
-const buscarAtorFoto = async function (id) {
+const buscarAtorAtividade = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
@@ -109,13 +109,13 @@ const buscarAtorFoto = async function (id) {
             customMessages.ERROR_BAD_REQUEST.field = '[ID] INVÁLIDO'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
-            let result = await atorFotoDAO.selectByIdAtorFoto(id)
+            let result = await atorAtividadeDAO.selectByIdAtorAtividade(id)
 
             if (result) {
                 if (result.length > 0) {
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.ator_foto = result
+                    customMessages.DEFAULT_MESSAGE.response.ator_atividade = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -130,7 +130,7 @@ const buscarAtorFoto = async function (id) {
     }
 }
 
-const buscarFotosIdAtor = async function (idAtor) {
+const buscarAtividadesIdAtor = async function (idAtor) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
@@ -138,13 +138,13 @@ const buscarFotosIdAtor = async function (idAtor) {
             customMessages.ERROR_BAD_REQUEST.field = '[ID DO ATOR] INVÁLIDO'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
-            let result = await atorFotoDAO.selectFotosByIdAtor(idAtor)
+            let result = await atorAtividadeDAO.selectAtividadesByIdAtor(idAtor)
 
             if (result) {
                 if (result.length > 0) {
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.fotos_ator = result
+                    customMessages.DEFAULT_MESSAGE.response.atividades_ator = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -159,21 +159,21 @@ const buscarFotosIdAtor = async function (idAtor) {
     }
 }
 
-const buscarAtoresIdFoto = async function (idFoto) {
+const buscarAtoresIdAtividade = async function (idAtividade) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        if (idFoto == undefined || String(idFoto).replaceAll(' ', '') == '' || idFoto == null || isNaN(idFoto) || idFoto < 1) {
-            customMessages.ERROR_BAD_REQUEST.field = '[ID DA FOTO] INVÁLIDA'
+        if (idAtividade == undefined || String(idAtividade).replaceAll(' ', '') == '' || idAtividade == null || isNaN(idAtividade) || idAtividade < 1) {
+            customMessages.ERROR_BAD_REQUEST.field = '[ID DA ATIVIDADE] INVÁLIDA'
             return customMessages.ERROR_BAD_REQUEST // status-code: 400
         } else {
-            let result = await atorFotoDAO.selectAtoresByIdFoto(idFoto)
+            let result = await atorAtividadeDAO.selectAtoresByIdAtividade(idAtividade)
 
             if (result) {
                 if (result.length > 0) {
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
-                    customMessages.DEFAULT_MESSAGE.response.atores_foto = result
+                    customMessages.DEFAULT_MESSAGE.response.atores_atividade = result
 
                     return customMessages.DEFAULT_MESSAGE // status-code: 200
                 } else {
@@ -188,14 +188,14 @@ const buscarAtoresIdFoto = async function (idFoto) {
     }
 }
 
-const excluirAtorFoto = async function (id) {
+const excluirAtorAtividade = async function (id) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let buscarAtorFotoResult = await buscarAtorFoto(id)
+        let buscarAtorAtividadeResult = await buscarAtorAtividade(id)
 
-        if (buscarAtorFotoResult.status) {
-            let result = await atorFotoDAO.deleteAtorFoto(id)
+        if (buscarAtorAtividadeResult.status) {
+            let result = await atorAtividadeDAO.deleteAtorAtividade(id)
 
             if (result) {
                 return customMessages.SUCCESS_DELETED_ITEM // status-code: 200
@@ -203,18 +203,18 @@ const excluirAtorFoto = async function (id) {
                 return customMessages.ERROR_INTERNAL_SERVER_MODEL // status-code: 500 (model)
             }
         } else {
-            return buscarAtorFotoResult // status-code: 400 (id) ou 404
+            return buscarAtorAtividadeResult // status-code: 400 (id) ou 404
         }
     } catch (error) {
         return customMessages.ERROR_INTERNAL_SERVER_CONTROLLER // status-code: 500 (controller)
     }
 }
 
-const excluirFotosIdAtor = async function (idAtor) {
+const excluirAtividadesIdAtor = async function (idAtor) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
     try {
-        let result = await atorFotoDAO.deleteFotosByIdAtor(idAtor)
+        let result = await atorAtividadeDAO.deleteAtividadesByIdAtor(idAtor)
 
         if (result) {
             return customMessages.SUCCESS_DELETED_ITEM // status-code: 200
@@ -227,13 +227,13 @@ const excluirFotosIdAtor = async function (idAtor) {
     }
 }
 
-const validarDados = async function (atorFoto) {
+const validarDados = async function (atorAtividade) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
-    if (atorFoto.id_ator == undefined || atorFoto.id_ator == '' || atorFoto.id_ator == null || isNaN(atorFoto.id_ator) || atorFoto.id_ator < 1) {
+    if (atorAtividade.id_ator == undefined || atorAtividade.id_ator == '' || atorAtividade.id_ator == null || isNaN(atorAtividade.id_ator) || atorAtividade.id_ator < 1) {
         customMessages.ERROR_BAD_REQUEST.field = '[ID DO ATOR] INVÁLIDO'
-    } else if (atorFoto.id_foto == undefined || atorFoto.id_foto == '' || atorFoto.id_foto == null || isNaN(atorFoto.id_foto) || atorFoto.id_foto < 1) {
-        customMessages.ERROR_BAD_REQUEST.field = '[ID DA FOTO] INVÁLIDA'
+    } else if (atorAtividade.id_atividade == undefined || atorAtividade.id_atividade == '' || atorAtividade.id_atividade == null || isNaN(atorAtividade.id_atividade) || atorAtividade.id_atividade < 1) {
+        customMessages.ERROR_BAD_REQUEST.field = '[ID DA ATIVIDADE] INVÁLIDA'
     } else {
         return false
     }
@@ -242,12 +242,12 @@ const validarDados = async function (atorFoto) {
 }
 
 module.exports = {
-    inserirNovoAtorFoto,
-    atualizarAtorFoto,
-    listarAtorFoto,
-    buscarAtorFoto,
-    buscarFotosIdAtor,
-    buscarAtoresIdFoto,
-    excluirAtorFoto,
-    excluirFotosIdAtor
+    inserirNovoAtorAtividade,
+    atualizarAtorAtividade,
+    listarAtorAtividade,
+    buscarAtorAtividade,
+    buscarAtividadesIdAtor,
+    buscarAtoresIdAtividade,
+    excluirAtorAtividade,
+    excluirAtividadesIdAtor
 }
