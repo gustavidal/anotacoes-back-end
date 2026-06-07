@@ -191,7 +191,7 @@ const listarAtor = async function () {
                     let resultSexo = await controllerSexo.buscarSexo(ator.id_sexo)
 
                     if (resultSexo.status) {
-                        ator.sexo = resultSexo.response.sexo
+                        ator.sexo = resultSexo.response.sexo[0]
                         delete ator.id_sexo
                     }
 
@@ -247,7 +247,7 @@ const buscarAtor = async function (id) {
                         let resultSexo = await controllerSexo.buscarSexo(ator.id_sexo)
 
                         if (resultSexo.status) {
-                            ator.sexo = resultSexo.response.sexo
+                            ator.sexo = resultSexo.response.sexo[0]
                             delete ator.id_sexo
                         }
 

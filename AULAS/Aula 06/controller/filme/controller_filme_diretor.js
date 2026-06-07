@@ -11,6 +11,9 @@ const configMessages = require('../modulo/configMessages.js')
 // Import do arquivo do DAO para manipular os dados de filmeDiretor no Banco de Dados
 const filmeDiretorDAO = require('../../model/DAO/filme_diretor/filme_diretor.js')
 
+// Import das Controllers
+const controllerDiretor = require('../diretor/controller_diretor.js')
+
 const inserirNovoFilmeDiretor = async function (filmeDiretor) {
     let customMessages = JSON.parse(JSON.stringify(configMessages))
 
@@ -142,6 +145,10 @@ const buscarDiretoresIdFilme = async function (idFilme) {
 
             if (result) {
                 if (result.length > 0) {
+                    for (let indice in result) {
+                        let diretor = await controllerDiretor.buscarDiretor(result[indice].id)
+                        result[indice] = diretor.response.diretor[0]
+                    }
                     customMessages.DEFAULT_MESSAGE.status = customMessages.SUCCESS_RESPONSE.status
                     customMessages.DEFAULT_MESSAGE.status_code = customMessages.SUCCESS_RESPONSE.status_code
                     customMessages.DEFAULT_MESSAGE.response.diretores_filme = result
